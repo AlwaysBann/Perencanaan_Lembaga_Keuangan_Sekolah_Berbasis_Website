@@ -15,7 +15,7 @@ return new class extends Migration
             $table->integer('id_user')->autoIncrement();
             $table->string('username', 255);
             $table->text('password');
-            $table->enum('level', ['super_admin', 'siswa', 'peminta', 'pengelola']);
+            $table->enum('role', ['super_admin', 'siswa', 'peminta', 'pengelola']);
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_users');
+        Schema::dropIfExists('tbl_user');
     }
 };
