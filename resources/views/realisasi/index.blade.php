@@ -47,8 +47,13 @@
                             <td>{{$r->nama_realisasi}}</td>
                             <td>{{$r->jumlah_dana_realisasi}}</td>
                             <td>{{$r->nama_ruangan}}</td>
-                            <td>{{$r->bukti_realisasi}}</td>
-                            <td style="max-width: 110px">
+                            <td>
+                                @if ($r->bukti_realisasi)
+                                <img src="{{ url('foto') . '/' . $r->bukti_realisasi }} "
+                                    style="max-width: 250px; height: auto;" />
+                            @endif
+                            </td>
+                            <td style="min-width: 110px">
                                 <a href="akun/edit/" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                     EDIT
                                 </a>
