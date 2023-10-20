@@ -65,7 +65,7 @@ class TblUserController extends Controller
     public function edit(string $id, Request $request, tbl_user $user)
     {
         $data = [
-            'user' =>  $user->select('id_user', 'username', 'role')->where('id_user', $id)->first()
+            'user' =>  tbl_user::where('id_user', $id)->first()
         ];
 
         return view('tbl_user.edit', $data);
@@ -83,12 +83,14 @@ class TblUserController extends Controller
                 'role'=> ['required'],
                 ]
                 );
-                if ($data) {
-                    $data['id_user'] = 1;
-                    $user->update($data);
-                    return redirect('/akun')->with('success','Data berhasil ditambahkan');
+                if ($data !== null) {
+                    // $data['id_user'] = 1;
+                    $dataUpdate= $user->where('id_user',$request->input('id_user'))->update($data);
+                    if ($dataUpdate) {
+                    return redirect('/akun');
+                    }
                 } else {
-                    return back()->with('error', 'Data Gagal ditambahkan');
+                    return back();
                 } 
     }
 

@@ -24,7 +24,7 @@
                 <a href="ruangan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
                     Tambah Ruangan 
                 </a>
-                <a href="logs" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
+                <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
             </div>

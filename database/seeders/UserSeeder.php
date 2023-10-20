@@ -19,6 +19,11 @@ class UserSeeder extends Seeder
             'username' => 'super',
             'role' => 'super_admin',
             'password' => Hash::make('super')
+        ],
+        [
+            'username' => 'suban',
+            'role' => 'pengelola',
+            'password' => Hash::make('123')
         ]];
 
         foreach ($users as $user => $val) {

@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('realisasi', function (Blueprint $table) {
             $table->integer('id_realisasi')->autoIncrement();
+            $table->integer('id_ruangan', false);
             $table->string('nama_realisasi', 200);
             $table->string('jumlah_dana_realisasi');
             $table->string('bukti_realisasi');
+
+            $table->foreign('id_ruangan')->on('ruangan')
+            ->references('id_ruangan')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

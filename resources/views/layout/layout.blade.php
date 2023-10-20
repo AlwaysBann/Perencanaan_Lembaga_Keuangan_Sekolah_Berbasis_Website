@@ -28,6 +28,7 @@
     <span class="" style="color: #E6B31E"> Nama Akun</span>
     </nav>
     <div class="mt-5">
+        @include('layout.flash-massage')
         @yield('content')
     </div>
 </body>

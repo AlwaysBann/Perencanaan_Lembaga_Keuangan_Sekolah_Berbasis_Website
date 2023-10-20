@@ -32,7 +32,7 @@
                       </div>
                       <div class="form-group  mb-3">
                         <label for="password" style="color: #E6B31E;">Password</label>
-                        <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                        <input value="{{$user->password}}" type="text" class="form-control" id="password" name="password">
                       </div>
                       <div class="form-group" style="margin-bottom: 180px">
                         <label for="role" style="color: #E6B31E;">Role</label>
