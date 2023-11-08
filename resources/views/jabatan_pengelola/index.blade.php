@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Manage User')
+@section('title', 'Kelola data Jabatan Pengelola')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -18,41 +18,33 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900; margin-bottom:10px">MANAGE ACCOUNT</h1>  
-        <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Akun User = {{$jumlahAkun ?? 0}}</h3> 
-        @include('layout.flash-massage')     
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DATA JABATAN PENGELOLA</h1>
+        @include('layout.flash-massage')   
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
-                <a href="akun/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
-                    Tambah User 
-                </a>
-                <a href="/akun/logs" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
-                    Log Activity
+                <a href="/jabatan_pengelola/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
+                    Tambah Jabatan 
                 </a>
             </div>
             <div class="">
                 <table class="table table-bordered border-warning table-dark DataTable" style="background-color: rgba(32, 32, 32, 0.637)">
                     <thead>
                         <tr>
-                            <th>id_user</th>
-                            <th>username</th>
-                            <th>password</th>
-                            <th>role</th>
-                            <th>aksi</th>
+                            <th style="max-width: 35px;">id_jabatan_pengelola</th>
+                            <th>nama_jabatan_pengelola</th>
+                            <th style="min-width: 60px">aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($user as $u)
+                        @foreach ($jabatan as $j)
                         <tr>
-                            <td>{{$u->id_user}}</td>
-                            <td>{{$u->username}}</td>
-                            <td>{{$u->password}}</td>
-                            <td>{{$u->role}}</td>
-                            <td>
-                                <a href="akun/edit/{{ $u->id_user }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
+                            <td>{{$j->id_jabatan_pengelola}}</td>
+                            <td>{{$j->nama_jabatan_pengelola}}</td>
+                            <td style="max-width: 40px">
+                                <a href="jabatan_pengelola/edit/{{$j->id_jabatan_pengelola}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                     EDIT
                                 </a>
-                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idUser="{{$u->id_user}}">HAPUS</btn>
+                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idJabatan="{{$j->id_jabatan_pengelola}}">HAPUS</btn>
                             </td>
                         </tr>
                     </tbody>
@@ -65,9 +57,9 @@
 <script type="module">
     $('.DataTable tbody').on('click', '.btnHapus', function(a) {
         a.preventDefault();
-        let idUser = $(this).closest('.btnHapus').attr('idUser');
+        let idJabatan = $(this).closest('.btnHapus').attr('idJabatan');
         swal.fire({
-            title: "Apakah anda ingin menghapus data "+idUser+" ?",
+            title: "Apakah anda ingin menghapus data ini?",
             showCancelButton: true,
             confirmButtonText: 'Setuju',
             cancelButtonText: `Batal`,
@@ -78,14 +70,14 @@
                 //Ajax Delete
                 $.ajax({
                     type: 'DELETE',
-                    url: 'akun/hapus',
+                    url: 'jabatan_pengelola/hapus',
                     data: {
-                        id_user: idUser,
+                        id_jabatan_pengelola: idJabatan,
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
                         if (data.success) {
-                            swal.fire('Data ' + idUser + ' Berhasil di hapus!', '', 'success').then(function() {
+                            swal.fire('Berhasil di hapus!', '', 'success').then(function() {
                                 //Refresh Halaman
                                 location.reload();
                             });

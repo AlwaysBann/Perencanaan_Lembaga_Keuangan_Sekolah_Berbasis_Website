@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ruangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RuanganController extends Controller
 {
@@ -38,14 +39,12 @@ class RuanganController extends Controller
         );
 
         //Proses Insert
-        if ($data) {
-            $data['id_ruangan'] = 1;
+        if (DB::statement("CALL CreateDataRuangan(?)", [$data['nama_ruangan']])) {
             // Simpan jika data terisi semua
-            $ruangan->create($data);
-            return redirect('/ruangan')->with('success', 'Data user baru berhasil ditambah');
+            return redirect('/ruangan')->with('success', 'Data Ruangan baru berhasil ditambah');
         } else {
             // Kembali ke form tambah data
-            return back()->with('error', 'Data user gagal ditambahkan');
+            return back()->with('error', 'Data Ruangan gagal ditambahkan');
         }
     }
 
@@ -76,16 +75,17 @@ class RuanganController extends Controller
     {
         $data = $request->validate(
             [
-            'nama_ruangan'=> ['required'],
-            ]
-            );
-            if ($data) {
-                $data['id_ruangan'] = 1;
-                $ruangan->update($data);
-                return redirect('/ruangan')->with('success','Data berhasil ditambahkan');
-            } else {
-                return back()->with('error', 'Data Gagal ditambahkan');
-            } 
+                'nama_ruangan'=> ['required'],
+                ]
+                );
+                if ($data !== null) {
+                    $dataUpdate= $ruangan->where('id_ruangan',$request->input('id_ruangan'))->update($data);
+                    if ($dataUpdate) {
+                    return redirect('/ruangan');
+                    }
+                } else {
+                    return back();
+                } 
     }
 
 
@@ -106,6 +106,5 @@ class RuanganController extends Controller
             return response()->json(['success' => true]);
         } 
 
-        return response()->json(['success' => false, 'pesan' => 'Data gagal dihapus']);
     }
 }

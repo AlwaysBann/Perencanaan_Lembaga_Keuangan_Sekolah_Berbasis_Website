@@ -10,9 +10,9 @@ class logsAkunController extends Controller
     function index(logs $logs)
     {
         $data = [
-            'transaksi' => $logs::orderBy('id_logs', 'desc')->get()
+            'logs' => $logs::orderBy('id_logs', 'desc')->get()
         ];
 
-        return view('transaksi.index', $data);
+        return view('logs_akun.index', $data);
     }
 }

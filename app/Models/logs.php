@@ -11,5 +11,5 @@ class Logs extends Model
     protected $table = 'logs';
     protected $fillable = ['logs'];
     protected $primaryKey = 'id_logs';
-    public $timestamps = false;
+    public $timestamps = true;
 }
