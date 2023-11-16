@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Edit User')
+@section('title', 'Edit Data Master')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -18,32 +18,29 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Edit DATA USER</h1>
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">EDIT DATA ANGKATAN</h1>
         <div class="container my-5 d-flex justify-content-center">
             <div class="row justify-content-center align-items-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
-
             <form action="simpan" method="POST">
                 <div class="form">
+                    <input type="hidden" name="no_angkatan" value="{{$angkatan->no_angkatan}}">
                     <div class="form-group mb-3">
-                        <label for="username" style="color: #E6B31E;">Username</label>
-                        <input type="hidden" name="id_user" placeholder="Username" value="{{$user->id_user}}">
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{$user->username}}">
+                        <label for="no_angkatan" style="color: #E6B31E;">No Angkatan</label>
+                        <input type="text" class="form-control" id="no_angkatan" name="no_angkatan" placeholder="No Angkatan" style="margin-bottom: 10px"
+                         value="{{$angkatan->no_angkatan}}">
                         @csrf
                       </div>
-                      <div class="form-group  mb-3">
-                        <label for="password" style="color: #E6B31E;">Password</label>
-                        <input value="{{$user->password}}" type="text" class="form-control" id="password" name="password">
+                    <div class="form-group mb-3">
+                        <label for="tahun_masuk" style="color: #E6B31E;">Tahun Masuk</label>
+                        <input type="text" class="form-control" id="tahun_masuk" name="tahun_masuk" placeholder="Tahun Masuk" style="margin-bottom: 10px"
+                         value="{{$angkatan->tahun_masuk}}">
+                        @csrf
                       </div>
-                      <div class="form-group" style="margin-bottom: 180px">
-                        <label for="role" style="color: #E6B31E;">Role</label>
-                        <select name="role" id="role" class="form-select">
-                            <option @if ($user->role == 'super_admin')
-                                return selected
-                            @endif value="super_admin">Super Admin</option>
-                            <option @if ($user->role == 'pengelola')
-                                return selected
-                            @endif value="pengelola">pengelola</option>
-                        </select>
+                    <div class="form-group mb-3">
+                        <label for="tahun_keluar" style="color: #E6B31E;">Tahun Keluar</label>
+                        <input type="text" class="form-control" id="tahun_keluar" name="tahun_keluar" placeholder="Tahun Keluar" style="margin-bottom: 50px"
+                         value="{{$angkatan->tahun_keluar}}">
+                        @csrf
                       </div>
                       <div class="col-md-4 mt-3 mb-3">
                         <button type="submit" class="btn me-4" style="background-color: white;font-weight: 500 ; color: green; border: 1px solid #E6B31E; min-width: 100px">SIMPAN</button>

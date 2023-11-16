@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->integer('id_logs', true)->nullable(false);
-            $table->text('logs')->nullable(true);
-            $table->timestamps(true);
+        Schema::create('angkatan', function (Blueprint $table) {
+            $table->integer('no_angkatan', false);
+            $table->string('tahun_masuk');
+            $table->string('tahun_keluar');
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('angkatan');
     }
 };

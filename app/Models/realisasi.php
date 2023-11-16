@@ -13,12 +13,4 @@ class realisasi extends Model
     protected $primaryKey = 'id_realisasi';
     public $timestamps = false;
 
-    public function ruangan()
-    {
-        return $this->belongsTo(ruangan::class);
-    }
-    public function getRuanganAttribute()
-    {
-        return ruangan::find($this->attributes['id_ruangan'])->jenis_surat;
-    }
 }

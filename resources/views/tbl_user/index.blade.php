@@ -18,13 +18,15 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">MANAGE ACCOUNT</h1>        
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900; margin-bottom:10px">MANAGE ACCOUNT</h1>  
+        <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Akun User = {{$jumlahAkun ?? 0}}</h3> 
+        @include('layout.flash-massage')     
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
                 <a href="akun/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
                     Tambah User 
                 </a>
-                <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
+                <a href="/akun/logs" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
             </div>
@@ -50,7 +52,7 @@
                                 <a href="akun/edit/{{ $u->id_user }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                     EDIT
                                 </a>
-                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idUser="{{ $u->id_user }}">HAPUS</btn>
+                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idUser="{{$u->id_user}}">HAPUS</btn>
                             </td>
                         </tr>
                     </tbody>

@@ -11,13 +11,23 @@
     </style>
 </head>
 <body>
-    <nav class="navbar fixed-top navbar-expand-md px-5" style="background-color: #343434;">
+    <nav class="navbar fixed-top navbar-expand-md px-5" style="background-color: #343434; z-index: 100;">
         @if (Auth::check() && Auth::User()->role == 'super_admin')
         <a href="/akun" class="navbar-brand" style="color: #E6B31E">MANAGE ACCOUNT</a>
         @endif
         @if (Auth::check() && Auth::User()->role == 'pengelola')
-        <a href="#" class="navbar-brand" style="color: #E6B31E">DASHBOARD</a>
-        <a href="/ruangan" class="navbar-brand" style="color: #E6B31E">DATA MASTER</a>
+        <a href="/dashboard" class="navbar-brand" style="color: #E6B31E">DASHBOARD</a>
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle navbar-brand" style="color: #E6B31E" href="#" id="listDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                DATA MASTER
+            </a>
+            <div class="dropdown-menu mt-1 p-1" aria-labelledby="listDropdown" style="background-color: #343434;z-index: 0">
+                <a href="/ruangan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">RUANGAN</a>
+                <a href="/jabatan_pengelola" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JABATAN PENGELOLA</a>
+                <a href="/jurusan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JURUSAN</a>
+                <a href="/angkatan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">ANGKATAN</a>
+            </div>
+        </div>
         <a href="#" class="navbar-brand" style="color: #E6B31E">PENGAJUAN</a>
         <a href="#" class="navbar-brand" style="color: #E6B31E">PERENCANAAN</a>
         <a href="/realisasi" class="navbar-brand" style="color: #E6B31E">REALISASI</a>
@@ -28,7 +38,6 @@
     <span class="" style="color: #E6B31E"> Nama Akun</span>
     </nav>
     <div class="mt-5">
-        @include('layout.flash-massage')
         @yield('content')
     </div>
 </body>

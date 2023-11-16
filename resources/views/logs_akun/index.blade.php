@@ -18,14 +18,11 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">MANAGE ACCOUNT</h1>        
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">ACTIVITY IN TABLE USER</h1>        
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
-                <a href="akun/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
-                    Tambah User 
-                </a>
-                <a href="logs" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
-                    Log Activity
+                <a href="/akun" class="btn btn-warning rounded-pill" style="color: white; min-width: 130px">
+                    Kembali
                 </a>
             </div>
             <div class="">
@@ -34,13 +31,15 @@
                         <tr>
                             <th>No</th>
                             <th>Aksi</th>
+                            <th>Waktu</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($user as $u)
+                        @foreach ($logs as $l)
                         <tr>
-                            <td>{{$u->id_logs}}</td>
-                            <td>{{$u->logs}}</td>
+                            <td>{{$l->id_logs}}</td>
+                            <td>{{$l->logs}}</td>
+                            <td>{{$waktuSekarang = date('Y-m-d H:i:s')}}</td>
                         </tr>
                     </tbody>
                         @endforeach

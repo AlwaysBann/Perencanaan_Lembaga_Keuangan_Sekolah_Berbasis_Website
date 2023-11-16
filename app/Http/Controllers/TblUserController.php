@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\tbl_user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TblUserController extends Controller
 {
@@ -12,8 +13,12 @@ class TblUserController extends Controller
      */
     public function index(tbl_user $user)
     {
+        // Mendapatkan data user dan mengirimkan
+        //  ke dalam halaman tbl_user.index untuk ditampilkan
+        $totalAkun = DB::select('SELECT CountAkun() AS Akun')[0]->Akun;
         $data = [
-            'user' => $user->all()
+            'user' => $user->all(),
+            'jumlahAkun' => $totalAkun
         ];
         return view('tbl_user.index', $data);
     }
@@ -80,7 +85,7 @@ class TblUserController extends Controller
             [
                 'username'=> ['required'],
                 'password'=> ['required'],
-                'role'=> ['required'],
+                'role'=> ['sometimes'],
                 ]
                 );
                 if ($data !== null) {
