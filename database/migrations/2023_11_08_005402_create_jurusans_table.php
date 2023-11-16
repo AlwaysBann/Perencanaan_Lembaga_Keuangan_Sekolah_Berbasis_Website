@@ -12,13 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ruangan', function (Blueprint $table) {
-            $table->integer('id_ruangan')->autoIncrement();
-            $table->string('nama_ruangan', 50);
+        Schema::create('jurusan', function (Blueprint $table) {
+            $table->integer('id_jurusan')->autoIncrement();
+            $table->string('nama_jurusan');
         });
-        DB::unprepared('DROP Procedure IF EXISTS CreateDataRuangan');
+        DB::unprepared('DROP Procedure IF EXISTS CreateDataJurusan');
         DB::unprepared(
-        "CREATE PROCEDURE CreateDataRuangan(ruangan VARCHAR(255))
+        "CREATE PROCEDURE CreateDataJurusan(jurusan VARCHAR(255))
         BEGIN
             DECLARE pesan_error CHAR(5) DEFAULT '00000';
             BEGIN
@@ -29,14 +29,13 @@ return new class extends Migration
             START TRANSACTION;
             SAVEPOINT satu;
 
-            INSERT INTO ruangan(nama_ruangan) VALUES (ruangan);
+            INSERT INTO jurusan(nama_jurusan) VALUES (jurusan);
 
             IF pesan_error != '00000' THEN ROLLBACK TO satu;
             END IF;
             COMMIT;
         END;"
         );
-        
     }
 
     /**
@@ -44,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ruangan');
+        Schema::dropIfExists('jurusan');
     }
 };
