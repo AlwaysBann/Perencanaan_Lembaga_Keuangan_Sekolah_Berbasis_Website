@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\logsAkunController;
 use App\Http\Controllers\PengelolaController;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,8 @@ use App\Http\Controllers\RealisasiController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JabatanPengelolaController;
 use App\Http\Controllers\TblUserController;
+use App\Http\Controllers\AngkatanController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +66,20 @@ Route::post('/pengelola/tambah/simpan', [PengelolaController::class,'store']);
 Route::get('/pengelola/edit/{id}', [PengelolaController::class,'edit']);
 Route::post('/pengelola/edit/simpan', [PengelolaController::class,'update']);
 Route::delete('/pengelola/hapus', [PengelolaController::class, 'destroy']);
+
+Route::get('/jurusan', [JurusanController::class,'index']);
+Route::get('/jurusan/tambah', [JurusanController::class,'create']);
+Route::post('/jurusan/tambah/simpan', [JurusanController::class,'store']);
+Route::get('/jurusan/edit/{id}', [JurusanController::class,'edit']);
+Route::post('/jurusan/edit/simpan', [JurusanController::class,'update']);
+Route::delete('/jurusan/hapus', [JurusanController::class, 'destroy']);
+
+Route::get('/angkatan', [AngkatanController::class,'index']);
+Route::get('/angkatan/tambah', [AngkatanController::class,'create']);
+Route::post('/angkatan/tambah/simpan', [AngkatanController::class,'store']);
+Route::get('/angkatan/edit/{id}', [AngkatanController::class,'edit']);
+Route::post('/angkatan/edit/simpan', [AngkatanController::class,'update']);
+Route::delete('/angkatan/hapus', [AngkatanController::class, 'destroy']);
 
 Route::get('/realisasi', [RealisasiController::class,'index']);
 Route::get('/realisasi/tambah', [RealisasiController::class,'create']);
