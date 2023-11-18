@@ -45,23 +45,30 @@ class TblUserController extends Controller
         );
 
         //Proses Insert
-        if ($data) {
+        $filter = $user->where('username', $data['username'])->first();
+        // dd($filter);
+        if ($filter) {
+            return back()->with('error', 'Data user gagal ditambahkan, Karena sudah ada');
+        } else {
             $data['id_user'] = 1;
-            // Simpan jika data terisi semua
             $user->create($data);
             return redirect('/akun')->with('success', 'Data user baru berhasil ditambah');
-        } else {
             // Kembali ke form tambah data
-            return back()->with('error', 'Data user gagal ditambahkan');
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(tbl_user $tbl_user)
+    public function show(Request $request, tbl_user $tbl_user)
     {
-        //
+        $search = $request->input('search');
+
+    $data = tbl_user::where('username', 'LIKE', "%$search%")
+                     ->orWhere('id_user', 'LIKE', "%$search%")
+                     ->get();
+
+    return view('tbl_user.index', ['user' => $data]);
     }
 
     /**

@@ -14,6 +14,9 @@
             background-size: 100%;
             background-repeat: repeat-y;
         }
+        ::placeholder{
+            color: #CACACA;
+        }
     </style>
 </head>
 <body>
@@ -23,7 +26,11 @@
         @include('layout.flash-massage')     
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
-                <a href="akun/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
+                <form action="search" method="GET" class="me-4" style="position: relative">
+                    <input type="text" name="search" style="background-color: #343434; border: 1px solid #E6B31E; height: 100%; width: 250px; color: white; padding-left: 10px; border-radius: 7px" placeholder="Cari Username...">
+                    <button type="submit" style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+                <a href="akun/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px; margin-left: 10px">
                     Tambah User 
                 </a>
                 <a href="/akun/logs" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">

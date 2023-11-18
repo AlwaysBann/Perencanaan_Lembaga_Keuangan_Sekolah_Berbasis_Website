@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ruangan', function (Blueprint $table) {
-            $table->integer('id_ruangan',false,);
+            $table->integer('id_ruangan')->autoIncrement();
             $table->string('nama_ruangan', 50);
         });
         DB::unprepared('DROP Procedure IF EXISTS CreateDataRuangan');

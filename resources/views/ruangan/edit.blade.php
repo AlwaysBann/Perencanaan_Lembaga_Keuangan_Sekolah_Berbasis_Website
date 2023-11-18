@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Tambah Data Master')
+@section('title', 'Edit Data Ruangan')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -18,14 +18,16 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">TAMBAH DATA RUANGAN</h1>
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">EDIT DATA RUANGAN</h1>
         <div class="container my-5 d-flex justify-content-center">
             <div class="row justify-content-center align-items-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
-            <form action="tambah/simpan" method="POST">
+            <form action="simpan" method="POST">
                 <div class="form">
+                    <input type="hidden" name="id_ruangan" value="{{$ruangan->id_ruangan}}">
                     <div class="form-group mb-3">
                         <label for="nama_ruangan" style="color: #E6B31E;">Nama Ruangan</label>
-                        <input type="text" class="form-control" id="nama_ruangan" name="nama_ruangan" placeholder="Nama Ruangan" style="margin-bottom: 300px">
+                        <input type="text" class="form-control" id="nama_ruangan" name="nama_ruangan" placeholder="Nama Ruangan" style="margin-bottom: 300px"
+                         value="{{$ruangan->nama_ruangan}}">
                         @csrf
                       </div>
                       <div class="col-md-4 mt-3 mb-3">

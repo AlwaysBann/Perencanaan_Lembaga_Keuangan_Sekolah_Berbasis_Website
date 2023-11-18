@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\logsAkunController;
+use App\Http\Controllers\PengelolaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -33,6 +34,7 @@ Route::middleware(['akses:super_admin'])->group(function () {
 Route::get('/akun', [TblUserController::class, 'index']);
 Route::get('/akun/tambah', [TblUserController::class, 'create']);
 Route::post('/akun/tambah/simpan', [TblUserController::class, 'store']);
+Route::get('/search', [TblUserController::class, 'show']);
 Route::get('/akun/edit/{id}', [TblUserController::class, 'edit']);
 Route::post('/akun/edit/simpan', [TblUserController::class, 'update']);
 Route::delete('/akun/hapus', [TblUserController::class, 'destroy']);
@@ -54,6 +56,13 @@ Route::post('/jabatan_pengelola/tambah/simpan', [JabatanPengelolaController::cla
 Route::get('/jabatan_pengelola/edit/{id}', [JabatanPengelolaController::class,'edit']);
 Route::post('/jabatan_pengelola/edit/simpan', [JabatanPengelolaController::class,'update']);
 Route::delete('/jabatan_pengelola/hapus', [JabatanPengelolaController::class, 'destroy']);
+
+Route::get('/pengelola', [PengelolaController::class,'index']);
+Route::get('/pengelola/tambah', [PengelolaController::class,'create']);
+Route::post('/pengelola/tambah/simpan', [PengelolaController::class,'store']);
+Route::get('/pengelola/edit/{id}', [PengelolaController::class,'edit']);
+Route::post('/pengelola/edit/simpan', [PengelolaController::class,'update']);
+Route::delete('/pengelola/hapus', [PengelolaController::class, 'destroy']);
 
 Route::get('/realisasi', [RealisasiController::class,'index']);
 Route::get('/realisasi/tambah', [RealisasiController::class,'create']);

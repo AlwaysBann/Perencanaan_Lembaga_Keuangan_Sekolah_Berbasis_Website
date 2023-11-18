@@ -36,9 +36,9 @@ class AuthController extends Controller
 
             if($user->role == 'super_admin'){
                 // Session::regenerateToken();
-                return redirect('/akun')->with('success','Berhasil Masuk');
+                return redirect('/akun')->with('success','Berhasil Masuk, Halo Super Admin');
             } elseif($user->role == 'pengelola'){
-                return redirect('/ruangan')->with('success','Berhasil Masuk');
+                return redirect('/ruangan')->with('success','Berhasil Masuk, Anda sebagai Pengelola');
             }
         }
     }
