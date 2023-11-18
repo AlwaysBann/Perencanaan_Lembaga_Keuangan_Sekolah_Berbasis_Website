@@ -51,7 +51,10 @@
                             <option value="" disabled hidden selected>Pilih Role</option>
                             <option value="super_admin">Super Admin</option>
                             <option value="pengelola">pengelola</option>
+<<<<<<< HEAD
                             <option value="peminta">Peminta</option>
+=======
+>>>>>>> 719faecad79d672013a237518a699c50800ce3c2
                         </select>
                         <div class="valid-feedback" style="font-size: 15px; color: green; font-weight: 700; text-shadow: 0px 0px 5px white">
                             Role Dapat disimpan
