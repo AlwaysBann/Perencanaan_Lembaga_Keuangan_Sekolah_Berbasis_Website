@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('username', 255);
             $table->text('password');
             $table->enum('role', ['super_admin', 'siswa', 'peminta', 'pengelola']);
+            $table->string('foto_profil')->nullable(true);
         });
     }
 

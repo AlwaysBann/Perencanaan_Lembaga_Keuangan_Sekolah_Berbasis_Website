@@ -97,7 +97,7 @@ Route::delete('/perencanaan/hapus', [PerencanaanController::class, 'destroy']);
 Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
 });
 
-Route::middleware(['akses:peminta'])->group(function () {
+Route::middleware(['akses:peminta,pengelola'])->group(function () {
 Route::get('/pengajuan', [PengajuanController::class,'index']);
 Route::get('/pengajuan/tambah', [PengajuanController::class,'create']);
 Route::post('/pengajuan/tambah/simpan', [PengajuanController::class,'store']);

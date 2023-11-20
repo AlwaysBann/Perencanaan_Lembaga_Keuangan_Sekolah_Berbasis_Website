@@ -57,8 +57,12 @@
         @endif
         <a href="/logout" class="navbar-brand me-auto" style="color: #E6B31E">LOGOUT</a>
 
-
-    <span class="" style="color: #E6B31E"> Nama Akun</span>
+    @auth
+    <span class="me-3" style="color: #E6B31E; font-size: 20px"> {{auth()->user()->username}}</span>
+    <div style="position: relative; overflow: hidden; width: 35px; height: 35px;">
+        <img src="{{auth()->user()->foto_profil == null ?  asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil)}}" alt="Foto Profile Kosong" class="" style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%">
+    </div>
+    @endauth
     </nav>
     <div class="mt-5">
         @yield('content')

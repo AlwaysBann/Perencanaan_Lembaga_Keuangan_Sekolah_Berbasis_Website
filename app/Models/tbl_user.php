@@ -10,7 +10,7 @@ class tbl_user extends Authenticatable
 {
     use HasFactory;
     protected $table = 'tbl_user';
-    protected $fillable = ['username', 'password', 'role'];
+    protected $fillable = ['username', 'password', 'role', 'foto_profil'];
     protected $primaryKey = 'id_user';
     public $timestamps = false;
 
