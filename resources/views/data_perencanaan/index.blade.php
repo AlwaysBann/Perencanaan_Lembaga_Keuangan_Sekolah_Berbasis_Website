@@ -45,7 +45,7 @@
                             <td>{{$o->nama_perencanaan}}</td>
                             <td>{{$o->nama_penanggung_jawab}}</td>
                             <td>{{$o->waktu_realisasi}}</td>
-                            <td style="max-width: 150px">
+                            <td style="max-width: 175px">
                                 <a href="perencanaan/detail/{{$o->id_perencanaan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                     DETAIL
                                 </a>

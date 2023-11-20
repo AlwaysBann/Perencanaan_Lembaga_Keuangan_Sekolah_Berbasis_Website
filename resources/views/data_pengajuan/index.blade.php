@@ -48,7 +48,7 @@
                             <td>{{$p->tujuan_pengajuan}}</td>
                             <td>{{$p->nama_pengaju}}</td>
                             <td>{{$p->waktu_pengajuan }}</td>
-                            <td style="max-width: 150px">
+                            <td style="max-width: 175px">
                                 <a href="pengajuan/detail/{{$p->id_pengajuan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                     DETAIL
                                 </a>

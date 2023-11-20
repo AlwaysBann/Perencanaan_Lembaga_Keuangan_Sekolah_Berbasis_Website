@@ -32,23 +32,28 @@ use App\Http\Controllers\PerencanaanController;
 // });
 
 Route::middleware(['guest'])->group(function () {
-Route::get('/', [AuthController::class, 'index']);
-Route::post('/', [AuthController::class, 'login']);
+    Route::get('/', [AuthController::class, 'index']);
+    Route::post('/', [AuthController::class, 'login']);
 });
 
 Route::middleware(['akses:super_admin'])->group(function () {
-Route::get('/akun', [TblUserController::class, 'index']);
-Route::get('/akun/tambah', [TblUserController::class, 'create']);
-Route::post('/akun/tambah/simpan', [TblUserController::class, 'store']);
-Route::get('/search', [TblUserController::class, 'show']);
-Route::get('/akun/edit/{id}', [TblUserController::class, 'edit']);
-Route::post('/akun/edit/simpan', [TblUserController::class, 'update']);
-Route::delete('/akun/hapus', [TblUserController::class, 'destroy']);
-Route::get('/akun/logs', [logsAkunController::class, 'index']);
+    Route::get('/akun', [TblUserController::class, 'index']);
+    Route::get('/akun/tambah', [TblUserController::class, 'create']);
+    Route::post('/akun/tambah/simpan', [TblUserController::class, 'store']);
+    Route::get('/search', [TblUserController::class, 'show']);
+    Route::get('/akun/edit/{id}', [TblUserController::class, 'edit']);
+    Route::post('/akun/edit/simpan', [TblUserController::class, 'update']);
+    Route::delete('/akun/hapus', [TblUserController::class, 'destroy']);
+    Route::get('/akun/logs', [logsAkunController::class, 'index']);
+});
+
+Route::middleware(['akses:siswa,pengelola,peminta'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/perencanaan', [PerencanaanController::class,'index']);
+    Route::get('/realisasi', [RealisasiController::class,'index']);
 });
 
 Route::middleware(['akses:pengelola'])->group(function () {
-Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/ruangan', [RuanganController::class,'index']);
 Route::get('/ruangan/tambah', [RuanganController::class,'create']);
 Route::post('/ruangan/tambah/simpan', [RuanganController::class,'store']);
@@ -84,7 +89,6 @@ Route::get('/angkatan/edit/{id}', [AngkatanController::class,'edit']);
 Route::post('/angkatan/edit/simpan', [AngkatanController::class,'update']);
 Route::delete('/angkatan/hapus', [AngkatanController::class, 'destroy']);
 
-Route::get('/realisasi', [RealisasiController::class,'index']);
 Route::get('/realisasi/tambah', [RealisasiController::class,'create']);
 Route::post('/realisasi/tambah/simpan', [RealisasiController::class,'store']);
 Route::get('/realisasi/edit/{id}', [RealisasiController::class,'edit']);
@@ -98,13 +102,12 @@ Route::get('/kelas/edit/{id}', [KelasController::class,'edit']);
 Route::post('/kelas/edit/simpan', [KelasController::class,'update']);
 Route::delete('/kelas/hapus', [KelasController::class, 'destroy']);
 
-Route::get('/perencanaan', [PerencanaanController::class,'index']);
 Route::get('/pengajuan/confirm/{id}', [PerencanaanController::class,'create']);
 Route::post('/pengajuan/confirm/simpan', [PerencanaanController::class,'store']);
 Route::get('/perencanaan/edit/{id}', [PerencanaanController::class,'edit']);
 Route::post('/perencanaan/edit/simpan', [PerencanaanController::class,'update']);
 Route::delete('/perencanaan/hapus', [PerencanaanController::class, 'destroy']);
-Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
+Route::get('/perencanaan/detail/{id}', [PerencanaanController::class,'show']);
 });
 
 Route::middleware(['akses:peminta,pengelola'])->group(function () {
@@ -117,6 +120,8 @@ Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
 Route::delete('/pengajuan/hapus', [PengajuanController::class,'destroy']);
 });
 
+Route::middleware(['akses:peminta'])->group(function () {
+});
 Route::middleware(['akses:peminta'])->group(function () {
 });
 
