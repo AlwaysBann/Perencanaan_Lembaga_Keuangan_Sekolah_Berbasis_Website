@@ -29,7 +29,8 @@
                 <table class="table table-bordered border-warning table-dark DataTable" style="background-color: rgba(32, 32, 32, 0.637)">
                     <thead>
                         <tr>
-                            <th style="max-width: 40px;">no_angkatan</th>
+                            <th style="max-width: 40px;">Id angkatan</th>
+                            <th style="max-width: 40px;">No angkatan</th>
                             <th>tahun_masuk</th>
                             <th>tahun_keluar</th>
                             <th style="max-width: 40px">aksi</th>
@@ -38,14 +39,15 @@
                     <tbody>
                         @foreach ($angkatan as $a)
                         <tr>
+                            <td style="min-width: 15px;">{{$a->id_angkatan}}</td>
                             <td style="max-width: 20px;">{{$a->no_angkatan}}</td>
                             <td>{{$a->tahun_masuk}}</td>
                             <td>{{$a->tahun_keluar}}</td>
-                            <td style="max-width: 60px">
-                                <a href="angkatan/edit/{{ $a->no_angkatan }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
+                            <td style="max-width: 100px">
+                                <a href="angkatan/edit/{{ $a->id_angkatan }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                     EDIT
                                 </a>
-                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" noAngkatan="{{ $a->no_angkatan }}">HAPUS</btn>
+                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idAngkatan="{{ $a->id_angkatan }}">HAPUS</btn>
                             </td>
                         </tr>
                     </tbody>
@@ -58,7 +60,7 @@
 <script type="module">
     $('.DataTable tbody').on('click', '.btnHapus', function(a) {
         a.preventDefault();
-        let noAngkatan = $(this).closest('.btnHapus').attr('noAngkatan');
+        let idAngkatan = $(this).closest('.btnHapus').attr('idAngkatan');
         swal.fire({
             title: "Apakah anda ingin menghapus data ini?",
             showCancelButton: true,
@@ -73,7 +75,7 @@
                     type: 'DELETE',
                     url: 'angkatan/hapus',
                     data: {
-                        no_angkatan: noAngkatan,
+                        id_angkatan: idAngkatan,
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {

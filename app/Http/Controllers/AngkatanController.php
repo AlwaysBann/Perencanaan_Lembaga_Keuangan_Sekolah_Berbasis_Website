@@ -98,8 +98,8 @@ class AngkatanController extends Controller
      */
     public function destroy(angkatan $angkatan, Request $request)
     {
-        $no_angkatan = $request->input('no_angkatan');
-        $data = $angkatan->find($no_angkatan);
+        $id_angkatan = $request->input('id_angkatan');
+        $data = $angkatan->find($id_angkatan);
 
         if (!$data) {
             return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);

@@ -12,14 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kelas', function (Blueprint $table) {
-            $table->integer('id_realisasi')->autoIncrement();
-            $table->integer('id_ruangan', false);
-            $table->string('nama_realisasi', 200);
-            $table->string('jumlah_dana_realisasi');
-            $table->string('bukti_realisasi');
+            $table->integer('id_kelas')->autoIncrement();
+            $table->integer('id_angkatan', false);
+            $table->integer('id_jurusan', false);
+            $table->string('nama_kelas', 200);
 
-            $table->foreign('id_ruangan')->on('ruangan')
-            ->references('id_ruangan')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_angkatan')->on('angkatan')
+            ->references('id_angkatan')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->foreign('id_jurusan')->on('jurusan')
+            ->references('id_jurusan')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
