@@ -16,35 +16,36 @@
         }
     </style>
 </head>
-
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DATA JURUSAN</h1>
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DATA KELAS</h1>
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
-                <a href="jurusan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
-                    Tambah Jurusan 
+                <a href="angkatan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
+                    Tambah Kelas 
                 </a>
             </div>
             <div class="">
                 <table class="table table-bordered border-warning table-dark DataTable" style="background-color: rgba(32, 32, 32, 0.637)">
                     <thead>
                         <tr>
-                            <th style="max-width: 10px;">id_jurusan</th>
-                            <th>nama_jurusan</th>
+                            <th style="max-width: 40px;">id_kelas</th>
+                            <th>nama_kelas</th>
+                            <th>nama_kelas</th>
+                            <th>nama_kelas</th>
                             <th style="max-width: 40px">aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jurusan as $j)
+                        @foreach ($kelas as $k)
                         <tr>
-                            <td style="max-width: 20px;">{{$j->id_jurusan}}</td>
-                            <td>{{$j->nama_jurusan}}</td>
+                            <td style="max-width: 20px;">{{$k->id_kelas}}</td>
+                            <td>{{$k->nama_kelas}}</td>
                             <td style="max-width: 60px">
-                                <a href="jurusan/edit/{{ $j->id_jurusan }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
+                                <a href="angkatan/edit/{{ $k->id_kelas }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                     EDIT
                                 </a>
-                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idJurusan="{{ $j->id_jurusan }}">HAPUS</btn>
+                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" noKelas="{{ $k->id_kelas }}">HAPUS</btn>
                             </td>
                         </tr>
                     </tbody>
@@ -57,7 +58,7 @@
 <script type="module">
     $('.DataTable tbody').on('click', '.btnHapus', function(a) {
         a.preventDefault();
-        let idJurusan = $(this).closest('.btnHapus').attr('idJurusan');
+        let noKelas = $(this).closest('.btnHapus').attr('noKelas');
         swal.fire({
             title: "Apakah anda ingin menghapus data ini?",
             showCancelButton: true,
@@ -70,9 +71,9 @@
                 //Ajax Delete
                 $.ajax({
                     type: 'DELETE',
-                    url: 'jurusan/hapus',
+                    url: 'kelas/hapus',
                     data: {
-                        id_jurusan: idJurusan,
+                        id_kelas: noKelas,
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
