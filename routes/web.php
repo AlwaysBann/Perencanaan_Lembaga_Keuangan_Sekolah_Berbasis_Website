@@ -99,6 +99,8 @@ Route::post('/kelas/edit/simpan', [KelasController::class,'update']);
 Route::delete('/kelas/hapus', [KelasController::class, 'destroy']);
 
 Route::get('/perencanaan', [PerencanaanController::class,'index']);
+Route::get('/pengajuan/confirm/{id}', [PerencanaanController::class,'create']);
+Route::post('/pengajuan/confirm/simpan', [PerencanaanController::class,'store']);
 Route::get('/perencanaan/edit/{id}', [PerencanaanController::class,'edit']);
 Route::post('/perencanaan/edit/simpan', [PerencanaanController::class,'update']);
 Route::delete('/perencanaan/hapus', [PerencanaanController::class, 'destroy']);
@@ -113,6 +115,9 @@ Route::get('/pengajuan/edit/{id}', [PengajuanController::class,'edit']);
 Route::post('/pengajuan/edit/simpan', [PengajuanController::class,'update']);
 Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
 Route::delete('/pengajuan/hapus', [PengajuanController::class,'destroy']);
+});
+
+Route::middleware(['akses:peminta'])->group(function () {
 });
 
 

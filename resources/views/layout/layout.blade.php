@@ -50,8 +50,6 @@
                 <a href="/angkatan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">ANGKATAN</a>
             </div>
         </div>
-        <a href="/pengajuan" class="navbar-brand" style="color: #E6B31E">PENGAJUAN</a>
-        <a href="/perencanaan" class="navbar-brand" style="color: #E6B31E">PERENCANAAN</a>
         <a href="#" class="navbar-brand" style="color: #E6B31E">PENGAJUAN</a>
         <a href="#" class="navbar-brand" style="color: #E6B31E">PERENCANAAN</a>
         <a href="/realisasi" class="navbar-brand" style="color: #E6B31E">REALISASI</a>

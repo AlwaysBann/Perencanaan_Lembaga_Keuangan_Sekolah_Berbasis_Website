@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('jumlah_item');
             $table->string('spesifikasi_item');
             $table->integer('harga_satuan');        
-            $table->string('jenis_item');
+            $table->enum('jenis_item', ['Jasa', 'Benda']);
             $table->date('waktu_pengajuan');
             $table->text('gambar_item');
 
