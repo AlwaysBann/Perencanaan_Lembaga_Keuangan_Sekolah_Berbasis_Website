@@ -29,6 +29,7 @@
                 <a href="/pengelola" class="navbar-brand" style="color: #E6B31E; padding-right:50%">PENGELOLA</a>
                 <a href="/jurusan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JURUSAN</a>
                 <a href="/angkatan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">ANGKATAN</a>
+                <a href="/kelas" class="navbar-brand" style="color: #E6B31E; padding-right:50%">KELAS</a>
             </div>
         </div>
         <a href="/pengajuan" class="navbar-brand" style="color: #E6B31E">PENGAJUAN</a>

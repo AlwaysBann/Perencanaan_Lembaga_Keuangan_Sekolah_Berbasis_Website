@@ -10,6 +10,6 @@ class angkatan extends Model
     use HasFactory;
     protected $table = "angkatan";
     protected $fillable = ['no_angkatan','tahun_masuk','tahun_keluar'];
-    protected $primaryKey = 'no_angkatan';
+    protected $primaryKey = 'id_angkatan';
     public $timestamps = false;
 }

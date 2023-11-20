@@ -21,7 +21,7 @@
         <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DATA KELAS</h1>
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
-                <a href="angkatan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
+                <a href="kelas/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
                     Tambah Kelas 
                 </a>
             </div>
@@ -31,9 +31,9 @@
                         <tr>
                             <th style="max-width: 40px;">id_kelas</th>
                             <th>nama_kelas</th>
-                            <th>nama_kelas</th>
-                            <th>nama_kelas</th>
-                            <th style="max-width: 40px">aksi</th>
+                            <th>angkatan</th>
+                            <th>jurusan</th>
+                            <th style="min-width: 90px">aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,11 +41,13 @@
                         <tr>
                             <td style="max-width: 20px;">{{$k->id_kelas}}</td>
                             <td>{{$k->nama_kelas}}</td>
+                            <td>{{$k->no_angkatan}}</td>
+                            <td>{{$k->nama_jurusan}}</td>
                             <td style="max-width: 60px">
-                                <a href="angkatan/edit/{{ $k->id_kelas }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
+                                <a href="kelas/edit/{{ $k->id_kelas }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                     EDIT
                                 </a>
-                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" noKelas="{{ $k->id_kelas }}">HAPUS</btn>
+                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idKelas="{{ $k->id_kelas }}">HAPUS</btn>
                             </td>
                         </tr>
                     </tbody>
@@ -58,7 +60,7 @@
 <script type="module">
     $('.DataTable tbody').on('click', '.btnHapus', function(a) {
         a.preventDefault();
-        let noKelas = $(this).closest('.btnHapus').attr('noKelas');
+        let idKelas = $(this).closest('.btnHapus').attr('idKelas');
         swal.fire({
             title: "Apakah anda ingin menghapus data ini?",
             showCancelButton: true,
@@ -73,7 +75,7 @@
                     type: 'DELETE',
                     url: 'kelas/hapus',
                     data: {
-                        id_kelas: noKelas,
+                        id_kelas: idKelas,
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
