@@ -20,6 +20,12 @@ class JabatanSeeder extends Seeder
             [
                 'nama_jabatan_pengelola' => 'Wakil Kepala Sekolah'
             ],
+            [
+                'nama_jabatan_pengelola' => 'Tata Usaha'
+            ],
+            [
+                'nama_jabatan_pengelola' => 'Bendahara Sekolah'
+            ],
         ];
     
             foreach ($jabatan as $j => $val) {

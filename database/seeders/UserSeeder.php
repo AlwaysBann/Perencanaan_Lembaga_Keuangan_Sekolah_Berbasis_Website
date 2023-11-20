@@ -26,6 +26,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('alpoy')
         ],
         [
+            'username' => 'raihanda',
+            'role' => 'peminta',
+            'password' => Hash::make('1234')
+        ],
+        [
             'username' => 'suban',
             'role' => 'pengelola',
             'password' => Hash::make('123')

@@ -19,13 +19,11 @@
 <body>
     <div class="px-5 py-3">
         <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DATA MASTER</h1>
+        @include('layout.flash-massage')   
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
                 <a href="ruangan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
                     Tambah Ruangan 
-                </a>
-                <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
-                    Log Activity
                 </a>
             </div>
             <div class="">

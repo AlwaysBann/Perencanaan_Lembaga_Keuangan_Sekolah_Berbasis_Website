@@ -16,7 +16,7 @@ class RuanganController extends Controller
         $data = [
             "ruangan" => $ruangan->all()
         ];
-        return view("data_master.index", $data);
+        return view("ruangan.index", $data);
     }
 
     /**
@@ -24,7 +24,7 @@ class RuanganController extends Controller
      */
     public function create()
     {
-        return view("data_master.tambah");
+        return view("ruangan.tambah");
     }
 
     /**
@@ -65,7 +65,7 @@ class RuanganController extends Controller
             'ruangan' =>  $ruangan->select('id_ruangan', 'nama_ruangan')->where('id_ruangan', $id)->first()
         ];
 
-        return view('data_master.edit', $data);
+        return view('ruangan.edit', $data);
     }
 
     /**

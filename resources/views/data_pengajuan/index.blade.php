@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Kelola data Master')
+@section('title', 'Pengajuan')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -18,11 +18,11 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DATA MASTER</h1>
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Pengajuan</h1>        
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
-                <a href="ruangan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
-                    Tambah Ruangan 
+                <a href="pengajuan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
+                    Tambah Pengajuan 
                 </a>
                 <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
@@ -32,25 +32,34 @@
                 <table class="table table-bordered border-warning table-dark DataTable" style="background-color: rgba(32, 32, 32, 0.637)">
                     <thead>
                         <tr>
-                            <th style="max-width: 10px;">id_ruangan</th>
-                            <th>nama_ruangan</th>
-                            <th style="max-width: 40px">aksi</th>
+                            <th style="max-width: 40px">No</th>
+                            <th>Nama Pengajuan</th>
+                            <th style="max-width: 90px">Tujuan Pengajuan</th>
+                            <th>Nama Pengaju</th>
+                            <th>Waktu Pengajuan</th>
+                            <th>aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($ruangan as $r)
+                        @foreach ($pengajuan as $p)
                         <tr>
-                            <td style="max-width: 20px;">{{$r->id_ruangan}}</td>
-                            <td>{{$r->nama_ruangan}}</td>
-                            <td style="max-width: 40px">
-                                <a href="ruangan/edit/{{ $r->id_ruangan }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
+                            <td>{{ $loop->iteration}}</td>
+                            <td>{{$p->nama_pengajuan}}</td>
+                            <td>{{$p->tujuan_pengajuan}}</td>
+                            <td>{{$p->nama_pengaju}}</td>
+                            <td>{{$p->waktu_pengajuan }}</td>
+                            <td style="max-width: 150px">
+                                <a href="pengajuan/detail/{{$p->id_pengajuan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
+                                    DETAIL
+                                </a>
+                                <a href="pengajuan/edit/{{$p->id_pengajuan}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; ">
                                     EDIT
                                 </a>
-                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idRuangan="{{ $r->id_ruangan }}">HAPUS</btn>
+                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; " idPengajuan="{{ $p->id_pengajuan }}">HAPUS</btn>
                             </td>
                         </tr>
                     </tbody>
-                        @endforeach
+                    @endforeach
                 </table>
             </div>
         </div>
@@ -59,7 +68,7 @@
 <script type="module">
     $('.DataTable tbody').on('click', '.btnHapus', function(a) {
         a.preventDefault();
-        let idRuangan = $(this).closest('.btnHapus').attr('idRuangan');
+        let idPengajuan = $(this).closest('.btnHapus').attr('idPengajuan');
         swal.fire({
             title: "Apakah anda ingin menghapus data ini?",
             showCancelButton: true,
@@ -72,9 +81,9 @@
                 //Ajax Delete
                 $.ajax({
                     type: 'DELETE',
-                    url: 'ruangan/hapus',
+                    url: 'pengajuan/hapus',
                     data: {
-                        id_ruangan: idRuangan,
+                        id_pengajuan: idPengajuan,
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {

@@ -12,4 +12,9 @@ class jabatan_pengelola extends Model
     protected $fillable = ['nama_jabatan_pengelola'];
     protected $primaryKey = 'id_jabatan_pengelola';
     public $timestamps = false;
+
+    public function pengelola()
+    {
+        return $this->hasMany(pengelola::class, 'id_pengelola');
+    }
 }   

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\logsAkunController;
+use App\Http\Controllers\PengelolaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -11,6 +12,9 @@ use App\Http\Controllers\JabatanPengelolaController;
 use App\Http\Controllers\TblUserController;
 use App\Http\Controllers\AngkatanController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\PerencanaanController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +40,7 @@ Route::middleware(['akses:super_admin'])->group(function () {
 Route::get('/akun', [TblUserController::class, 'index']);
 Route::get('/akun/tambah', [TblUserController::class, 'create']);
 Route::post('/akun/tambah/simpan', [TblUserController::class, 'store']);
+Route::get('/search', [TblUserController::class, 'show']);
 Route::get('/akun/edit/{id}', [TblUserController::class, 'edit']);
 Route::post('/akun/edit/simpan', [TblUserController::class, 'update']);
 Route::delete('/akun/hapus', [TblUserController::class, 'destroy']);
@@ -57,6 +62,13 @@ Route::post('/jabatan_pengelola/tambah/simpan', [JabatanPengelolaController::cla
 Route::get('/jabatan_pengelola/edit/{id}', [JabatanPengelolaController::class,'edit']);
 Route::post('/jabatan_pengelola/edit/simpan', [JabatanPengelolaController::class,'update']);
 Route::delete('/jabatan_pengelola/hapus', [JabatanPengelolaController::class, 'destroy']);
+
+Route::get('/pengelola', [PengelolaController::class,'index']);
+Route::get('/pengelola/tambah', [PengelolaController::class,'create']);
+Route::post('/pengelola/tambah/simpan', [PengelolaController::class,'store']);
+Route::get('/pengelola/edit/{id}', [PengelolaController::class,'edit']);
+Route::post('/pengelola/edit/simpan', [PengelolaController::class,'update']);
+Route::delete('/pengelola/hapus', [PengelolaController::class, 'destroy']);
 
 Route::get('/jurusan', [JurusanController::class,'index']);
 Route::get('/jurusan/tambah', [JurusanController::class,'create']);
@@ -85,6 +97,22 @@ Route::post('/kelas/tambah/simpan', [KelasController::class,'store']);
 Route::get('/kelas/edit/{id}', [KelasController::class,'edit']);
 Route::post('/kelas/edit/simpan', [KelasController::class,'update']);
 Route::delete('/kelas/hapus', [KelasController::class, 'destroy']);
+
+Route::get('/perencanaan', [PerencanaanController::class,'index']);
+Route::get('/perencanaan/edit/{id}', [PerencanaanController::class,'edit']);
+Route::post('/perencanaan/edit/simpan', [PerencanaanController::class,'update']);
+Route::delete('/perencanaan/hapus', [PerencanaanController::class, 'destroy']);
+Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
+});
+
+Route::middleware(['akses:peminta,pengelola'])->group(function () {
+Route::get('/pengajuan', [PengajuanController::class,'index']);
+Route::get('/pengajuan/tambah', [PengajuanController::class,'create']);
+Route::post('/pengajuan/tambah/simpan', [PengajuanController::class,'store']);
+Route::get('/pengajuan/edit/{id}', [PengajuanController::class,'edit']);
+Route::post('/pengajuan/edit/simpan', [PengajuanController::class,'update']);
+Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
+Route::delete('/pengajuan/hapus', [PengajuanController::class,'destroy']);
 });
 
 
