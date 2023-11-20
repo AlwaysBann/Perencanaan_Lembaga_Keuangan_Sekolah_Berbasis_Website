@@ -99,7 +99,6 @@ class PengajuanController extends Controller
             if ($data) {
                 $pengajuan->where('id_pengajuan', $id_pengajuan)->update($data);
                 return redirect('/pengajuan')->with('success','Data berhasil diupdate');
-                
             } else {
                 return back()->with('error', 'Data Gagal diupdate');
             } 
@@ -112,9 +111,9 @@ class PengajuanController extends Controller
         $id_pengajuan = $request->input('id_pengajuan');
         $data = Pengajuan::find($id_pengajuan);
 
-        // if (!$data) {
-        //     return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
-        // }
+        if (!$data) {
+            return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
+        }
         
         // if ($data) {
         //     $data->delete();    
@@ -126,9 +125,9 @@ class PengajuanController extends Controller
         if(file_exists($filePath) && unlink($filePath)) {
             $data->delete();
             return response()->json(['succes' => true]);
-        } else{
-            return response()->json(['success' => false, 'pesan' => 'Data gagal dihapus']);
+            return redirect('/pengajuan')->with('success','Data berhasil diupdate');
         }
+        return response()->json(['success' => false, 'pesan' => 'Data gagal dihapus']);
 
     }
 

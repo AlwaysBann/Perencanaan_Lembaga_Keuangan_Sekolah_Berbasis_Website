@@ -18,12 +18,9 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Pengajuan</h1>        
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Perencanaan</h1>        
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
-                <a href="pengajuan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
-                    Tambah Pengajuan 
-                </a>
                 <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
@@ -34,35 +31,28 @@
                         <tr>
                             <th style="max-width: 40px">No</th>
                             <th>Nama Pengajuan</th>
-                            <th style="max-width: 90px">Tujuan Pengajuan</th>
-                            <th>Nama Pengaju</th>
-                            <th>Waktu Pengajuan</th>
+                            <th style="max-width: 90px"> Nama Perencanaan </th>
+                            <th>Nama Penanggung Jawab</th>
+                            <th>Waktu Realisasi</th>
                             <th>aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pengajuan as $p)
+                        @foreach ($perencanaan as $o)
                         <tr>
                             <td>{{ $loop->iteration}}</td>
-                            <td>{{$p->nama_pengajuan}}</td>
-                            <td>{{$p->tujuan_pengajuan}}</td>
-                            <td>{{$p->nama_pengaju}}</td>
-                            <td>{{$p->waktu_pengajuan }}</td>
+                            <td>{{$o->nama_pengajuan}}</td>
+                            <td>{{$o->nama_perencanaan}}</td>
+                            <td>{{$o->nama_penanggung_jawab}}</td>
+                            <td>{{$o->waktu_realisasi}}</td>
                             <td style="max-width: 150px">
-                                <a href="pengajuan/detail/{{$p->id_pengajuan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
+                                <a href="perencanaan/detail/{{$o->id_perencanaan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                     DETAIL
                                 </a>
-                                @if (Auth::check() && Auth::User()->role == 'peminta')
-                                    <a href="pengajuan/edit/{{$p->id_pengajuan}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; ">
-                                        EDIT
-                                    </a>
-                                @endif
-                                @if (Auth::check() && Auth::User()->role == 'pengelola')
-                                    <a href="pengajuan/confirm/{{$p->id_pengajuan}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; ">
-                                        CONFIRM
-                                    </a>
-                                @endif
-                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; " idPengajuan="{{ $p->id_pengajuan }}">HAPUS</btn>
+                                <a href="perencanaan/edit/{{$o->id_perencanaan}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; ">
+                                    EDIT
+                                </a>
+                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; " idPengajuan="{{ $o->id_perencanaan }}">HAPUS</btn>
                             </td>
                         </tr>
                     </tbody>

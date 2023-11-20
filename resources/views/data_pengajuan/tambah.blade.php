@@ -64,7 +64,11 @@
                        </div>
                       <div class="form-group mb-3">
                         <label for="jenis_item" style="color: #E6B31E;">Jenis Item</label>
-                        <input type="text" class="form-control" id="jenis_item" name="jenis_item" placeholder="Jenis Item">
+                        <select name="jenis_item" id="jenis_item" class="form-control">
+                          <option value="" selected disabled hidden>Pilih Jenis Item</option>
+                          <option value="Jasa">Jasa</option>
+                          <option value="Benda">Benda</option>
+                        </select>
                        </div>
                         <div class="form-group" style="margin-bottom: 180px">
                             <label for="bukti_realisasi" style="color: #E6B31E;">Gambar Item</label>

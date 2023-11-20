@@ -24,7 +24,7 @@
             <form action="{{url('pengajuan/edit/simpan')}}" method="POST" enctype="multipart/form-data">
             @csrf
                 <div class="form">
-                    <input type="hidden" class="form-control" id="id_pengajuan" name="id_pengajuan" placeholder="Nama Pengaju" value="{{$pengajuan->    id_pengajuan}}">
+                    <input type="hidden" class="form-control" id="id_pengajuan" name="id_pengajuan" placeholder="Nama Pengaju" value="{{$pengajuan->id_pengajuan}}">
                     <div class="form-group mb-3">
                         <label for="nama_pengaju" style="color: #E6B31E;">Nama Pengaju</label>
                         <input type="text" class="form-control" id="nama_pengaju" name="nama_pengaju" placeholder="Nama Pengaju" value="{{$pengajuan->nama_pengaju}}">

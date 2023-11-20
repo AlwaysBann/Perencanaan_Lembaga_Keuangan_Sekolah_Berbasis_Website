@@ -9,8 +9,7 @@ class perencanaan extends Model
 {
     use HasFactory;
     protected $table = 'perencanaan';
-    protected $fillable = ['nama_perencana', 'nama_perencanaan', 'tujuan_perencanaan', 'nama_item', 'jumlah_item', 'spesifikasi_item',
-                            'harga_item', 'jenis_item', 'id_ruangan', 'waktu_pengajuan','id_pengajuan'];
-    protected $primaryKey = 'id_penrencanaan';
+    protected $fillable = ['nama_perencanaan', 'nama_penanggung_jawab','waktu_realisasi', 'id_pengajuan'];
+    protected $primaryKey = 'id_perencanaan';
     public $timestamps = false;
 }
