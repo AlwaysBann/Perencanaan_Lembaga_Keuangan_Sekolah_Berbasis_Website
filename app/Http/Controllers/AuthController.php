@@ -39,6 +39,8 @@ class AuthController extends Controller
                 return redirect('/akun')->with('success','Berhasil Masuk, Halo Super Admin');
             } elseif($user->role == 'pengelola'){
                 return redirect('/ruangan')->with('success','Berhasil Masuk, Anda sebagai Pengelola');
+            } elseif($user->role == 'peminta'){
+                return redirect('/pengajuan')->with('success', 'Berhasil Masuk');
             }
         }
     }

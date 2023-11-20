@@ -11,6 +11,8 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JabatanPengelolaController;
 use App\Http\Controllers\TblUserController;
 use App\Http\Controllers\AngkatanController;
+use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\PerencanaanController;
 
 
 /*
@@ -87,6 +89,22 @@ Route::post('/realisasi/tambah/simpan', [RealisasiController::class,'store']);
 Route::get('/realisasi/edit/{id}', [RealisasiController::class,'edit']);
 Route::post('/realisasi/edit/simpan', [RealisasiController::class,'update']);
 Route::delete('/realisasi/hapus', [RealisasiController::class, 'destroy']);
+
+Route::get('/perencanaan', [PerencanaanController::class,'index']);
+Route::get('/perencanaan/edit/{id}', [PerencanaanController::class,'edit']);
+Route::post('/perencanaan/edit/simpan', [PerencanaanController::class,'update']);
+Route::delete('/perencanaan/hapus', [PerencanaanController::class, 'destroy']);
+Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
+});
+
+Route::middleware(['akses:peminta,pengelola'])->group(function () {
+Route::get('/pengajuan', [PengajuanController::class,'index']);
+Route::get('/pengajuan/tambah', [PengajuanController::class,'create']);
+Route::post('/pengajuan/tambah/simpan', [PengajuanController::class,'store']);
+Route::get('/pengajuan/edit/{id}', [PengajuanController::class,'edit']);
+Route::post('/pengajuan/edit/simpan', [PengajuanController::class,'update']);
+Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
+Route::delete('/pengajuan/hapus', [PengajuanController::class,'destroy']);
 });
 
 

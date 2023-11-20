@@ -22,7 +22,7 @@
         @include('layout.flash-massage')
         <div class="container my-5 d-flex justify-content-center">
             <div class="row justify-content-center align-items-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
-            <form action="tambah/simpan" method="POST" class="needs-validation" novalidate>
+            <form action="tambah/simpan" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
                 <div class="form">
                     <div class="form-group mb-3">
                         <label for="username" style="color: #E6B31E;">Username</label>
@@ -45,12 +45,13 @@
                             Data ini wajib diisi!
                           </div>
                       </div>
-                      <div class="form-group" style="margin-bottom: 180px">
+                      <div class="form-group mb-3">
                         <label for="role" style="color: #E6B31E;">Role</label>
                         <select name="role" id="role" class="form-select" required>
                             <option value="" disabled hidden selected>Pilih Role</option>
                             <option value="super_admin">Super Admin</option>
                             <option value="pengelola">pengelola</option>
+                            <option value="peminta">Peminta</option>
                         </select>
                         <div class="valid-feedback" style="font-size: 15px; color: green; font-weight: 700; text-shadow: 0px 0px 5px white">
                             Role Dapat disimpan
@@ -59,6 +60,13 @@
                             Data ini wajib diisi!
                           </div>
                       </div>
+                      <div class="form-group" style="margin-bottom: 90px">
+                        <label for="foto_profil" style="color: #E6B31E;">Foto Profil</label>
+                        <input type="file" class="form-control" id="foto_profil" name="foto_profil" >
+                        <div class="valid-feedback" style="font-size: 15px; color: green; font-weight: 700; text-shadow: 0px 0px 5px white">
+                          Foto Profil Tidak wajib di isi
+                        </div>
+                    </div>
                       <div class="col-md-4 mt-3 mb-3">
                         <button type="submit" class="btn me-4" style="background-color: white;font-weight: 500 ; color: green; border: 1px solid #E6B31E; min-width: 100px">SIMPAN</button>
                         <a href="/akun" class="btn " style="background-color: white;font-weight: 500 ; color: red;  border: 1px solid #E6B31E;  min-width: 100px">KEMBALI</a>
