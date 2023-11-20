@@ -18,16 +18,26 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">TAMBAH DATA REALISASI</h1>
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">REALISASI PERENCANAAN</h1>
         <div class="container my-5 d-flex justify-content-center">
             <div class="row justify-content-center align-items-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
-            <form action="tambah/simpan" method="POST" enctype="multipart/form-data">
+                <div class="form-group mb-3">
+                    <label for="id_perencanaan" style="color: #E6B31E;">id Perencanaan</label>
+                    <input type="text" class="form-control" id="id_perencanaan" name="id_perencanaan" placeholder="Nama Realisasi" value="{{$perencanaan->id_perencanaan}}" disabled>
+                </div>
+                <div class="form-group mb-5">
+                    <label for="nama_perencanaan" style="color: #E6B31E;">Nama Perencanaan</label>
+                    <input type="text" class="form-control" id="nama_perencanaan" name="nama_perencanaan" placeholder="Nama Realisasi" value="{{$perencanaan->nama_perencanaan}}" disabled>
+                </div>
+                <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">TAMBAH DATA REALISASI</h3>
+                <form action="simpan" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" class="form-control" id="id_perencanaan" name="id_perencanaan" placeholder="Nama Realisasi" value="{{$perencanaan->id_perencanaan}}">
                 <div class="form">
                     <div class="form-group mb-3">
                         <label for="nama_realisasi" style="color: #E6B31E;">Nama Realisasi</label>
                         <input type="text" class="form-control" id="nama_realisasi" name="nama_realisasi" placeholder="Nama Realisasi">
-                        @csrf
-                      </div>
+                    </div>
+                    @csrf
                       <div class="form-group  mb-3">
                         <label for="jumlah_dana_realisasi" style="color: #E6B31E;">Jumlah dana realisasi</label>
                         <input type="text" class="form-control" id="jumlah_dana_realisasi" name="jumlah_dana_realisasi" placeholder="Jumlah Dana Realisasi" value="Rp.">

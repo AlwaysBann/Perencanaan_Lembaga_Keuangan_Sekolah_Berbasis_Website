@@ -45,6 +45,7 @@
                             <td>{{$o->nama_perencanaan}}</td>
                             <td>{{$o->nama_penanggung_jawab}}</td>
                             <td>{{$o->waktu_realisasi}}</td>
+                            @if (Auth::check() && Auth::User()->role == 'peminta')
                             <td style="max-width: 175px">
                                 <a href="perencanaan/detail/{{$o->id_perencanaan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                     DETAIL
@@ -54,6 +55,29 @@
                                 </a>
                                 <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; " idPengajuan="{{ $o->id_perencanaan }}">HAPUS</btn>
                             </td>
+                            @endif
+                            @if (Auth::check() && Auth::User()->role == 'pengelola')
+                            <td style="max-width: 205px">
+                                <a href="perencanaan/detail/{{$o->id_perencanaan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
+                                    DETAIL
+                                </a>
+                                <a href="realisasi/tambah/{{$o->id_perencanaan}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; ">
+                                    REALISASI
+                                </a>
+                                <button class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; " idPengajuan="{{ $o->id_perencanaan }}" disabled>HAPUS</button>
+                            </td>
+                            @endif
+                            @if (Auth::check() && Auth::User()->role == 'siswa')
+                            <td style="max-width: 175px">
+                                    <button class="btn mx-4" style="background-color: white;font-weight: 600 ; border: 1px solid #E6B31E; min-width: 80px;" disabled>
+                                        <a href="perencanaan/detail/{{$o->id_perencanaan}}" style="color: #E6B31E; text-decoration: none">DETAIL</a>
+                                    </button>
+                                    <button class="btn mx-4" style="background-color: white;font-weight: 600 ; border: 1px solid #E6B31E; min-width: 80px;" disabled>
+                                        <a href="perencanaan/edit/{{$o->id_perencanaan}}" style="color: green; text-decoration: none">EDIT</a>
+                                    </button>
+                                    <button class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idRealisasi="{{$r->id_realisasi}}" disabled>HAPUS</button>
+                                </td>
+                            @endif
                         </tr>
                     </tbody>
                     @endforeach

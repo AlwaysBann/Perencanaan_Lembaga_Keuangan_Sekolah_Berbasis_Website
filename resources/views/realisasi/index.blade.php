@@ -22,29 +22,44 @@
         @include('layout.flash-massage')     
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
-                <a href="realisasi/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
-                    Tambah Realisasi 
-                </a>
+                <form action="realisasi/search" method="GET" class="me-4" style="position: relative">
+                    <input type="text" name="search" style="background-color: #343434; border: 1px solid #E6B31E; height: 100%; width: 250px; color: white; padding-left: 10px; border-radius: 7px" placeholder="Cari Data Realisasi...">
+                    <button type="submit" style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+                @if (Auth::check() && Auth::User()->role == 'pengelola')
                 <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
+                @endif
+                @if (Auth::check() && Auth::User()->role == 'peminta')
+                <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
+                    Log Activity
+                </a>
+                @endif
+                @if (Auth::check() && Auth::User()->role == 'siswa')
+                <button class="btn btn-warning rounded-pill ms-auto" style=" min-width: 130px;" disabled>
+                    <a href="#" style="color: white; text-decoration: none">Log Activity</a>
+                </button>
+                @endif
             </div>
             <div class="">
                 <table class="table table-bordered border-warning table-dark DataTable" style="background-color: rgba(32, 32, 32, 0.637)">
                     <thead>
                         <tr>
                             <th style="max-width: 60px">id realisasi</th>
+                            <th>nama perencanaan</th>
                             <th>nama realisasi</th>
                             <th style="max-width: 90px">jumlah dana realisasi</th>
                             <th>bukti realisai</th>
                             <th>Ruangan</th>
-                            <th style="max-width: 110px">aksi</th>
+                            <th>aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($realisasi as $r)
                             <tr>
                                 <td>{{$r->id_realisasi}}</td>
+                                <td>{{$r->nama_perencanaan}}</td>
                                 <td>{{$r->nama_realisasi}}</td>
                                 <td>{{$r->jumlah_dana_realisasi}}</td>
                                 <td style="margin-right: 0px">
@@ -57,12 +72,22 @@
                             <td>{{$r->nama_ruangan}}</td>
                         {{-- @endforeach --}}
                             </td>
-                                <td style="min-width: 110px">
-                                    <a href="realisasi/edit/{{$r->id_realisasi}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
-                                        EDIT
-                                    </a>
-                                    <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idRealisasi="{{$r->id_realisasi}}">HAPUS</btn>
-                                </td>
+                            @if (Auth::check() && Auth::User()->role == 'siswa' || Auth::User()->role == 'peminta')
+                            <td style="max-width: 130px">
+                                <button class="btn mx-4" style="background-color: white;font-weight: 600 ; border: 1px solid #E6B31E; min-width: 80px;" disabled>
+                                    <a href="realisasi/edit/{{$r->id_realisasi}}" style="color: green; text-decoration: none">EDIT</a>
+                                </button>
+                                <button class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idRealisasi="{{$r->id_realisasi}}" disabled>HAPUS</button>
+                            </td>
+                            @endif
+                            @if (Auth::check() && Auth::User()->role == 'pengelola')
+                            <td style="max-width: 130px">
+                                <a href="realisasi/edit/{{$r->id_realisasi}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
+                                    EDIT
+                                </a>
+                                <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idRealisasi="{{$r->id_realisasi}}">HAPUS</btn>
+                            </td>
+                            @endif
                             </tr>
                         @endforeach
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\perencanaan;
 use App\Models\realisasi;
 use App\Models\ruangan;
 use Illuminate\Http\Request;
@@ -20,7 +21,10 @@ class RealisasiController extends Controller
             // "realisasi"=> DB::table("realisasi")->orderBy("id_realisasi","desc")->get(),
             "realisasi"=> DB::table("realisasi")
                         ->join("ruangan","realisasi.id_ruangan", "=" ,"ruangan.id_ruangan")
-                        ->select('realisasi.*','ruangan.nama_ruangan')->orderBy("id_realisasi","desc")->get(),
+                        ->join("perencanaan","realisasi.id_ruangan", "=" ,"perencanaan.id_perencanaan")
+                        ->select('realisasi.*','ruangan.nama_ruangan', 'perencanaan.*')
+                        ->orderBy("id_realisasi","desc")
+                        ->get(),
         ];
         return view('realisasi.index', $data);
     }
@@ -28,48 +32,61 @@ class RealisasiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(ruangan $ruangan)
+    public function create(string $id, ruangan $ruangan, perencanaan $perencanaan)
     {
-        $ruanganData = $ruangan->all();
+        $data = [
+            'perencanaan' => $perencanaan->select('id_perencanaan', 'nama_perencanaan')->where('id_perencanaan', $id)->first(),
+            'ruangan' => $ruangan->all(),
+        ];
 
-        return view('realisasi.tambah', [
-            'ruangan' => $ruanganData,
-        ]);
+        return view('realisasi.tambah', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, realisasi $realisasi)
+    public function store(Request $request, Realisasi $realisasi, Perencanaan $perencanaan)
     {
-        $data = $request->validate([
-            'nama_realisasi' => 'required',
-            'jumlah_dana_realisasi' => 'required',
-            'id_ruangan' => 'required',
-            'bukti_realisasi' => 'required',
-        ]);
+        try {
+            DB::beginTransaction();
 
+            $data = $request->validate([
+                'id_perencanaan' => 'required',
+                'nama_realisasi' => 'required',
+                'jumlah_dana_realisasi' => 'required',
+                'id_ruangan' => 'required',
+                'bukti_realisasi' => 'required',
+            ]);
+        // dd($data);
+            // ... (kode pengolahan file)
 
-        if ($request->hasFile('bukti_realisasi')) {
-            $foto_file = $request->file('bukti_realisasi');
-            $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
-            $foto_file->move(public_path('foto'), $foto_nama);
-            $data['bukti_realisasi'] = $foto_nama;
+            $save = $realisasi->create($data);
+            // $delete = $perencanaan->where('id_perencanaan', $request->input('id_perencanaan'))->delete();
+
+            if ($save) {
+                DB::commit();
+                return redirect('/realisasi')->with('success', 'Data surat baru berhasil ditambah');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Data surat gagal ditambahkan');
         }
-
-        if ($realisasi->create($data)) {
-            return redirect('/realisasi')->with('success', 'Data surat baru berhasil ditambah');
-        }
-
-        return back()->with('error', 'Data surat gagal ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(realisasi $realisasi)
+    public function show(Request $request, realisasi $realisasi)
     {
-        //
+        $search = $request->input('search');
+
+    $data = realisasi::where('nama_realisasi', 'LIKE', "%$search%")
+                     ->orWhere('id_realisasi', 'LIKE', "%$search%")
+                     ->join("ruangan","realisasi.id_ruangan", "=" ,"ruangan.id_ruangan")
+                     ->select('realisasi.*','ruangan.nama_ruangan')
+                     ->get();
+        // dd($data);
+    return view('realisasi.index', ['realisasi' => $data]);
     }
 
     /**

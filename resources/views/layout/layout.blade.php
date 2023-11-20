@@ -38,20 +38,8 @@
         @endif
         @if (Auth::check() && Auth::User()->role == 'peminta')
         <a href="/dashboard" class="navbar-brand" style="color: #E6B31E">DASHBOARD</a>
-        <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle navbar-brand" style="color: #E6B31E" href="#" id="listDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                DATA MASTER
-            </a>
-            <div class="dropdown-menu mt-1 p-1" aria-labelledby="listDropdown" style="background-color: #343434;z-index: 0">
-                <a href="/ruangan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">RUANGAN</a>
-                <a href="/jabatan_pengelola" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JABATAN PENGELOLA</a>
-                <a href="/pengelola" class="navbar-brand" style="color: #E6B31E; padding-right:50%">PENGELOLA</a>
-                <a href="/jurusan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JURUSAN</a>
-                <a href="/angkatan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">ANGKATAN</a>
-            </div>
-        </div>
-        <a href="#" class="navbar-brand" style="color: #E6B31E">PENGAJUAN</a>
-        <a href="#" class="navbar-brand" style="color: #E6B31E">PERENCANAAN</a>
+        <a href="/pengajuan" class="navbar-brand" style="color: #E6B31E">PENGAJUAN</a>
+        <a href="/perencanaan" class="navbar-brand" style="color: #E6B31E">PERENCANAAN</a>
         <a href="/realisasi" class="navbar-brand" style="color: #E6B31E">REALISASI</a>
         @endif
         <a href="/logout" class="navbar-brand me-auto" style="color: #E6B31E">LOGOUT</a>

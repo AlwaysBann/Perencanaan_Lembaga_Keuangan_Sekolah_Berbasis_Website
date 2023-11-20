@@ -51,6 +51,7 @@ Route::middleware(['akses:siswa,pengelola,peminta'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/perencanaan', [PerencanaanController::class,'index']);
     Route::get('/realisasi', [RealisasiController::class,'index']);
+    Route::get('/realisasi/search', [RealisasiController::class, 'show']);
 });
 
 Route::middleware(['akses:pengelola'])->group(function () {
@@ -89,7 +90,7 @@ Route::get('/angkatan/edit/{id}', [AngkatanController::class,'edit']);
 Route::post('/angkatan/edit/simpan', [AngkatanController::class,'update']);
 Route::delete('/angkatan/hapus', [AngkatanController::class, 'destroy']);
 
-Route::get('/realisasi/tambah', [RealisasiController::class,'create']);
+Route::get('/realisasi/tambah/{id}', [RealisasiController::class,'create']);
 Route::post('/realisasi/tambah/simpan', [RealisasiController::class,'store']);
 Route::get('/realisasi/edit/{id}', [RealisasiController::class,'edit']);
 Route::post('/realisasi/edit/simpan', [RealisasiController::class,'update']);
