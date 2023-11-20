@@ -10,7 +10,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JabatanPengelolaController;
 use App\Http\Controllers\TblUserController;
 use App\Http\Controllers\AngkatanController;
-
+use App\Http\Controllers\KelasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +78,13 @@ Route::post('/realisasi/tambah/simpan', [RealisasiController::class,'store']);
 Route::get('/realisasi/edit/{id}', [RealisasiController::class,'edit']);
 Route::post('/realisasi/edit/simpan', [RealisasiController::class,'update']);
 Route::delete('/realisasi/hapus', [RealisasiController::class, 'destroy']);
+
+Route::get('/kelas', [KelasController::class,'index']);
+Route::get('/kelas/tambah', [KelasController::class,'create']);
+Route::post('/kelas/tambah/simpan', [KelasController::class,'store']);
+Route::get('/kelas/edit/{id}', [KelasController::class,'edit']);
+Route::post('/kelas/edit/simpan', [KelasController::class,'update']);
+Route::delete('/kelas/hapus', [KelasController::class, 'destroy']);
 });
 
 
