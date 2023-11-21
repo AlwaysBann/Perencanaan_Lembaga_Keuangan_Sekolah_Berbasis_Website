@@ -51,7 +51,7 @@ class PengajuanController extends Controller
         }
         
         if ($pengajuan->create($data)) {
-            return redirect('pengajuan')->with('success', 'Data surat baru berhasil ditambah');
+            return redirect('pengajuan')->with('success', 'Data Pengajuan baru berhasil ditambah');
         }else {
             return redirect()->back();
         }

@@ -45,32 +45,29 @@ class RealisasiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Realisasi $realisasi, Perencanaan $perencanaan)
+    public function store(Request $request, realisasi $realisasi,)
     {
-        try {
-            DB::beginTransaction();
+        $data = $request->validate([
+            'id_perencanaan' => 'required',
+            'nama_realisasi' => 'required',
+            'jumlah_dana_realisasi' => 'required',
+            'id_ruangan' => 'required',
+            'bukti_realisasi' => 'required',
+        ]);
 
-            $data = $request->validate([
-                'id_perencanaan' => 'required',
-                'nama_realisasi' => 'required',
-                'jumlah_dana_realisasi' => 'required',
-                'id_ruangan' => 'required',
-                'bukti_realisasi' => 'required',
-            ]);
-        // dd($data);
-            // ... (kode pengolahan file)
 
-            $save = $realisasi->create($data);
-            // $delete = $perencanaan->where('id_perencanaan', $request->input('id_perencanaan'))->delete();
-
-            if ($save) {
-                DB::commit();
-                return redirect('/realisasi')->with('success', 'Data surat baru berhasil ditambah');
-            }
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Data surat gagal ditambahkan');
+        if ($request->hasFile('bukti_realisasi')) {
+            $foto_file = $request->file('bukti_realisasi');
+            $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
+            $foto_file->move(public_path('foto'), $foto_nama);
+            $data['bukti_realisasi'] = $foto_nama;
         }
+        
+        if ($realisasi->create($data)) {
+            return redirect('/realisasi')->with('success', 'Data Realisasi baru berhasil ditambah');
+        }
+
+        return back()->with('error', 'Data Realisasi gagal ditambahkan');
     }
 
     /**
@@ -134,10 +131,10 @@ class RealisasiController extends Controller
             $dataUpdate = $realisasi->where('id_realisasi', $id_realisasi)->update($data);
 
             if ($dataUpdate) {
-                return redirect('realisasi')->with('success', 'Data surat berhasil diupdate');
+                return redirect('realisasi')->with('success', 'Data Realisasi berhasil diupdate');
             }
 
-            return back()->with('error', 'Data jenis surat gagal diupdate');
+            return back()->with('error', 'Data jenis Realisasi gagal diupdate');
         }
     }
 
