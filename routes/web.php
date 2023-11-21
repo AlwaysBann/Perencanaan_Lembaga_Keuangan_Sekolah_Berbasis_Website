@@ -11,6 +11,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JabatanPengelolaController;
 use App\Http\Controllers\TblUserController;
 use App\Http\Controllers\AngkatanController;
+use App\Http\Controllers\JabatanPemintaController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PerencanaanController;
@@ -75,6 +76,20 @@ Route::post('/pengelola/tambah/simpan', [PengelolaController::class,'store']);
 Route::get('/pengelola/edit/{id}', [PengelolaController::class,'edit']);
 Route::post('/pengelola/edit/simpan', [PengelolaController::class,'update']);
 Route::delete('/pengelola/hapus', [PengelolaController::class, 'destroy']);
+
+Route::get('/jabatan_peminta', [JabatanPemintaController::class,'index']);
+Route::get('/jabatan_peminta/tambah', [JabatanPemintaController::class,'create']);
+Route::post('/jabatan_peminta/tambah/simpan', [JabatanPemintaController::class,'store']);
+Route::get('/jabatan_peminta/edit/{id}', [JabatanPemintaController::class,'edit']);
+Route::post('/jabatan_peminta/edit/simpan', [JabatanPemintaController::class,'update']);
+Route::delete('/jabatan_peminta/hapus', [JabatanPemintaController::class, 'destroy']);
+
+Route::get('/peminta', [PemintaController::class,'index']);
+Route::get('/peminta/tambah', [PemintaController::class,'create']);
+Route::post('/peminta/tambah/simpan', [PemintaController::class,'store']);
+Route::get('/peminta/edit/{id}', [PemintaController::class,'edit']);
+Route::post('/peminta/edit/simpan', [PemintaController::class,'update']);
+Route::delete('/peminta/hapus', [PemintaController::class, 'destroy']);
 
 Route::get('/jurusan', [JurusanController::class,'index']);
 Route::get('/jurusan/tambah', [JurusanController::class,'create']);

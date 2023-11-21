@@ -60,7 +60,7 @@
                        </div>
                       <div class="form-group mb-3">
                         <label for="harga_satuan" style="color: #E6B31E;">Harga Satuan</label>
-                        <input type="text" class="form-control" id="harga_satuan" name="harga_satuan" placeholder="Harga Satuan">
+                        <input type="text" class="form-control" id="harga_satuan" name="harga_satuan" placeholder="Harga Satuan" value="Rp.">
                        </div>
                       <div class="form-group mb-3">
                         <label for="jenis_item" style="color: #E6B31E;">Jenis Item</label>

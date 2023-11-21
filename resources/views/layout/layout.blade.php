@@ -27,6 +27,8 @@
                 <a href="/ruangan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">RUANGAN</a>
                 <a href="/jabatan_pengelola" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JABATAN PENGELOLA</a>
                 <a href="/pengelola" class="navbar-brand" style="color: #E6B31E; padding-right:50%">PENGELOLA</a>
+                <a href="/jabatan_peminta" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JABATAN PEMINTA</a>
+                <a href="/peminta" class="navbar-brand" style="color: #E6B31E; padding-right:50%">PEMINTA</a>
                 <a href="/jurusan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JURUSAN</a>
                 <a href="/angkatan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">ANGKATAN</a>
                 <a href="/kelas" class="navbar-brand" style="color: #E6B31E; padding-right:50%">KELAS</a>
