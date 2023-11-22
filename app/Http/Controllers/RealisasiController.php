@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\perencanaan;
 use App\Models\realisasi;
 use App\Models\ruangan;
 use Illuminate\Http\Request;
@@ -20,7 +21,10 @@ class RealisasiController extends Controller
             // "realisasi"=> DB::table("realisasi")->orderBy("id_realisasi","desc")->get(),
             "realisasi"=> DB::table("realisasi")
                         ->join("ruangan","realisasi.id_ruangan", "=" ,"ruangan.id_ruangan")
-                        ->select('realisasi.*','ruangan.nama_ruangan')->orderBy("id_realisasi","desc")->get(),
+                        ->join("perencanaan","realisasi.id_ruangan", "=" ,"perencanaan.id_perencanaan")
+                        ->select('realisasi.*','ruangan.nama_ruangan', 'perencanaan.*')
+                        ->orderBy("id_realisasi","desc")
+                        ->get(),
         ];
         return view('realisasi.index', $data);
     }
@@ -28,21 +32,23 @@ class RealisasiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(ruangan $ruangan)
+    public function create(string $id, ruangan $ruangan, perencanaan $perencanaan)
     {
-        $ruanganData = $ruangan->all();
+        $data = [
+            'perencanaan' => $perencanaan->select('id_perencanaan', 'nama_perencanaan')->where('id_perencanaan', $id)->first(),
+            'ruangan' => $ruangan->all(),
+        ];
 
-        return view('realisasi.tambah', [
-            'ruangan' => $ruanganData,
-        ]);
+        return view('realisasi.tambah', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, realisasi $realisasi)
+    public function store(Request $request, realisasi $realisasi,)
     {
         $data = $request->validate([
+            'id_perencanaan' => 'required',
             'nama_realisasi' => 'required',
             'jumlah_dana_realisasi' => 'required',
             'id_ruangan' => 'required',
@@ -56,20 +62,28 @@ class RealisasiController extends Controller
             $foto_file->move(public_path('foto'), $foto_nama);
             $data['bukti_realisasi'] = $foto_nama;
         }
-
+        
         if ($realisasi->create($data)) {
-            return redirect('/realisasi')->with('success', 'Data surat baru berhasil ditambah');
+            return redirect('/realisasi')->with('success', 'Data Realisasi baru berhasil ditambah');
         }
 
-        return back()->with('error', 'Data surat gagal ditambahkan');
+        return back()->with('error', 'Data Realisasi gagal ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(realisasi $realisasi)
+    public function show(Request $request, realisasi $realisasi)
     {
-        //
+        $search = $request->input('search');
+
+    $data = realisasi::where('nama_realisasi', 'LIKE', "%$search%")
+                     ->orWhere('id_realisasi', 'LIKE', "%$search%")
+                     ->join("ruangan","realisasi.id_ruangan", "=" ,"ruangan.id_ruangan")
+                     ->select('realisasi.*','ruangan.nama_ruangan')
+                     ->get();
+        // dd($data);
+    return view('realisasi.index', ['realisasi' => $data]);
     }
 
     /**
@@ -117,10 +131,10 @@ class RealisasiController extends Controller
             $dataUpdate = $realisasi->where('id_realisasi', $id_realisasi)->update($data);
 
             if ($dataUpdate) {
-                return redirect('realisasi')->with('success', 'Data surat berhasil diupdate');
+                return redirect('realisasi')->with('success', 'Data Realisasi berhasil diupdate');
             }
 
-            return back()->with('error', 'Data jenis surat gagal diupdate');
+            return back()->with('error', 'Data jenis Realisasi gagal diupdate');
         }
     }
 

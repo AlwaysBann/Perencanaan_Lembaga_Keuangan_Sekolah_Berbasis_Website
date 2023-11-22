@@ -106,15 +106,17 @@ class TblUserController extends Controller
                 ]
                 );
                 if ($data !== null) {
-                    $foto_file = $request->file('foto_profil');
-                    $foto_extension = $foto_file->getClientOriginalExtension();
-                    $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
-                    $foto_file->move(public_path('foto'), $foto_nama);
-
-                    $update_data = $user->where('id_user', $request->input('id_user'))->first();
-                    File::delete(public_path('foto') . '/' . $update_data->file);
-
-                    $data['foto_profil'] = $foto_nama;
+                    if ($request->hasFile('foto_profil')) {
+                        $foto_file = $request->file('foto_profil');
+                        $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
+                        $foto_file->move(public_path('foto'), $foto_nama);
+                        // $data['foto_profil'] = $foto_nama;
+                        
+                        $update_data = $user->where('id_user', $request->input('id_user'))->first();
+                        File::delete(public_path('foto') . '/' . $update_data->file);
+                        
+                        $data['foto_profil'] = $foto_nama;
+                    }
                     // $data['id_user'] = 1;
                     $dataUpdate= $user->where('id_user',$request->input('id_user'))->update($data);
                     if ($dataUpdate) {

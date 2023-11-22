@@ -21,6 +21,26 @@ return new class extends Migration
             RETURN Akun;
         END
         ');
+
+        DB::unprepared('DROP FUNCTION IF EXISTS CountPengajuan');
+        DB::unprepared('
+        CREATE FUNCTION CountPengajuan() RETURNS INT
+        BEGIN
+            DECLARE Pengajuan INT;
+            SELECT COUNT(*) INTO Pengajuan FROM pengajuan;
+            RETURN Pengajuan;
+        END
+        ');
+
+        DB::unprepared('DROP FUNCTION IF EXISTS CountPerencanaan');
+        DB::unprepared('
+        CREATE FUNCTION CountPerencanaan() RETURNS INT
+        BEGIN
+            DECLARE Perencanaan INT;
+            SELECT COUNT(*) INTO Perencanaan FROM perencanaan;
+            RETURN Perencanaan;
+        END
+        ');
     }
 
     /**

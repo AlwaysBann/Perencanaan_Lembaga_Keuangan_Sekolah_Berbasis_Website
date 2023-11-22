@@ -15,7 +15,9 @@ class PerencanaanController extends Controller
      */
     public function index(perencanaan $perencanaan)
     {
+        $totalPerencanaan = DB::select('SELECT CountPerencanaan() AS Perencanaan')[0]->Perencanaan;
         $data = [
+            "jumlahPerencanaan" => $totalPerencanaan,
             "perencanaan" => DB::table('perencanaan')
             ->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')
             ->select('perencanaan.*', 'pengajuan.*')
@@ -54,23 +56,37 @@ class PerencanaanController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id, Request $request, perencanaan $perencanaan, ruangan $ruangan)
+    public function search(Request $request, perencanaan $perencanaan)
     {
-        $data = [
-            'perencanaan' => $perencanaan->join('perencanaan.id_ruangan', '=', 'ruangan.id_ruangan')->where('id_perencanaan', '=', $id)->first(),
-        ];
-        // dd($data);  
-        return view('data_perencanaan.detail', $data);
+        $search = $request->input('search');
+
+        $data = perencanaan::where('nama_perencanaan', 'LIKE', "%$search%")
+                     ->orWhere('id_perencanaan', 'LIKE', "%$search%")
+                     ->orWhere('nama_penanggung_jawab', 'LIKE', "%$search%")
+                     ->get();
+
+        return view('data_perencanaan.index', ['perencanaan'=>$data]);
+    }
+
+    /**
+     * Display the specified resource.  z
+     */
+    public function show(string $id, Request $request, perencanaan $perencanaan)
+    {
+        $pengajuan = $perencanaan->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('perencanaan.id_pengajuan', $id)->select('pengajuan.*', 'ruangan.*', 'perencanaan.nama_penanggung_jawab', 'perencanaan.nama_perencanaan')->first();
+        return view('data_perencanaan.detail', compact('pengajuan'));
     }
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id, Request $request, perencanaan $perencanaan)
+    public function edit(string $id, Request $request, perencanaan $perencanaan, Pengajuan $pengajuan)
     {
-       
+        $data = [
+            'perencanaan' => $perencanaan->where('id_pengajuan', $id)->first(),
+            'pengajuan' => $pengajuan->select('id_pengajuan', 'nama_pengajuan')->where('id_pengajuan', $id)->first()
+        ];
+        // dd($data);
+        return view('data_perencanaan.edit', $data);
     }
 
     /**
@@ -78,7 +94,21 @@ class PerencanaanController extends Controller
      */
     public function update(Request $request, perencanaan $perencanaan)
     {
-        //
+        $id_perencanaan = $request->input('id_perencanaan');
+        $data = $request->validate(
+            [
+                'nama_perencanaan' => ['required'],
+                'nama_penanggung_jawab' => ['required'],
+                'waktu_realisasi' => ['required'],
+                'id_pengajuan' => ['required'],
+            ]
+            );
+            if ($data) {
+                $perencanaan->where('id_perencanaan', $id_perencanaan)->update($data);
+                return redirect('/perencanaan')->with('success','Data berhasil diupdate');
+            } else {
+                return back()->with('error', 'Data Gagal diupdate');
+            } 
     }
 
     /**
@@ -87,24 +117,15 @@ class PerencanaanController extends Controller
     public function destroy(Request $request, perencanaan $perencanaan)
     {
         $id_perencanaan = $request->input('id_perencanaan');
-        $data = perencanaan::find($id_perencanaan);
+        $data = $perencanaan->find($id_perencanaan);
 
         if (!$data) {
             return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
         }
-        
-        // if ($data) {
-        //     $data->delete();    
-        //     return response()->json(['success' => true]);
-        // } 
 
-        $filePath = public_path('item') . '/' . $data->gambar_item;
-
-        if(file_exists($filePath) && unlink($filePath)) {
-            $data->delete();
-            return response()->json(['succes' => true]);
-            return redirect('/perencanaan')->with('success','Data berhasil diupdate');
+        if ($data) {
+            $data->delete();    
+            return response()->json(['success' => true]);
         }
-        return response()->json(['success' => false, 'pesan' => 'Data gagal dihapus']);
     }
 }

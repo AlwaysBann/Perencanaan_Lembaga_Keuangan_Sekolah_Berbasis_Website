@@ -54,10 +54,10 @@ class PengelolaController extends Controller
 
 
         if ($pengelola->create($data)) {
-            return redirect('/pengelola')->with('success', 'Data surat baru berhasil ditambah');
+            return redirect('/pengelola')->with('success', 'Data Pengelola baru berhasil ditambah');
         }
 
-        return back()->with('error', 'Data surat gagal ditambahkan');
+        return back()->with('error', 'Data Pengelola gagal ditambahkan');
     }
 
     /**
@@ -99,10 +99,10 @@ class PengelolaController extends Controller
             $dataUpdate = $pengelola->where('id_pengelola', $id_pengelola)->update($data);
 
             if ($dataUpdate) {
-                return redirect('/pengelola')->with('success', 'Data surat berhasil diupdate');
+                return redirect('/pengelola')->with('success', 'Data Pengelola berhasil diupdate');
             }
 
-            return back()->with('error', 'Data jenis surat gagal diupdate');
+            return back()->with('error', 'Data jenis Pengelola gagal diupdate');
     }
 
     /**

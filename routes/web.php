@@ -13,11 +13,14 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JabatanPengelolaController;
 use App\Http\Controllers\TblUserController;
 use App\Http\Controllers\AngkatanController;
+use App\Http\Controllers\JabatanPemintaController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\PemintaController;
 use App\Http\Controllers\PerencanaanController;
 use App\Http\Controllers\TagihanController;
 
+use App\Http\Controllers\SumberDanaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,23 +38,29 @@ use App\Http\Controllers\TagihanController;
 // });
 
 Route::middleware(['guest'])->group(function () {
-Route::get('/', [AuthController::class, 'index']);
-Route::post('/', [AuthController::class, 'login']);
+    Route::get('/', [AuthController::class, 'index']);
+    Route::post('/', [AuthController::class, 'login']);
 });
 
 Route::middleware(['akses:super_admin'])->group(function () {
-Route::get('/akun', [TblUserController::class, 'index']);
-Route::get('/akun/tambah', [TblUserController::class, 'create']);
-Route::post('/akun/tambah/simpan', [TblUserController::class, 'store']);
-Route::get('/search', [TblUserController::class, 'show']);
-Route::get('/akun/edit/{id}', [TblUserController::class, 'edit']);
-Route::post('/akun/edit/simpan', [TblUserController::class, 'update']);
-Route::delete('/akun/hapus', [TblUserController::class, 'destroy']);
-Route::get('/akun/logs', [logsAkunController::class, 'index']);
+    Route::get('/akun', [TblUserController::class, 'index']);
+    Route::get('/akun/tambah', [TblUserController::class, 'create']);
+    Route::post('/akun/tambah/simpan', [TblUserController::class, 'store']);
+    Route::get('/search', [TblUserController::class, 'show']);
+    Route::get('/akun/edit/{id}', [TblUserController::class, 'edit']);
+    Route::post('/akun/edit/simpan', [TblUserController::class, 'update']);
+    Route::delete('/akun/hapus', [TblUserController::class, 'destroy']);
+    Route::get('/akun/logs', [logsAkunController::class, 'index']);
+});
+
+Route::middleware(['akses:siswa,pengelola,peminta'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/perencanaan', [PerencanaanController::class,'index']);
+    Route::get('/realisasi', [RealisasiController::class,'index']);
+    Route::get('/realisasi/search', [RealisasiController::class, 'show']);
 });
 
 Route::middleware(['akses:pengelola'])->group(function () {
-Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('/ruangan', [RuanganController::class,'index']);
 Route::get('/ruangan/tambah', [RuanganController::class,'create']);
 Route::post('/ruangan/tambah/simpan', [RuanganController::class,'store']);
@@ -72,6 +81,20 @@ Route::post('/pengelola/tambah/simpan', [PengelolaController::class,'store']);
 Route::get('/pengelola/edit/{id}', [PengelolaController::class,'edit']);
 Route::post('/pengelola/edit/simpan', [PengelolaController::class,'update']);
 Route::delete('/pengelola/hapus', [PengelolaController::class, 'destroy']);
+
+Route::get('/jabatan_peminta', [JabatanPemintaController::class,'index']);
+Route::get('/jabatan_peminta/tambah', [JabatanPemintaController::class,'create']);
+Route::post('/jabatan_peminta/tambah/simpan', [JabatanPemintaController::class,'store']);
+Route::get('/jabatan_peminta/edit/{id}', [JabatanPemintaController::class,'edit']);
+Route::post('/jabatan_peminta/edit/simpan', [JabatanPemintaController::class,'update']);
+Route::delete('/jabatan_peminta/hapus', [JabatanPemintaController::class, 'destroy']);
+
+Route::get('/peminta', [PemintaController::class,'index']);
+Route::get('/peminta/tambah', [PemintaController::class,'create']);
+Route::post('/peminta/tambah/simpan', [PemintaController::class,'store']);
+Route::get('/peminta/edit/{id}', [PemintaController::class,'edit']);
+Route::post('/peminta/edit/simpan', [PemintaController::class,'update']);
+Route::delete('/peminta/hapus', [PemintaController::class, 'destroy']);
 
 Route::get('/jurusan', [JurusanController::class,'index']);
 Route::get('/jurusan/tambah', [JurusanController::class,'create']);
@@ -101,8 +124,7 @@ Route::get('/angkatan/edit/{id}', [AngkatanController::class,'edit']);
 Route::post('/angkatan/edit/simpan', [AngkatanController::class,'update']);
 Route::delete('/angkatan/hapus', [AngkatanController::class, 'destroy']);
 
-Route::get('/realisasi', [RealisasiController::class,'index']);
-Route::get('/realisasi/tambah', [RealisasiController::class,'create']);
+Route::get('/realisasi/tambah/{id}', [RealisasiController::class,'create']);
 Route::post('/realisasi/tambah/simpan', [RealisasiController::class,'store']);
 Route::get('/realisasi/edit/{id}', [RealisasiController::class,'edit']);
 Route::post('/realisasi/edit/simpan', [RealisasiController::class,'update']);
@@ -125,10 +147,19 @@ Route::delete('/siswa/hapus', [SiswaController::class, 'destroy']);
 Route::get('/perencanaan', [PerencanaanController::class,'index']);
 Route::get('/pengajuan/confirm/{id}', [PerencanaanController::class,'create']);
 Route::post('/pengajuan/confirm/simpan', [PerencanaanController::class,'store']);
+Route::get('/perencanaan/search', [PerencanaanController::class,'search']);
 Route::get('/perencanaan/edit/{id}', [PerencanaanController::class,'edit']);
 Route::post('/perencanaan/edit/simpan', [PerencanaanController::class,'update']);
 Route::delete('/perencanaan/hapus', [PerencanaanController::class, 'destroy']);
-Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
+Route::get('/perencanaan/detail/{id}', [PerencanaanController::class,'show']);
+
+Route::get('/sumber_dana', [SumberDanaController::class,'index']);
+Route::get('/sumber_dana/tambah', [SumberDanaController::class,'create']);
+Route::post('/sumber_dana/tambah/simpan', [SumberDanaController::class,'store']);
+Route::get('/sumber_dana/edit/{id}', [SumberDanaController::class,'edit']);
+Route::post('/sumber_dana/edit/simpan', [SumberDanaController::class,'update']);
+Route::delete('/sumber_dana/hapus', [SumberDanaController::class, 'destroy']);
+Route::get('/sumber_dana/detail/{id}', [SumberDanaController::class,'show']);
 });
 
 Route::middleware(['akses:peminta,pengelola'])->group(function () {
@@ -138,9 +169,13 @@ Route::post('/pengajuan/tambah/simpan', [PengajuanController::class,'store']);
 Route::get('/pengajuan/edit/{id}', [PengajuanController::class,'edit']);
 Route::post('/pengajuan/edit/simpan', [PengajuanController::class,'update']);
 Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
+Route::get('/pengajuan/search', [PengajuanController::class,'search']);
+Route::get('/pengajuan/logs', [PengajuanController::class,'logs']);
 Route::delete('/pengajuan/hapus', [PengajuanController::class,'destroy']);
 });
 
+Route::middleware(['akses:peminta'])->group(function () {
+});
 Route::middleware(['akses:peminta'])->group(function () {
 });
 

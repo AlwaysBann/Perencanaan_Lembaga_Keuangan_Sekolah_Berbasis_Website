@@ -18,13 +18,18 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Pengajuan</h1>        
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Pengajuan</h1>  
+        <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Data Pengajuan = {{$jumlahPengajuan ?? 0}}</h3>       
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
+                <form action="pengajuan/search" method="GET" class="me-4" style="position: relative">
+                    <input type="text" name="search" style="background-color: #343434; border: 1px solid #E6B31E; height: 100%; width: 250px; color: white; padding-left: 10px; border-radius: 7px" placeholder="Cari Data Pengajuan...">
+                    <button type="submit" style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
                 <a href="pengajuan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
                     Tambah Pengajuan 
                 </a>
-                <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
+                <a href="pengajuan/logs" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
             </div>
@@ -48,7 +53,7 @@
                             <td>{{$p->tujuan_pengajuan}}</td>
                             <td>{{$p->nama_pengaju}}</td>
                             <td>{{$p->waktu_pengajuan }}</td>
-                            <td style="max-width: 150px">
+                            <td style="max-width: 175px">
                                 <a href="pengajuan/detail/{{$p->id_pengajuan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                     DETAIL
                                 </a>

@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">EDIT DATA PENGAJUAN</h1>
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">CONFIRM DATA PENGAJUAN</h1>
         <div class="container my-5 d-flex justify-content-center">
             <div class="row justify-content-center align-items-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
                 <div class="form-group mb-3">
@@ -34,16 +34,17 @@
                 <div class="form">
                     <input type="hidden" class="form-control" id="id_pengajuan" name="id_pengajuan" value="{{$pengajuan->id_pengajuan}}">
                     {{-- <input type="hidden" class="form-control" id="id_pengajuan" name="id_pengajuan" placeholder="Nama Pengaju" value="{{$pengajuan->id_pengajuan}}"> --}}
-                      <div class="form-group mb-3">
+                    <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">CONFIRM DATA PENGAJUAN</h3>  
+                    <div class="form-group mb-3">
                         <label for="nama_perencanaan" style="color: #E6B31E;">Nama Perencanaan</label>
                         <input type="text" class="form-control" id="nama_perencanaan" name="nama_perencanaan" placeholder="Nama Perencanaan">
                        </div>
                        <div class="form-group mb-3">
                         <label for="nama_penganggung_jawab" style="color: #E6B31E;">Nama Penanggung Jawab</label>
-                        <input type="text" class="form-control" id="nama_penanggung_jawab" name="nama_penanggung_jawab" placeholder="Tujuan Ajuan">
+                        <input type="text" class="form-control" id="nama_penanggung_jawab" name="nama_penanggung_jawab" placeholder="Nama Penanggung Jawab">
                        </div>
                       <div class="form-group mb-3">
-                        <label for="waktu_realisasi" style="color: #E6B31E;">Waktu Pengajuan</label>
+                        <label for="waktu_realisasi" style="color: #E6B31E;">Waktu Realisasi</label>
                         <input type="date" class="form-control" id="waktu_realisasi" name="waktu_realisasi" placeholder="Nama Item">
                        </div>
                        <div class="col-md-4 mt-3 mb-3">

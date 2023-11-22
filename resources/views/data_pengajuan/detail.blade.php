@@ -34,7 +34,7 @@
                         <div class="col-4">
                             <div class="row">
                                 <div class="col fs-5" style="color: #E6B31E">
-                                    Nama Perencana
+                                    Nama Pengaju
                                 </div>
                                 <div>
                                    {{$pengajuan->nama_pengaju}}

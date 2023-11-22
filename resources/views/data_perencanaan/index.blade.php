@@ -18,9 +18,14 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Perencanaan</h1>        
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Perencanaan</h1>       
+        <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Data Perencanaan = {{$jumlahPerencanaan ?? 0}}</h3> 
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
+                <form action="perencanaan/search" method="GET" class="me-4" style="position: relative">
+                    <input type="text" name="search" style="background-color: #343434; border: 1px solid #E6B31E; height: 100%; width: 250px; color: white; padding-left: 10px; border-radius: 7px" placeholder="Cari Data Perencanaan...">
+                    <button type="submit" style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
                 <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
@@ -45,7 +50,8 @@
                             <td>{{$o->nama_perencanaan}}</td>
                             <td>{{$o->nama_penanggung_jawab}}</td>
                             <td>{{$o->waktu_realisasi}}</td>
-                            <td style="max-width: 150px">
+                            @if (Auth::check() && Auth::User()->role == 'peminta')
+                            <td style="max-width: 175px">
                                 <a href="perencanaan/detail/{{$o->id_perencanaan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                     DETAIL
                                 </a>
@@ -54,6 +60,29 @@
                                 </a>
                                 <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; " idPengajuan="{{ $o->id_perencanaan }}">HAPUS</btn>
                             </td>
+                            @endif
+                            @if (Auth::check() && Auth::User()->role == 'pengelola')
+                            <td style="max-width: 205px">
+                                <a href="perencanaan/detail/{{$o->id_perencanaan}}" class="btn " style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
+                                    DETAIL
+                                </a>
+                                <a href="realisasi/tambah/{{$o->id_perencanaan}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; ">
+                                    REALISASI
+                                </a>
+                                <button class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; " idPengajuan="{{ $o->id_perencanaan }}" disabled>HAPUS</button>
+                            </td>
+                            @endif
+                            @if (Auth::check() && Auth::User()->role == 'siswa')
+                            <td style="max-width: 175px">
+                                    <button class="btn mx-4" style="background-color: white;font-weight: 600 ; border: 1px solid #E6B31E; min-width: 80px;" disabled>
+                                        <a href="perencanaan/detail/{{$o->id_perencanaan}}" style="color: #E6B31E; text-decoration: none">DETAIL</a>
+                                    </button>
+                                    <button class="btn mx-4" style="background-color: white;font-weight: 600 ; border: 1px solid #E6B31E; min-width: 80px;" disabled>
+                                        <a href="perencanaan/edit/{{$o->id_perencanaan}}" style="color: green; text-decoration: none">EDIT</a>
+                                    </button>
+                                    <button class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idRealisasi="{{$r->id_realisasi}}" disabled>HAPUS</button>
+                                </td>
+                            @endif
                         </tr>
                     </tbody>
                     @endforeach

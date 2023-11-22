@@ -90,7 +90,7 @@ class JabatanPengelolaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage
      */
     public function destroy(jabatan_pengelola $jabatan, Request $request)
     {
