@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengajuan;
 use App\Models\ruangan;
+use App\Models\logs;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PengajuanController extends Controller
 {
     public function index(Pengajuan $pengajuan)
     {
+        $totalPengajuan = DB::select('SELECT CountPengajuan() AS Pengajuan')[0]->Pengajuan;
         $data = [
-            "pengajuan" => $pengajuan->all()
+            "pengajuan" => $pengajuan->all(),
+            "jumlahPengajuan" => $totalPengajuan
         ];
         return view("data_pengajuan.index", $data);
     }
@@ -38,10 +43,9 @@ class PengajuanController extends Controller
             'jenis_item' => ['required'],
             'gambar_item' => ['required'],
         ]);
-        
-        $waktu = now()->format('Y-m-d');
 
-        $data['waktu_pengajuan'] = $waktu;
+        $data['pembuat'] = Auth::user()->username;
+
         
         if ($request->hasFile('gambar_item') && $request->file('gambar_item')->isValid()) {
             $foto_file = $request->file('gambar_item');
@@ -49,14 +53,15 @@ class PengajuanController extends Controller
             $foto_file->move(public_path('Item'), $foto_nama);
             $data['gambar_item'] = $foto_nama;
         }
-        
-        if ($pengajuan->create($data)) {
+
+       if (DB::statement(
+            'CALL CreateDataPengajuan(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            array_values($data)
+        )) {
             return redirect('pengajuan')->with('success', 'Data Pengajuan baru berhasil ditambah');
-        }else {
+        } else {
             return redirect()->back();
         }
-
-        
     }
 
     public function edit(string $id, Request $request, Pengajuan $pengajuan, ruangan $ruangan)
@@ -79,6 +84,27 @@ class PengajuanController extends Controller
         return view('data_pengajuan.detail', $data);
     }
 
+    public function search(Request $request, Pengajuan $pengajuan)
+    {
+        $search = $request->input('search');
+
+        $data = Pengajuan::where('nama_pengajuan', 'LIKE', "%$search%")
+                     ->orWhere('id_pengajuan', 'LIKE', "%$search%")
+                     ->orWhere('nama_pengaju', 'LIKE', "%$search%")
+                     ->get();
+
+        return view('data_pengajuan.index', ['pengajuan'=>$data]);
+    }
+
+    public function logs(logs $logs)
+    {
+        $data = [
+            'logs' => $logs::orderBy('id_logs', 'desc')->get()
+        ];
+
+        return view('data_pengajuan.logs', $data);
+    }
+
     public function update(Request $request, ruangan $ruangan, Pengajuan $pengajuan)
     {
         $id_pengajuan = $request->input('id_pengajuan');
@@ -95,42 +121,29 @@ class PengajuanController extends Controller
                 'id_ruangan' => ['required'],
                 'gambar_item' => ['sometimes'],
             ]
-            );
-            if ($data) {
-                $pengajuan->where('id_pengajuan', $id_pengajuan)->update($data);
-                return redirect('/pengajuan')->with('success','Data berhasil diupdate');
-            } else {
-                return back()->with('error', 'Data Gagal diupdate');
-            } 
+        );
+        if ($data) {
+            $pengajuan->where('id_pengajuan', $id_pengajuan)->update($data);
+            return redirect('/pengajuan')->with('success', 'Data berhasil diupdate');
+        } else {
+            return back()->with('error', 'Data Gagal diupdate');
+        }
     }
 
-    
+
 
     public function destroy(Pengajuan $pengajuan, Request $request)
     {
         $id_pengajuan = $request->input('id_pengajuan');
-        $data = Pengajuan::find($id_pengajuan);
+        $data = $pengajuan->find($id_pengajuan);
 
         if (!$data) {
             return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
         }
-        
-        // if ($data) {
-        //     $data->delete();    
-        //     return response()->json(['success' => true]);
-        // } 
 
-        $filePath = public_path('item') . '/' . $data->gambar_item;
-
-        if(file_exists($filePath) && unlink($filePath)) {
+        if ($data) {
             $data->delete();
-            return response()->json(['succes' => true]);
-            return redirect('/pengajuan')->with('success','Data berhasil diupdate');
+            return response()->json(['success' => true]);
         }
-        return response()->json(['success' => false, 'pesan' => 'Data gagal dihapus']);
-
     }
-
 }
-                
-

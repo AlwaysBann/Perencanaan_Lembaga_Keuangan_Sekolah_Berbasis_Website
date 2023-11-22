@@ -15,7 +15,9 @@ class PerencanaanController extends Controller
      */
     public function index(perencanaan $perencanaan)
     {
+        $totalPerencanaan = DB::select('SELECT CountPerencanaan() AS Perencanaan')[0]->Perencanaan;
         $data = [
+            "jumlahPerencanaan" => $totalPerencanaan,
             "perencanaan" => DB::table('perencanaan')
             ->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')
             ->select('perencanaan.*', 'pengajuan.*')
@@ -52,6 +54,18 @@ class PerencanaanController extends Controller
         }else {
             return redirect()->back();
         }
+    }
+
+    public function search(Request $request, perencanaan $perencanaan)
+    {
+        $search = $request->input('search');
+
+        $data = perencanaan::where('nama_perencanaan', 'LIKE', "%$search%")
+                     ->orWhere('id_perencanaan', 'LIKE', "%$search%")
+                     ->orWhere('nama_penanggung_jawab', 'LIKE', "%$search%")
+                     ->get();
+
+        return view('data_perencanaan.index', ['perencanaan'=>$data]);
     }
 
     /**
@@ -103,24 +117,15 @@ class PerencanaanController extends Controller
     public function destroy(Request $request, perencanaan $perencanaan)
     {
         $id_perencanaan = $request->input('id_perencanaan');
-        $data = perencanaan::find($id_perencanaan);
+        $data = $perencanaan->find($id_perencanaan);
 
         if (!$data) {
             return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
         }
-        
-        // if ($data) {
-        //     $data->delete();    
-        //     return response()->json(['success' => true]);
-        // } 
 
-        $filePath = public_path('item') . '/' . $data->gambar_item;
-
-        if(file_exists($filePath) && unlink($filePath)) {
-            $data->delete();
-            return response()->json(['succes' => true]);
-            return redirect('/perencanaan')->with('success','Data berhasil diupdate');
+        if ($data) {
+            $data->delete();    
+            return response()->json(['success' => true]);
         }
-        return response()->json(['success' => false, 'pesan' => 'Data gagal dihapus']);
     }
 }

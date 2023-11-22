@@ -14,8 +14,9 @@ use App\Http\Controllers\AngkatanController;
 use App\Http\Controllers\JabatanPemintaController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\PemintaController;
 use App\Http\Controllers\PerencanaanController;
-
+use App\Http\Controllers\SumberDanaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,10 +121,19 @@ Route::delete('/kelas/hapus', [KelasController::class, 'destroy']);
 
 Route::get('/pengajuan/confirm/{id}', [PerencanaanController::class,'create']);
 Route::post('/pengajuan/confirm/simpan', [PerencanaanController::class,'store']);
+Route::get('/perencanaan/search', [PerencanaanController::class,'search']);
 Route::get('/perencanaan/edit/{id}', [PerencanaanController::class,'edit']);
 Route::post('/perencanaan/edit/simpan', [PerencanaanController::class,'update']);
 Route::delete('/perencanaan/hapus', [PerencanaanController::class, 'destroy']);
 Route::get('/perencanaan/detail/{id}', [PerencanaanController::class,'show']);
+
+Route::get('/sumber_dana', [SumberDanaController::class,'index']);
+Route::get('/sumber_dana/tambah', [SumberDanaController::class,'create']);
+Route::post('/sumber_dana/tambah/simpan', [SumberDanaController::class,'store']);
+Route::get('/sumber_dana/edit/{id}', [SumberDanaController::class,'edit']);
+Route::post('/sumber_dana/edit/simpan', [SumberDanaController::class,'update']);
+Route::delete('/sumber_dana/hapus', [SumberDanaController::class, 'destroy']);
+Route::get('/sumber_dana/detail/{id}', [SumberDanaController::class,'show']);
 });
 
 Route::middleware(['akses:peminta,pengelola'])->group(function () {
@@ -133,6 +143,8 @@ Route::post('/pengajuan/tambah/simpan', [PengajuanController::class,'store']);
 Route::get('/pengajuan/edit/{id}', [PengajuanController::class,'edit']);
 Route::post('/pengajuan/edit/simpan', [PengajuanController::class,'update']);
 Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
+Route::get('/pengajuan/search', [PengajuanController::class,'search']);
+Route::get('/pengajuan/logs', [PengajuanController::class,'logs']);
 Route::delete('/pengajuan/hapus', [PengajuanController::class,'destroy']);
 });
 

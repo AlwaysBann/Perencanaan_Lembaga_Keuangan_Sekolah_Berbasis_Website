@@ -19,7 +19,7 @@ class PemintaController extends Controller
 
            'peminta' => DB::table('peminta')
                             ->join('tbl_user', 'peminta.id_user', '=', 'tbl_user.id_user')
-                            ->join('jabatan_peminta', 'peminta.id_jabatan_peminta', '=', 'jabatan_peminta.id_jabatan_pe')
+                            ->join('jabatan_peminta', 'peminta.id_jabatan_peminta', '=', 'jabatan_peminta.id_jabatan_peminta')
                             ->select('peminta.*', 'tbl_user.*', 'jabatan_peminta.*')
                             ->get()
         ];
@@ -71,9 +71,15 @@ class PemintaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(peminta $peminta)
+    public function edit(peminta $peminta,tbl_user $user,jabatan_peminta $jabatan, string $id)
     {
-        //
+        $data = [
+            'peminta' => $peminta->where('id_peminta', $id)->first(),
+            'user'=> $user->all(),
+            'jabatan' => $jabatan->all(),
+        ];
+
+        return view('peminta.edit', $data);
     }
 
     /**
@@ -81,14 +87,39 @@ class PemintaController extends Controller
      */
     public function update(Request $request, peminta $peminta)
     {
-        //
+        $id_peminta = $request->input('id_peminta');
+        $data = $request->validate([
+            'nama_peminta' => 'required',
+            'id_jabatan_peminta' => 'required',
+            'id_user' => 'required',
+            'mulai_jabat' => 'required',
+            'akhir_jabat' => 'required',
+        ]);
+
+            $dataUpdate = $peminta->where('id_peminta', $id_peminta)->update($data);
+
+            if ($dataUpdate) {
+                return redirect('/peminta')->with('success', 'Data Peminta berhasil diupdate');
+            }
+
+            return back()->with('error', 'Data jenis Peminta gagal diupdate');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage.  
      */
-    public function destroy(peminta $peminta)
+    public function destroy(Request $request, peminta $peminta)
     {
-        //
+        $id_peminta = $request->input('id_peminta');
+        $data = $peminta->find($id_peminta);
+
+        if (!$data) {
+            return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
+        }
+        
+        if ($data) {
+            $data->delete();
+            return response()->json(['success' => true]);
+        } 
     }
 }

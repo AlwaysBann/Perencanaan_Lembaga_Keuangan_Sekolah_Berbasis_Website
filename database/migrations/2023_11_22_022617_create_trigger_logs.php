@@ -28,6 +28,19 @@ return new class extends Migration
         INSERT INTO logs (logs) VALUES (CONCAT("Akun User telah ditambahkan oleh super admin dengan nomor id: ", user_id, ". dan nama ", nameuser));
     END'
         );
+
+        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared(
+            'CREATE TRIGGER ' . $this->trgName . ' AFTER INSERT ON pengajuan
+    FOR EACH ROW
+    BEGIN
+        DECLARE user_id INT;
+
+        SELECT id_user INTO user_id FROM tbl_user WHERE id_user = NEW.id_pengajuan;
+        
+        INSERT INTO logs (logs) VALUES (CONCAT("Akun User telah ditambahkan oleh super admin dengan nomor id: ", user_id, ". dan nama ", NEW.pembuat));
+    END'
+        );
     }
 
     /**
