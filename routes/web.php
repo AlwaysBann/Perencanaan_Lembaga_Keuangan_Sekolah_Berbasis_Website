@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\JenisTagihanController;
 use App\Http\Controllers\logsAkunController;
 use App\Http\Controllers\PengelolaController;
+use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\AngkatanController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PerencanaanController;
+use App\Http\Controllers\TagihanController;
 
 
 /*
@@ -77,6 +80,20 @@ Route::get('/jurusan/edit/{id}', [JurusanController::class,'edit']);
 Route::post('/jurusan/edit/simpan', [JurusanController::class,'update']);
 Route::delete('/jurusan/hapus', [JurusanController::class, 'destroy']);
 
+Route::get('/JenisTagihan', [JenisTagihanController::class,'index']);
+Route::get('/JenisTagihan/tambah', [JenisTagihanController::class,'create']);
+Route::post('/JenisTagihan/tambah/simpan', [JenisTagihanController::class,'store']);
+Route::get('/JenisTagihan/edit/{id}', [JenisTagihanController::class,'edit']);
+Route::post('/JenisTagihan/edit/simpan', [JenisTagihanController::class,'update']);
+Route::delete('/JenisTagihan/hapus', [JenisTagihanController::class, 'destroy']);
+
+Route::get('/tagihan', [TagihanController::class,'index']);
+Route::get('/tagihan/tambah', [TagihanController::class,'create']);
+Route::post('/tagihan/tambah/simpan', [TagihanController::class,'store']);
+Route::get('/tagihan/edit/{id}', [TagihanController::class,'edit']);
+Route::post('/tagihan/edit/simpan', [TagihanController::class,'update']);
+Route::delete('/tagihan/hapus', [TagihanController::class, 'destroy']);
+
 Route::get('/angkatan', [AngkatanController::class,'index']);
 Route::get('/angkatan/tambah', [AngkatanController::class,'create']);
 Route::post('/angkatan/tambah/simpan', [AngkatanController::class,'store']);
@@ -97,6 +114,13 @@ Route::post('/kelas/tambah/simpan', [KelasController::class,'store']);
 Route::get('/kelas/edit/{id}', [KelasController::class,'edit']);
 Route::post('/kelas/edit/simpan', [KelasController::class,'update']);
 Route::delete('/kelas/hapus', [KelasController::class, 'destroy']);
+
+Route::get('/siswa', [SiswaController::class,'index']);
+Route::get('/siswa/tambah', [SiswaController::class,'create']);
+Route::post('/siswa/tambah/simpan', [SiswaController::class,'store']);
+Route::get('/siswa/edit/{id}', [SiswaController::class,'edit']);
+Route::post('/siswa/edit/simpan', [SiswaController::class,'update']);
+Route::delete('/siswa/hapus', [SiswaController::class, 'destroy']);
 
 Route::get('/perencanaan', [PerencanaanController::class,'index']);
 Route::get('/pengajuan/confirm/{id}', [PerencanaanController::class,'create']);

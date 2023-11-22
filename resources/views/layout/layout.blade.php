@@ -30,6 +30,9 @@
                 <a href="/jurusan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JURUSAN</a>
                 <a href="/angkatan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">ANGKATAN</a>
                 <a href="/kelas" class="navbar-brand" style="color: #E6B31E; padding-right:50%">KELAS</a>
+                <a href="/siswa" class="navbar-brand" style="color: #E6B31E; padding-right:50%">SISWA</a>
+                <a href="/JenisTagihan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">JENIS TAGIHAN</a>
+                <a href="/tagihan" class="navbar-brand" style="color: #E6B31E; padding-right:50%">TAGIHAN</a>
             </div>
         </div>
         <a href="/pengajuan" class="navbar-brand" style="color: #E6B31E">PENGAJUAN</a>
