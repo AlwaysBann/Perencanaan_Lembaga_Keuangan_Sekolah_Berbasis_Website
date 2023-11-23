@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\perencanaan;
 use App\Models\realisasi;
 use App\Models\ruangan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -16,12 +17,11 @@ class RealisasiController extends Controller
      */
     public function index()
     {
-        
         $data = [
             // "realisasi"=> DB::table("realisasi")->orderBy("id_realisasi","desc")->get(),
             "realisasi"=> DB::table("realisasi")
                         ->join("ruangan","realisasi.id_ruangan", "=" ,"ruangan.id_ruangan")
-                        ->join("perencanaan","realisasi.id_ruangan", "=" ,"perencanaan.id_perencanaan")
+                        ->join("perencanaan","realisasi.id_perencanaan", "=" ,"perencanaan.id_perencanaan")
                         ->select('realisasi.*','ruangan.nama_ruangan', 'perencanaan.*')
                         ->orderBy("id_realisasi","desc")
                         ->get(),
@@ -29,6 +29,16 @@ class RealisasiController extends Controller
         return view('realisasi.index', $data);
     }
 
+    public function detail(realisasi $realisasi, ruangan $ruangan, perencanaan $perencanaan, string $id)
+    {
+        $data = [
+            "realisasi"=> $realisasi->where('id_realisasi', $id)->first(),
+            "perencanaan"=>$perencanaan->all(),
+            "ruangan"=>$ruangan->all(),
+
+        ];
+        return view('realisasi.detail', $data);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -77,10 +87,11 @@ class RealisasiController extends Controller
     {
         $search = $request->input('search');
 
-    $data = realisasi::where('nama_realisasi', 'LIKE', "%$search%")
+    $data = realisasi::where('nama_perencanaan', 'LIKE', "%$search%")
                      ->orWhere('id_realisasi', 'LIKE', "%$search%")
                      ->join("ruangan","realisasi.id_ruangan", "=" ,"ruangan.id_ruangan")
-                     ->select('realisasi.*','ruangan.nama_ruangan')
+                     ->join("perencanaan","realisasi.id_perencanaan", "=" ,"perencanaan.id_perencanaan")
+                     ->select('realisasi.*','ruangan.nama_ruangan', 'perencanaan.nama_perencanaan')
                      ->get();
         // dd($data);
     return view('realisasi.index', ['realisasi' => $data]);
@@ -154,6 +165,19 @@ class RealisasiController extends Controller
 
             $data->delete();
             return response()->json(['success' => true]);
+
+    }
+
+    public function cetak(realisasi $realisasi)
+    {
+            $data = $realisasi
+                    ->join("ruangan","realisasi.id_ruangan", "=" ,"ruangan.id_ruangan")
+                    ->join("perencanaan","realisasi.id_perencanaan", "=" ,"perencanaan.id_perencanaan")
+                    ->select('realisasi.*','ruangan.nama_ruangan', 'perencanaan.*')
+                    ->orderBy("id_realisasi","desc")
+                    ->get();
+            $pdf = PDF::loadView('realisasi.cetak', ['realisasi' => $data]);
+            return $pdf->download('data_realisasi.pdf');
 
     }
 }

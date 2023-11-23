@@ -110,7 +110,6 @@ class TblUserController extends Controller
                         $foto_file = $request->file('foto_profil');
                         $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
                         $foto_file->move(public_path('foto'), $foto_nama);
-                        // $data['foto_profil'] = $foto_nama;
                         
                         $update_data = $user->where('id_user', $request->input('id_user'))->first();
                         File::delete(public_path('foto') . '/' . $update_data->file);

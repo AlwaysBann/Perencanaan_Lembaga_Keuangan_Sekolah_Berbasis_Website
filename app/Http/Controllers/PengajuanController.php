@@ -125,7 +125,6 @@ class PengajuanController extends Controller
         if(file_exists($filePath) && unlink($filePath)) {
             $data->delete();
             return response()->json(['succes' => true]);
-            return redirect('/pengajuan')->with('success','Data berhasil diupdate');
         }
         return response()->json(['success' => false, 'pesan' => 'Data gagal dihapus']);
 

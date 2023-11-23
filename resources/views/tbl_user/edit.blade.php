@@ -22,7 +22,7 @@
         <div class="container my-5 d-flex justify-content-center">
             <div class="row justify-content-center align-items-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
 
-            <form action="simpan" method="POST">
+            <form action="simpan" method="POST" enctype="multipart/form-data">
                 <div class="form">
                     <div class="form-group mb-3">
                         <label for="username" style="color: #E6B31E;">Username</label>
@@ -43,6 +43,9 @@
                             <option @if ($user->role == 'pengelola')
                                 return selected
                             @endif value="pengelola">pengelola</option>
+                            <option @if ($user->role == 'peminta')
+                                return selected
+                            @endif value="peminta">peminta</option>
                         </select>
                       </div>
                       <div class="form-group" style="margin-bottom: 90px">

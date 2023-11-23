@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('logs', function (Blueprint $table) {
-            $table->integer('id_logs', true)->nullable(false);
-            $table->text('logs')->nullable(true);
-            $table->timestamps(true);
+            $table->integer('id_logs', true);
+            $table->text('logs')->nullable(false);
+            // $table->timestamps(true);
         });
     }
 

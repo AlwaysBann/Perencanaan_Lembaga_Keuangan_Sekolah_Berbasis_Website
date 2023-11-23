@@ -19,6 +19,6 @@ class Aksesrole
         if (Auth::check() && in_array(Auth::user()->role, $roles)) {
             return $next($request);
         }
-        return redirect("/");
+        return back();
     }
 }

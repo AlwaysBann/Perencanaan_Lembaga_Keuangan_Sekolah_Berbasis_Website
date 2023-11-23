@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Pengajuan')
+@section('title', 'Realisasi')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Detail pengajuan</title>
+    <title>Document</title>
     <style>
         body{
             background-image: url('/img/background.png');
@@ -18,44 +18,49 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DETAIL DATA PENGAJUAN</h1>
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DETAIL DATA REALISASI</h1>
         <div class="container my-5 d-flex justify-content-center">
             <div class="row justify-content-center align-items-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4">
-                            @if ($pengajuan->gambar_item)
-                            <img src="{{ url('item') . '/' . $pengajuan->gambar_item }} "
-                                style="width: 200px; height: 250px;" alt="Profile" />
+                            @if ($realisasi->bukti_realisasi)
+                            <img src="{{ url('foto') . '/' . $realisasi->bukti_realisasi }} "
+                                style="width: 200px; height: 250px;" alt="Bukti Realisasi" />
                         @endif
                         </div>
             
                         <!-- Column 2 with 5 rows -->
                         <div class="col-4">
-                            <div class="row">
+                            <div class="row" >
                                 <div class="col fs-5" style="color: #E6B31E">
-                                    Nama Pengaju
+                                    Nama Realisasi
                                 </div>
-                                <div>
-                                   {{$pengajuan->nama_pengaju}}
+                                <div style="color: white">
+                                   {{$realisasi->nama_realisasi}}
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col fs-5" style="color: #E6B31E">
-                                    Tujuan Pengajuan
+                                    Jumlah Dana Realisasi
                                 </div>
-                                <div>
-                                    {{$pengajuan->tujuan_pengajuan}}
+                                <div style="color: white">
+                                    {{$realisasi->jumlah_dana_realisasi}}
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col fs-5" style="color: #E6B31E">
-                                    Nama Item
+                                    Ruangan
                                 </div>
-                                <div>
-                                    {{$pengajuan->nama_item}}
+                                <div style="color: white">
+                                    @foreach ($ruangan as $i)
+                                     @if($realisasi->id_ruangan == $i->id_ruangan)
+                                        {{ $i->nama_ruangan }}
+                                         @break
+                                    @endif
+                                    @endforeach
                                 </div>
                             </div>
 
@@ -63,8 +68,8 @@
                                 <div class="col fs-5" style="color: #E6B31E">
                                     Spesifikasi Item
                                 </div>
-                                <div>
-                                    {{$pengajuan->spesifikasi_item}}
+                                <div style="color: white">
+                                    {{$realisasi->nama_ruangan}}
                                 </div>
                             </div>
                             
@@ -73,7 +78,7 @@
                                     Jenis Item
                                 </div>
                                 <div>
-                                    {{$pengajuan->jenis_item}}
+                                    {{$realisasi->jenis_item}}
                                 </div>
                             </div>
                             
@@ -84,10 +89,10 @@
                         <div class="col-4">
                             <div class="row">
                                 <div class="col fs-5" style="color: #E6B31E">
-                                    Nama Pengajuan
+                                    Nama Realisasi
                                 </div>
                                 <div>
-                                    {{$pengajuan->nama_pengajuan}}
+                                    {{$realisasi->nama_realisasi}}
                                 </div>
                             </div>
                             
@@ -97,7 +102,7 @@
                                 </div>
                                 <div name='id_ruangan'>
                                     @foreach ($ruangan as $i)
-                                     @if($pengajuan->id_ruangan == $i->id_ruangan)
+                                     @if($realisasi->id_ruangan == $i->id_ruangan)
                                         {{ $i->nama_ruangan }}
                                          @break
                                     @endif
@@ -110,7 +115,7 @@
                                     Jumlah Item
                                 </div>
                                 <div>
-                                    {{$pengajuan->jumlah_item}}
+                                    {{$realisasi->jumlah_item}}
                                 </div>
                             </div>  
                             
@@ -119,7 +124,7 @@
                                     Harga Satuan
                                 </div>
                                 <div>
-                                    {{$pengajuan->harga_satuan}}
+                                    {{$realisasi->harga_satuan}}
                                 </div>
                             </div>
 

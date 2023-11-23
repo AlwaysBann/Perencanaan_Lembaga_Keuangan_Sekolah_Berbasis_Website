@@ -39,7 +39,7 @@
                         <tr>
                             <td>{{$l->id_logs}}</td>
                             <td>{{$l->logs}}</td>
-                            <td>{{$waktuSekarang = date('Y-m-d H:i:s')}}</td>
+                            <td>{{$l->waktu}}</td>
                         </tr>
                     </tbody>
                         @endforeach

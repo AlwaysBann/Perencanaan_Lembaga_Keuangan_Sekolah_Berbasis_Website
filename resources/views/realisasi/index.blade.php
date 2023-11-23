@@ -27,6 +27,9 @@
                     <button type="submit" style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
                 @if (Auth::check() && Auth::User()->role == 'pengelola')
+                <a href="realisasi/cetak" class="btn btn-info rounded-pill" style="color: white; min-width: 130px">
+                    Cetak List Data
+                </a>
                 <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
@@ -51,7 +54,6 @@
                             <th>nama realisasi</th>
                             <th style="max-width: 90px">jumlah dana realisasi</th>
                             <th>bukti realisai</th>
-                            <th>Ruangan</th>
                             <th>aksi</th>
                         </tr>
                     </thead>
@@ -68,22 +70,25 @@
                                     style="max-width: 150px; height: auto;" />
                                 @endif
                                 </td>
-                        {{-- @foreach ($ruangan as $r) --}}
-                            <td>{{$r->nama_ruangan}}</td>
-                        {{-- @endforeach --}}
                             </td>
                             @if (Auth::check() && Auth::User()->role == 'siswa' || Auth::User()->role == 'peminta')
-                            <td style="max-width: 130px">
-                                <button class="btn mx-4" style="background-color: white;font-weight: 600 ; border: 1px solid #E6B31E; min-width: 80px;" disabled>
+                            <td style="max-width: 200px">
+                                <button class="btn mx-2" style="background-color: white;font-weight: 600 ; border: 1px solid #E6B31E; min-width: 80px;" disabled>
                                     <a href="realisasi/edit/{{$r->id_realisasi}}" style="color: green; text-decoration: none">EDIT</a>
+                                </button>
+                                <button class="btn mx-2" style="background-color: white;font-weight: 600 ; border: 1px solid #E6B31E; min-width: 80px;" disabled>
+                                    <a href="realisasi/detail/{{$r->id_realisasi}}" style="color: #E6B31E; text-decoration: none">DETAIL</a>
                                 </button>
                                 <button class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idRealisasi="{{$r->id_realisasi}}" disabled>HAPUS</button>
                             </td>
                             @endif
                             @if (Auth::check() && Auth::User()->role == 'pengelola')
-                            <td style="max-width: 130px">
-                                <a href="realisasi/edit/{{$r->id_realisasi}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
+                            <td style="max-width: 200px">
+                                <a href="realisasi/edit/{{$r->id_realisasi}}" class="btn mx-2" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                     EDIT
+                                </a>
+                                <a href="realisasi/detail/{{$r->id_realisasi}}" class="btn mx-2" style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E; min-width: 80px;">
+                                    DETAIL
                                 </a>
                                 <btn class="btn btnHapus mx-2" style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; min-width: 80px;" idRealisasi="{{$r->id_realisasi}}">HAPUS</btn>
                             </td>

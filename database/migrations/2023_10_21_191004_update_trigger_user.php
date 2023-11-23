@@ -46,6 +46,12 @@ return new class extends Migration
         SET update_message = CONCAT(update_message, " ", perubahan);
         END IF;
 
+        -- Periksa perubahan pada foto profil
+        IF OLD.foto_profil != NEW.foto_profil THEN
+        SET perubahan = CONCAT("Foto_profil dari ", (SELECT foto_profil FROM tbl_user WHERE id_user = OLD.id_user), " ke ", (SELECT foto_profil FROM tbl_user WHERE id_user = NEW.id_user));
+        SET update_message = CONCAT(update_message, " ", perubahan);
+        END IF;
+
         -- Insert pesan log ke dalam tabel logs
         INSERT INTO logs (logs) VALUES (update_message);
     END'
