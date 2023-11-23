@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Realisasi')
+@section('title', 'Penajuan')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@
                        </div>
                       <div class="form-group mb-3">
                         <label for="jumlah_item" style="color: #E6B31E;">Jumlah Item</label>
-                        <input type="text" class="form-control" id="jumlah_item" name="jumlah_item" placeholder="Jumlah Item">
+                        <input type="number" class="form-control" id="jumlah_item" name="jumlah_item" placeholder="Jumlah Item">
                        </div>
                       <div class="form-group mb-3">
                         <label for="spesifikasi_item" style="color: #E6B31E;">Spesifikasi Item</label>
@@ -60,7 +60,7 @@
                        </div>
                       <div class="form-group mb-3">
                         <label for="harga_satuan" style="color: #E6B31E;">Harga Satuan</label>
-                        <input type="text" class="form-control" id="harga_satuan" name="harga_satuan" placeholder="Harga Satuan">
+                        <input type="text" class="form-control" id="harga_satuan" name="harga_satuan" placeholder="Harga Satuan" value="Rp.">
                        </div>
                       <div class="form-group mb-3">
                         <label for="jenis_item" style="color: #E6B31E;">Jenis Item</label>
