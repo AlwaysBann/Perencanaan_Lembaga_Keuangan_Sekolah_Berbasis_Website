@@ -6,6 +6,7 @@ use App\Models\Pengajuan;
 use App\Models\perencanaan;
 use App\Models\ruangan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 
 class PerencanaanController extends Controller
@@ -21,7 +22,7 @@ class PerencanaanController extends Controller
             "perencanaan" => DB::table('perencanaan')
             ->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')
             ->select('perencanaan.*', 'pengajuan.*')
-            ->get()
+            ->get() 
         ];
         return view("data_perencanaan.index", $data);
     }
@@ -63,6 +64,8 @@ class PerencanaanController extends Controller
         $data = perencanaan::where('nama_perencanaan', 'LIKE', "%$search%")
                      ->orWhere('id_perencanaan', 'LIKE', "%$search%")
                      ->orWhere('nama_penanggung_jawab', 'LIKE', "%$search%")
+                     ->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')
+                     ->select('perencanaan.*', 'pengajuan.*')
                      ->get();
 
         return view('data_perencanaan.index', ['perencanaan'=>$data]);
@@ -73,7 +76,8 @@ class PerencanaanController extends Controller
      */
     public function show(string $id, Request $request, perencanaan $perencanaan)
     {
-        $pengajuan = $perencanaan->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('perencanaan.id_pengajuan', $id)->select('pengajuan.*', 'ruangan.*', 'perencanaan.nama_penanggung_jawab', 'perencanaan.nama_perencanaan')->first();
+        $pengajuan = $perencanaan->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('perencanaan.id_pengajuan', $id)->select('pengajuan.*', 'ruangan.*', 'perencanaan.nama_penanggung_jawab', 'perencanaan.nama_perencanaan', 'perencanaan.id_perencanaan')->first();
+        // dd($pengajuan);
         return view('data_perencanaan.detail', compact('pengajuan'));
     }
     /**
@@ -127,5 +131,13 @@ class PerencanaanController extends Controller
             $data->delete();    
             return response()->json(['success' => true]);
         }
+    }
+
+    public function cetak(string $id, perencanaan $perencanaan, Request $request)
+    {
+        $pengajuan = $perencanaan->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('perencanaan.id_pengajuan', $id)->select('pengajuan.*', 'ruangan.*', 'perencanaan.nama_penanggung_jawab', 'perencanaan.nama_perencanaan', 'perencanaan.id_perencanaan')->first();
+            $pdf = PDF::loadView('data_perencanaan.cetak', compact('pengajuan'));
+            return $pdf->stream('data_perencanaan.pdf');
+
     }
 }

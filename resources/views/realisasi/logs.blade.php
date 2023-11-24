@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Manage User')
+@section('title', 'Log Activity Realisasi')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">ACTIVITY IN TABLE USER</h1>        
+        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">ACTIVITY IN TABLE REALISASI</h1>        
         <div class="card-body" style="margin-top: 200px">
             <div class="d-flex" style="margin-bottom: 20px">
                 <a href="/akun" class="btn btn-warning rounded-pill" style="color: white; min-width: 130px">

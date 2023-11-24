@@ -51,10 +51,10 @@ class TagihanController extends Controller
 
 
         if ($tagihan->create($data)) {
-            return redirect('/tagihan')->with('success', 'Data surat baru berhasil ditambah');
+            return redirect('/tagihan')->with('success', 'Data tagihan baru berhasil ditambah');
         }
 
-        return back()->with('error', 'Data surat gagal ditambahkan');
+        return back()->with('error', 'Data tagihan gagal ditambahkan');
     }
 
     /**
@@ -93,10 +93,10 @@ class TagihanController extends Controller
             $dataUpdate = $tagihan->where('id_tagihan', $id_tagihan)->update($data);
 
             if ($dataUpdate) {
-                return redirect('/tagihan')->with('success', 'Data surat berhasil diupdate');
+                return redirect('/tagihan')->with('success', 'Data tagihan berhasil diupdate');
             }
 
-            return back()->with('error', 'Data jenis surat gagal diupdate');
+            return back()->with('error', 'Data jenis tagihan gagal diupdate');
     }
 
     /**

@@ -19,6 +19,7 @@ use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\PemintaController;
 use App\Http\Controllers\PerencanaanController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\LogsRealisasiController;
 
 use App\Http\Controllers\SumberDanaController;
 
@@ -60,6 +61,7 @@ Route::middleware(['akses:siswa,pengelola,peminta'])->group(function () {
     Route::get('/perencanaan', [PerencanaanController::class,'index']);
     Route::get('/perencanaan/detail/{id}', [PerencanaanController::class,'show']);
     Route::get('/perencanaan/search', [PerencanaanController::class,'search']);
+    Route::get('/perencanaan/cetak/{id}', [PerencanaanController::class,'cetak']);
     
     Route::get('/realisasi', [RealisasiController::class,'index']);
     Route::get('/realisasi/search', [RealisasiController::class, 'show']);
@@ -167,9 +169,11 @@ Route::middleware(['akses:peminta,pengelola'])->group(function () {
     Route::get('/pengajuan', [PengajuanController::class,'index']);
     Route::get('/pengajuan/detail/{id}', [PengajuanController::class,'show']);
     Route::get('/pengajuan/search', [PengajuanController::class,'search']);
+    Route::get('/pengajuan/cetak/{id}', [PengajuanController::class,'cetak']);
     Route::get('/pengajuan/logs', [PengajuanController::class,'logs']);
     
     Route::get('/realisasi/cetak', [RealisasiController::class, 'cetak']);
+    Route::get('/realisasi/logs', [LogsRealisasiController::class, 'index']);
 });
 
 Route::middleware(['akses:peminta'])->group(function () {

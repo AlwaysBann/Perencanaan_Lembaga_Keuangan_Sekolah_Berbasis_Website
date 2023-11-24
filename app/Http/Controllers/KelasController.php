@@ -101,10 +101,10 @@ class KelasController extends Controller
             $dataUpdate = $kelas->where('id_kelas', $id_kelas)->update($data);
 
             if ($dataUpdate) {
-                return redirect('/kelas')->with('success', 'Data surat berhasil diupdate');
+                return redirect('/kelas')->with('success', 'Data kelas berhasil diupdate');
             }
 
-            return back()->with('error', 'Data jenis surat gagal diupdate');
+            return back()->with('error', 'Data jenis kelas gagal diupdate');
     }
 
     /**

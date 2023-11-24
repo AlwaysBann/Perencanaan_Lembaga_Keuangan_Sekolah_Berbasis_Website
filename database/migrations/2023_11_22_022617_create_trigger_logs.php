@@ -38,7 +38,7 @@ return new class extends Migration
 
         SELECT id_user INTO user_id FROM tbl_user WHERE id_user = NEW.id_pengajuan;
         
-        INSERT INTO logs (logs) VALUES (CONCAT("Akun User telah ditambahkan oleh super admin dengan nomor id: ", user_id, ". dan nama ", NEW.pembuat));
+        INSERT INTO logs (logs) VALUES (CONCAT("Pengajuan telah ditambahkan oleh peminta dengan nomor id: ", user_id, ". dan nama ", NEW.pembuat));
     END'
         );
     }

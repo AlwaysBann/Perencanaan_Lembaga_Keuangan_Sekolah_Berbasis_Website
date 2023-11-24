@@ -18,7 +18,6 @@ class RealisasiController extends Controller
     public function index()
     {
         $data = [
-            // "realisasi"=> DB::table("realisasi")->orderBy("id_realisasi","desc")->get(),
             "realisasi"=> DB::table("realisasi")
                         ->join("ruangan","realisasi.id_ruangan", "=" ,"ruangan.id_ruangan")
                         ->join("perencanaan","realisasi.id_perencanaan", "=" ,"perencanaan.id_perencanaan")
@@ -32,7 +31,7 @@ class RealisasiController extends Controller
     public function detail(realisasi $realisasi, ruangan $ruangan, perencanaan $perencanaan, string $id)
     {
         $data = [
-            "realisasi"=> $realisasi->where('id_realisasi', $id)->first(),
+            'realisasi' => $realisasi->join('perencanaan', 'realisasi.id_perencanaan', '=', 'perencanaan.id_perencanaan')->where('id_realisasi', '=', $id)->first(),
             "perencanaan"=>$perencanaan->all(),
             "ruangan"=>$ruangan->all(),
 

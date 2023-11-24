@@ -23,7 +23,7 @@
             <div class="row justify-content-center align-items-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
             <form action="simpan" method="POST">
                 <div class="form">
-                    <input type="hidden" name="no_angkatan" value="{{$angkatan->no_angkatan}}">
+                    <input type="hidden" name="id_angkatan" value="{{$angkatan->id_angkatan}}">
                     <div class="form-group mb-3">
                         <label for="no_angkatan" style="color: #E6B31E;">No Angkatan</label>
                         <input type="text" class="form-control" id="no_angkatan" name="no_angkatan" placeholder="No Angkatan" style="margin-bottom: 10px"

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Halaman Login</title>
     <style>
      body{
       background-color: #343434;
@@ -21,11 +21,11 @@
       @csrf
         <div class="form-group mb-3">
           <label for="username" style="">Username</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+          <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
         </div>
         <button type="submit" class="btn my-3 justify-content-center align-items-center" style="color: #E6B31E; background: #343434; padding-left: 100px; padding-right:100px; margin-left: 40px">login</button>
       </form>

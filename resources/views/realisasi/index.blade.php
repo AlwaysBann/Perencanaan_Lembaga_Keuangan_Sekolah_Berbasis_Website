@@ -27,21 +27,24 @@
                     <button type="submit" style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
                 @if (Auth::check() && Auth::User()->role == 'pengelola')
-                <a href="realisasi/cetak" class="btn btn-info rounded-pill" style="color: white; min-width: 130px">
-                    Cetak List Data
-                </a>
-                <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
+                    <a href="realisasi/cetak" class="btn btn-info rounded-pill" style="color: white; min-width: 130px">
+                        Cetak List Data
+                    </a>
+                <a href="/realisasi/logs" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
                 @endif
                 @if (Auth::check() && Auth::User()->role == 'peminta')
-                <a href="#" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
+                <a href="realisasi/cetak" class="btn btn-info rounded-pill" style="color: white; min-width: 130px">
+                    Cetak List Data
+                </a>
+                <a href="/realisasi/logs" class="btn btn-warning rounded-pill ms-auto" style="color: white; min-width: 130px">
                     Log Activity
                 </a>
                 @endif
                 @if (Auth::check() && Auth::User()->role == 'siswa')
                 <button class="btn btn-warning rounded-pill ms-auto" style=" min-width: 130px;" disabled>
-                    <a href="#" style="color: white; text-decoration: none">Log Activity</a>
+                    <a href="/realisasi/logs" style="color: white; text-decoration: none">Log Activity</a>
                 </button>
                 @endif
             </div>

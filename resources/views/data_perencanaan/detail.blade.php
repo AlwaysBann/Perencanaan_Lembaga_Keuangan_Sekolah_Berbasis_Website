@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Realisasi')
+@section('title', 'Perencanaan')
 @section('content')
     <!DOCTYPE html>
     <html lang="en">
@@ -15,12 +15,12 @@
                 background-size: 100%;
                 background-repeat: repeat-y;
             }
-        </style>
+        </style>    
     </head>
 
     <body>
         <div class="px-5 py-3">
-            <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">EDIT DATA PENGAJUAN
+            <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DETAIL DATA PERENCANAAN
             </h1>
             <div class="container my-5 d-flex justify-content-center">
                 <div class="row justify-content-center align-items-center rounded-3 p-4"
@@ -145,6 +145,9 @@
                         <div class="col-md-4 mt-3 mb-3">
                             <a href="#" onclick="window.history.back();" class="btn "
                                 style="background-color: white;font-weight: 500 ; color: red;  border: 1px solid #E6B31E;  min-width: 100px">KEMBALI</a>
+                                <a href="/perencanaan/cetak/{{$pengajuan->id_perencanaan}}" class="btn btn-info rounded-pill mx-3" style="color: white; min-width: 130px">
+                                    Cetak List Data
+                                </a>
                         </div>
                     </div>
                 </div>

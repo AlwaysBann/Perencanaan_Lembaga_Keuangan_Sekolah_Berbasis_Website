@@ -24,6 +24,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4">
+                            <h3 style="color: #E6B31E;">Foto bukti Realisasi</h3>
                             @if ($realisasi->bukti_realisasi)
                             <img src="{{ url('foto') . '/' . $realisasi->bukti_realisasi }} "
                                 style="width: 200px; height: 250px;" alt="Bukti Realisasi" />
@@ -64,70 +65,12 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col fs-5" style="color: #E6B31E">
-                                    Spesifikasi Item
-                                </div>
-                                <div style="color: white">
-                                    {{$realisasi->nama_ruangan}}
-                                </div>
-                            </div>
                             
-                            <div class="row">
-                                <div class="col fs-5" style="color: #E6B31E">
-                                    Jenis Item
-                                </div>
-                                <div>
-                                    {{$realisasi->jenis_item}}
-                                </div>
-                            </div>
                             
                             
                         </div>
             
-                        <!-- Column 3 with 5 rows -->
-                        <div class="col-4">
-                            <div class="row">
-                                <div class="col fs-5" style="color: #E6B31E">
-                                    Nama Realisasi
-                                </div>
-                                <div>
-                                    {{$realisasi->nama_realisasi}}
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col fs-5" style="color: #E6B31E">
-                                    Ruangan
-                                </div>
-                                <div name='id_ruangan'>
-                                    @foreach ($ruangan as $i)
-                                     @if($realisasi->id_ruangan == $i->id_ruangan)
-                                        {{ $i->nama_ruangan }}
-                                         @break
-                                    @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col fs-5" style="color: #E6B31E">
-                                    Jumlah Item
-                                </div>
-                                <div>
-                                    {{$realisasi->jumlah_item}}
-                                </div>
-                            </div>  
-                            
-                            <div class="row">
-                                <div class="col fs-5" style="color: #E6B31E">
-                                    Harga Satuan
-                                </div>
-                                <div>
-                                    {{$realisasi->harga_satuan}}
-                                </div>
-                            </div>
-
+                        
                         </div>
                         <div class="col-md-4 mt-3 mb-3">
                             <a href="#" onclick="window.history.back();" class="btn " style="background-color: white;font-weight: 500 ; color: red;  border: 1px solid #E6B31E;  min-width: 100px">KEMBALI</a>

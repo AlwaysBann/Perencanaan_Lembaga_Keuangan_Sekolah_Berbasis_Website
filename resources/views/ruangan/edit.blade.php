@@ -27,7 +27,7 @@
                     <div class="form-group mb-3">
                         <label for="nama_ruangan" style="color: #E6B31E;">Nama Ruangan</label>
                         <input type="text" class="form-control" id="nama_ruangan" name="nama_ruangan" placeholder="Nama Ruangan" style="margin-bottom: 300px"
-                         value="{{$ruangan->nama_ruangan}}">
+                         value="{{$ruangan->nama_ruangan}}" required>
                         @csrf
                       </div>
                       <div class="col-md-4 mt-3 mb-3">

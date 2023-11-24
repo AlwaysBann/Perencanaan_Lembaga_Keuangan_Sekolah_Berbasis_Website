@@ -65,7 +65,7 @@ class AngkatanController extends Controller
     public function edit(string $id, Request $request, angkatan $angkatan)
     {
         $data = [
-            'angkatan' =>  $angkatan->select('no_angkatan', 'tahun_masuk','tahun_keluar')->where('no_angkatan', $id)->first()
+            'angkatan' =>  $angkatan->select('no_angkatan', 'tahun_masuk','tahun_keluar')->where('id_angkatan', $id)->first()
         ];
 
         return view('angkatan.edit', $data);
@@ -78,12 +78,13 @@ class AngkatanController extends Controller
     {
         $data = $request->validate(
             [
+                'no_angkatan'=> ['required'],
                 'tahun_masuk'=> ['required'],
                 'tahun_keluar'=> ['required'],
                 ]
                 );
                 if ($data !== null) {
-                    $dataUpdate= $angkatan->where('no_angkatan',$request->input('no_angkatan'))->update($data);
+                    $dataUpdate= $angkatan->where('id_angkatan',$request->input('id_angkatan'))->update($data);
                     if ($dataUpdate) {
                     return redirect('/angkatan');
                     }

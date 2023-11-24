@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('id_jabatan_pengelola', false);
             $table->integer('id_user', false);
             $table->string('nama_pengelola')->nullable(false);
-            $table->year('mulai_jabat')->nullable(false);
-            $table->year('akhir_jabat')->nullable(false);
+            $table->date('mulai_jabat')->nullable(false);
+            $table->date('akhir_jabat')->nullable(false);
 
             $table->foreign('id_jabatan_pengelola')->on('jabatan_pengelola')
             ->references('id_jabatan_pengelola')->onDelete('cascade')->onUpdate('cascade');

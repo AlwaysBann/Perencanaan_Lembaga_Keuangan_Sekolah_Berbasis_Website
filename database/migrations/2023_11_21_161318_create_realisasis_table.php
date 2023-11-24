@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -25,6 +26,12 @@ return new class extends Migration
             $table->foreign('id_perencanaan')->on('perencanaan')
             ->references('id_perencanaan')->onDelete('cascade')->onUpdate('cascade');
         });
+        DB::unprepared('CREATE TRIGGER tambah_realisasi AFTER INSERT ON realisasi FOR EACH ROW BEGIN INSERT INTO logs_realisasi(logs) VALUES (concat
+        (\'Data Realisasi \', NEW.nama_realisasi, \' telah ditambahkan pada \' , NOW())); END;');
+        DB::unprepared('CREATE TRIGGER edit_realisasi AFTER UPDATE ON realisasi FOR EACH ROW BEGIN INSERT INTO logs_realisasi(logs) VALUES (concat
+        (\'Data Realisasi \', OLD.nama_realisasi, \' telah diperbarui pada \' , NOW())); END;');
+        DB::unprepared('CREATE TRIGGER hapus_realisasi AFTER DELETE ON realisasi FOR EACH ROW BEGIN INSERT INTO logs_realisasi(logs) VALUES (concat
+        (\'Data Realisasi \', OLD.nama_realisasi, \' telah dihapus pada \',  NOW())); END;');
     }
 
     /**

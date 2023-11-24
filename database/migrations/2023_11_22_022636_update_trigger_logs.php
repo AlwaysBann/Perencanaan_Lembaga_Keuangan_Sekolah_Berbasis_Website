@@ -56,6 +56,48 @@ return new class extends Migration
         INSERT INTO logs (logs) VALUES (update_message);
     END'
         );
+
+    //     DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+    //     DB::unprepared(
+    //         'CREATE TRIGGER ' . $this->trgName . ' AFTER UPDATE ON pengajuan
+    // BEGIN
+    //     DECLARE user_id INT;
+    //     DECLARE perubahan VARCHAR(255);
+    //     DECLARE update_message TEXT;
+        
+    //     -- Ambil ID user yang diupdate
+    //     SELECT id_user INTO user_id FROM tbl_user WHERE id_user = NEW.id_user;
+
+    //     -- Inisialisasi pesan log
+    //     SET update_message = CONCAT("User dengan nomor id: ", user_id, " telah diupdate. Perubahan:");
+
+    //     -- Periksa perubahan pada username
+    //     IF OLD.nama_pengajuan != NEW.nama_pengajuan THEN
+    //         SET perubahan = CONCAT("Username dari ",NEW.pembuat , " ke ", (SELECT username FROM tbl_user WHERE id_user = NEW.id_user));
+    //         SET update_message = CONCAT(update_message, " ", perubahan);
+    //     END IF;
+        
+    //     -- Periksa perubahan pada password
+    //     IF OLD.password != NEW.password THEN
+    //         SET update_message = CONCAT(update_message, " password dari ", " kepo ", " ke ", "kepo");
+    //     END IF;
+        
+    //     -- Periksa perubahan pada role
+    //     IF OLD.role != NEW.role THEN
+    //     SET perubahan = CONCAT("Role dari ", (SELECT role FROM tbl_user WHERE id_user = OLD.id_user), " ke ", (SELECT role FROM tbl_user WHERE id_user = NEW.id_user));
+    //     SET update_message = CONCAT(update_message, " ", perubahan);
+    //     END IF;
+
+    //     -- Periksa perubahan pada foto profil
+    //     IF OLD.foto_profil != NEW.foto_profil THEN
+    //     SET perubahan = CONCAT("Foto_profil dari ", (SELECT foto_profil FROM tbl_user WHERE id_user = OLD.id_user), " ke ", (SELECT foto_profil FROM tbl_user WHERE id_user = NEW.id_user));
+    //     SET update_message = CONCAT(update_message, " ", perubahan);
+    //     END IF;
+
+    //     -- Insert pesan log ke dalam tabel logs
+    //     INSERT INTO logs (logs) VALUES (update_message);
+    // END'
+    //     );
     }
 
     /**

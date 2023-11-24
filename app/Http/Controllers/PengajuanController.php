@@ -6,8 +6,10 @@ use App\Models\Pengajuan;
 use App\Models\ruangan;
 use App\Models\logs;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class PengajuanController extends Controller
 {
@@ -122,12 +124,28 @@ class PengajuanController extends Controller
                 'gambar_item' => ['sometimes'],
             ]
         );
+
+        if ($id_pengajuan!== null) {
+            if ($request->hasFile('gambar_item')) {
+                $foto_file = $request->file('gambar_item');
+                $foto_extension = $foto_file->getClientOriginalExtension();
+                $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
+                $foto_file->move(public_path('item'), $foto_nama);
+
+                $update_data = $pengajuan->where('id_pengajuan', $id_pengajuan)->first();
+                File::delete(public_path('item') . '/' . $update_data->file);
+
+                $data['gambar_item'] = $foto_nama;
+            }
+        }
+
         if ($data) {
             $pengajuan->where('id_pengajuan', $id_pengajuan)->update($data);
             return redirect('/pengajuan')->with('success', 'Data berhasil diupdate');
         } else {
             return back()->with('error', 'Data Gagal diupdate');
         }
+
     }
 
 
@@ -145,5 +163,16 @@ class PengajuanController extends Controller
             $data->delete();
             return response()->json(['success' => true]);
         }
+    }
+
+    public function cetak(string $id, Request $request, Pengajuan $pengajuan, ruangan $ruangan)
+    {
+        $data = [
+            'pengajuan' => $pengajuan->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('id_pengajuan', '=', $id)->first(),
+            'ruangan' => $ruangan->join('pengajuan', 'ruangan.id_ruangan', '=', 'pengajuan.id_ruangan')->get()
+        ];
+            $pdf = PDF::loadView('data_pengajuan.cetak', $data);
+            return $pdf->stream('data_pengajuan.pdf');
+
     }
 }

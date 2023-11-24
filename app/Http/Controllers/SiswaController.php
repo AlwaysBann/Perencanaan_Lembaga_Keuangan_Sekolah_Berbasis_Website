@@ -101,10 +101,10 @@ class SiswaController extends Controller
             $dataUpdate = $siswa->where('id_siswa', $id_siswa)->update($data);
 
             if ($dataUpdate) {
-                return redirect('/siswa')->with('success', 'Data surat berhasil diupdate');
+                return redirect('/siswa')->with('success', 'Data siswa berhasil diupdate');
             }
 
-            return back()->with('error', 'Data jenis surat gagal diupdate');
+            return back()->with('error', 'Data jenis siswa gagal diupdate');
     }
 
     /**
