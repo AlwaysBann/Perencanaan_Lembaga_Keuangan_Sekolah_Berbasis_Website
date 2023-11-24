@@ -41,7 +41,7 @@ class PerencanaanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, perencanaan $perencanaan)
+    public function store(Request $request, perencanaan $perencanaan, Pengajuan $pengajuan)
     {
         $data = $request->validate([
             'nama_perencanaan' => ['required'],
@@ -51,6 +51,9 @@ class PerencanaanController extends Controller
         ]);
         // dd($data);
         if ($perencanaan->create($data)) {
+            $pengajuan
+            ->where('id_pengajuan', $request->input('id_pengajuan'))
+            ->update(['status' => 'setuju']);
             return redirect('/perencanaan')->with('success', 'Data Perencanaan Berhasil Ditambah');
         }else {
             return redirect()->back();

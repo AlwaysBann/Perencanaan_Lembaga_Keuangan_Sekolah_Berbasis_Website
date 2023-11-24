@@ -62,7 +62,7 @@
                                         EDIT
                                     </a>
                                 @endif
-                                @if (Auth::check() && Auth::User()->role == 'pengelola')
+                                @if (Auth::check() && Auth::User()->role == 'pengelola' && $p->status == 'tidak')
                                     <a href="pengajuan/confirm/{{$p->id_pengajuan}}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; ">
                                         CONFIRM
                                     </a>

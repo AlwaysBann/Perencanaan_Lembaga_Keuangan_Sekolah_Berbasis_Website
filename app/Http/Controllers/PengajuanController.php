@@ -72,7 +72,7 @@ class PengajuanController extends Controller
             'pengajuan' => $pengajuan->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('id_pengajuan', '=', $id)->first(),
             'ruangan' => $ruangan->get()
         ];
-        // dd($data);
+
         return view('data_pengajuan.edit', $data);
     }
 

@@ -10,7 +10,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    protected $trgName = '';
+    protected $trgName = 'trgDelete';
 
     public function up()
     {
@@ -25,6 +25,17 @@ return new class extends Migration
         //         INSERT INTO logs (logs) VALUES (CONCAT("Super Admin telah menghapus  Akun user  nomor id: ", OLD.id_user, ". bernama ", user_name));
         //     END'
         // );
+
+        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared(
+            'CREATE TRIGGER ' . $this->trgName . ' AFTER DELETE ON pengajuan
+            FOR EACH ROW
+            BEGIN
+
+                INSERT INTO logs (logs) VALUES (CONCAT("Peminta telah menghapus Pengajuan  nomor id: ", OLD.id_pengajuan, ". bernama ", OLD.pembuat));
+
+            END'
+        );
     }
 
     /**

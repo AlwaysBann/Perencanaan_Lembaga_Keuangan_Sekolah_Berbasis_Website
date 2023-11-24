@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('jenis_item', ['Jasa', 'Benda']);
             $table->date('waktu_pengajuan');
             $table->string('pembuat');
+            $table->enum('status', ['setuju', 'tidak'])->default('tidak');
             $table->text('gambar_item');
 
             $table->foreign('id_ruangan')->on('ruangan')
