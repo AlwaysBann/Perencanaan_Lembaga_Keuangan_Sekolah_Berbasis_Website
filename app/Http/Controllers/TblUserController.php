@@ -95,7 +95,7 @@ class TblUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, tbl_user $user)
+    public function update(Request $request, tbl_user $user, string $id)
     {
         $data = $request->validate(
             [
@@ -116,14 +116,14 @@ class TblUserController extends Controller
                         
                         $data['foto_profil'] = $foto_nama;
                     }
-                    // $data['id_user'] = 1;
-                    $dataUpdate= $user->where('id_user',$request->input('id_user'))->update($data);
-                    if ($dataUpdate) {
-                    return redirect('/akun');
+                    $filter = $user->where('username', $data['username'])->first();
+                    if($filter){
+                        return redirect('/akun/tambah/' + $id)->with('error', 'Data user gagal diedit, Karena Username sudah ada');
+                    } else {
+                        $user->where('id_user',$request->input('id_user'))->update($data);
+                        return redirect('/akun')->with('success', 'Data user '+ $data['id_user'] + ' berhasil diedit');
                     }
-                } else {
-                    return back();
-                } 
+                }
     }
 
     /**

@@ -45,7 +45,7 @@ class AuthController extends Controller
                 return redirect('/dashboard')->with('success', 'Berhasil Masuk');
             }
         }else{
-            return back();
+            return back()->with('error', 'Masukan Username dan Password yang benar!');
         }
     }
 

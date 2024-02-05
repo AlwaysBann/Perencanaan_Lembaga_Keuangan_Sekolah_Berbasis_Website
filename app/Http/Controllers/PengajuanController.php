@@ -7,6 +7,7 @@ use App\Models\ruangan;
 use App\Models\logs;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -48,7 +49,7 @@ class PengajuanController extends Controller
 
         $data['pembuat'] = Auth::user()->username;
 
-        
+
         if ($request->hasFile('gambar_item') && $request->file('gambar_item')->isValid()) {
             $foto_file = $request->file('gambar_item');
             $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
@@ -56,7 +57,7 @@ class PengajuanController extends Controller
             $data['gambar_item'] = $foto_nama;
         }
 
-       if (DB::statement(
+        if (DB::statement(
             'CALL CreateDataPengajuan(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             array_values($data)
         )) {
@@ -91,20 +92,23 @@ class PengajuanController extends Controller
         $search = $request->input('search');
 
         $data = Pengajuan::where('nama_pengajuan', 'LIKE', "%$search%")
-                     ->orWhere('id_pengajuan', 'LIKE', "%$search%")
-                     ->orWhere('nama_pengaju', 'LIKE', "%$search%")
-                     ->get();
+            ->orWhere('id_pengajuan', 'LIKE', "%$search%")
+            ->orWhere('nama_pengaju', 'LIKE', "%$search%")
+            ->get();
 
-        return view('data_pengajuan.index', ['pengajuan'=>$data]);
+        return view('data_pengajuan.index', ['pengajuan' => $data]);
     }
 
     public function logs(logs $logs)
     {
+        date_default_timezone_set('Asia/Jakarta');
+
         $data = [
-            'logs' => $logs::orderBy('id_logs', 'desc')->get()
+            'logs' => $logs::orderBy('id_logs', 'desc')->get(),
+            'waktuSekarang' => date('Y-m-d H:i:s')
         ];
 
-        return view('data_pengajuan.logs', $data);
+        return view('data_pengajuan.logs', $data);  
     }
 
     public function update(Request $request, ruangan $ruangan, Pengajuan $pengajuan)
@@ -125,7 +129,7 @@ class PengajuanController extends Controller
             ]
         );
 
-        if ($id_pengajuan!== null) {
+        if ($id_pengajuan !== null) {
             if ($request->hasFile('gambar_item')) {
                 $foto_file = $request->file('gambar_item');
                 $foto_extension = $foto_file->getClientOriginalExtension();
@@ -145,7 +149,6 @@ class PengajuanController extends Controller
         } else {
             return back()->with('error', 'Data Gagal diupdate');
         }
-
     }
 
 
@@ -171,8 +174,7 @@ class PengajuanController extends Controller
             'pengajuan' => $pengajuan->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('id_pengajuan', '=', $id)->first(),
             'ruangan' => $ruangan->join('pengajuan', 'ruangan.id_ruangan', '=', 'pengajuan.id_ruangan')->get()
         ];
-            $pdf = PDF::loadView('data_pengajuan.cetak', $data);
-            return $pdf->stream('data_pengajuan.pdf');
-
+        $pdf = PDF::loadView('data_pengajuan.cetak', $data);
+        return $pdf->stream('data_pengajuan.pdf');
     }
 }

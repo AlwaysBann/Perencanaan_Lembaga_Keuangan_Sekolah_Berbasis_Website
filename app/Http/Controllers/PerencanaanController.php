@@ -20,9 +20,9 @@ class PerencanaanController extends Controller
         $data = [
             "jumlahPerencanaan" => $totalPerencanaan,
             "perencanaan" => DB::table('perencanaan')
-            ->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')
-            ->select('perencanaan.*', 'pengajuan.*')
-            ->get() 
+                ->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')
+                ->select('perencanaan.*', 'pengajuan.*')
+                ->get()
         ];
         return view("data_perencanaan.index", $data);
     }
@@ -52,10 +52,10 @@ class PerencanaanController extends Controller
         // dd($data);
         if ($perencanaan->create($data)) {
             $pengajuan
-            ->where('id_pengajuan', $request->input('id_pengajuan'))
-            ->update(['status' => 'setuju']);
+                ->where('id_pengajuan', $request->input('id_pengajuan'))
+                ->update(['status' => 'setuju']);
             return redirect('/perencanaan')->with('success', 'Data Perencanaan Berhasil Ditambah');
-        }else {
+        } else {
             return redirect()->back();
         }
     }
@@ -65,13 +65,13 @@ class PerencanaanController extends Controller
         $search = $request->input('search');
 
         $data = perencanaan::where('nama_perencanaan', 'LIKE', "%$search%")
-                     ->orWhere('id_perencanaan', 'LIKE', "%$search%")
-                     ->orWhere('nama_penanggung_jawab', 'LIKE', "%$search%")
-                     ->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')
-                     ->select('perencanaan.*', 'pengajuan.*')
-                     ->get();
+            ->orWhere('id_perencanaan', 'LIKE', "%$search%")
+            ->orWhere('nama_penanggung_jawab', 'LIKE', "%$search%")
+            ->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')
+            ->select('perencanaan.*', 'pengajuan.*')
+            ->get();
 
-        return view('data_perencanaan.index', ['perencanaan'=>$data]);
+        return view('data_perencanaan.index', ['perencanaan' => $data]);
     }
 
     /**
@@ -109,13 +109,13 @@ class PerencanaanController extends Controller
                 'waktu_realisasi' => ['required'],
                 'id_pengajuan' => ['required'],
             ]
-            );
-            if ($data) {
-                $perencanaan->where('id_perencanaan', $id_perencanaan)->update($data);
-                return redirect('/perencanaan')->with('success','Data berhasil diupdate');
-            } else {
-                return back()->with('error', 'Data Gagal diupdate');
-            } 
+        );
+        if ($data) {
+            $perencanaan->where('id_perencanaan', $id_perencanaan)->update($data);
+            return redirect('/perencanaan')->with('success', 'Data berhasil diupdate');
+        } else {
+            return back()->with('error', 'Data Gagal diupdate');
+        }
     }
 
     /**
@@ -131,7 +131,7 @@ class PerencanaanController extends Controller
         }
 
         if ($data) {
-            $data->delete();    
+            $data->delete();
             return response()->json(['success' => true]);
         }
     }
@@ -139,8 +139,7 @@ class PerencanaanController extends Controller
     public function cetak(string $id, perencanaan $perencanaan, Request $request)
     {
         $pengajuan = $perencanaan->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('perencanaan.id_pengajuan', $id)->select('pengajuan.*', 'ruangan.*', 'perencanaan.nama_penanggung_jawab', 'perencanaan.nama_perencanaan', 'perencanaan.id_perencanaan')->first();
-            $pdf = PDF::loadView('data_perencanaan.cetak', compact('pengajuan'));
-            return $pdf->stream('data_perencanaan.pdf');
-
+        $pdf = PDF::loadView('data_perencanaan.cetak', compact('pengajuan'));
+        return $pdf->stream('data_perencanaan.pdf');
     }
 }
