@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\tbl_user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SiswaController extends Controller
@@ -14,9 +16,10 @@ class SiswaController extends Controller
      */
     public function index(Siswa $siswa)
     {
+        $totalSiswa = DB::select('SELECT CountSiswa() AS Siswa')[0]->Siswa;
         $data= [
-
-           'siswa' => DB::table('siswa')
+            'jumlahSiswa' => $totalSiswa,
+            'siswa' => DB::table('siswa')
                             ->join('tbl_user', 'siswa.id_user', '=', 'tbl_user.id_user')
                             ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
                             ->select('tbl_user.*', 'kelas.*', 'siswa.*')
@@ -31,38 +34,38 @@ class SiswaController extends Controller
      */
     public function create(tbl_user $tbl_user, siswa $siswa)
     {
-        $data = [
-            'tbl_user' => $tbl_user->all(),
-            'siswa' => $siswa->all(),
-        ];
-        return view('siswa.tambah', $data); 
+        $user = tbl_user::all();
+        $kelas = Kelas::all();
+        return view('siswa.tambah', [
+            'nama_user' => $user,
+            'nama_kelas' => $kelas,
+        ]); 
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, siswa $siswa)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'id_user' => ['required'],
+            'nis_siswa' => ['required'],
             'nama_siswa' => ['required'],
             'jenis_kelamin' => ['required'],
+            'no_telp' => ['required'],
             'id_kelas' => ['required'],
         ]);
 
-        // dd($data);
         //Proses Insert
-        if ($data) {
+        if (DB::statement("CALL CreateDataSiswa(?, ?, ?, ?, ?, ?)", array_values($data))) {
             // Simpan jika data terisi semua
-            $siswa->create($data);
             return redirect('/siswa')->with('success', 'Data Siswa baru berhasil ditambah');
         } else {
             // Kembali ke form tambah data
             return back()->with('error', 'Data Siswa gagal ditambahkan');
+        }
     }
 
-        
-    }
 
     /**
      * Display the specified resource.
@@ -77,28 +80,32 @@ class SiswaController extends Controller
      */
     public function edit( siswa $siswa, tbl_user $tbl_user, string $id)
     {
-        $data = [
-            'id_siswa' => $siswa->where('id_siswa', $id)->first(),
-            'id_user'=> $tbl_user->all(),
-        ];
+       $siswa = Siswa::where('id_siswa', $id)->first();
+       $user = tbl_user::all();
+       $kelas = kelas::all();
 
-        return view('siswa.edit', $data);
+        return view('siswa.edit', [
+            'nama_siswa' => $siswa,
+            'nama_user' => $user,
+            'nama_kelas' => $kelas
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, siswa $siswa)
+    public function update(Request $request, siswa $siswa, $id)
     {
-        $id_siswa = $request->input('id_siswa');
         $data = $request->validate([
             'id_user' => ['required'],
+            'nis_siswa' => ['required'],
             'nama_siswa' => ['required'],
             'jenis_kelamin' => ['required'],
             'id_kelas' => ['required'],
+            'no_telp' => ['required'],
         ]);
 
-            $dataUpdate = $siswa->where('id_siswa', $id_siswa)->update($data);
+            $dataUpdate = $siswa->where('id_siswa', $id)->update($data);
 
             if ($dataUpdate) {
                 return redirect('/siswa')->with('success', 'Data siswa berhasil diupdate');

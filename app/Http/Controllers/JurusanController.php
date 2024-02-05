@@ -11,13 +11,14 @@ class JurusanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(jurusan $j)
+    public function index()
     {
+        // VIEW SQL
         $data = [
-            "jurusan" => $j->all()
+            'jurusan' => DB::table('view_jurusan')->get(),
         ];
 
-        return view("jurusan.index", $data);
+        return view('jurusan.index', $data);
     }
 
     /**
@@ -76,17 +77,17 @@ class JurusanController extends Controller
     {
         $data = $request->validate(
             [
-                'nama_jurusan'=> ['required'],
-                ]
-                );
-                if ($data !== null) {
-                    $dataUpdate= $jurusan->where('id_jurusan',$request->input('id_jurusan'))->update($data);
-                    if ($dataUpdate) {
-                    return redirect('/jurusan');
-                    }
-                } else {
-                    return back();
-                } 
+                'nama_jurusan' => ['required'],
+            ]
+        );
+        if ($data !== null) {
+            $dataUpdate = $jurusan->where('id_jurusan', $request->input('id_jurusan'))->update($data);
+            if ($dataUpdate) {
+                return redirect('/jurusan');
+            }
+        } else {
+            return back();
+        }
     }
 
 
@@ -101,11 +102,10 @@ class JurusanController extends Controller
         if (!$data) {
             return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
         }
-        
+
         if ($data) {
             $data->delete();
             return response()->json(['success' => true]);
-        } 
-
+        }
     }
 }

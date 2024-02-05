@@ -50,12 +50,24 @@
         @endif
         <a href="/logout" class="navbar-brand me-auto" style="color: #E6B31E">LOGOUT</a>
 
-    @auth
-    <span class="me-3" style="color: #E6B31E; font-size: 20px"> {{auth()->user()->username}}</span>
-    <div style="position: relative; overflow: hidden; width: 35px; height: 35px;">
-        <img src="{{auth()->user()->foto_profil == null ?  asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil)}}" alt="Foto Profile Kosong" class="" style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%">
-    </div>
-    @endauth
+    @if (Auth::check())
+        @if (Auth::user()->role == 'super_admin' || Auth::user()->role == 'pengelola' || Auth::user()->role == 'peminta')
+            <span class="me-3" style="color: #E6B31E; font-size: 20px"> {{auth()->user()->username}}</span>
+            <div style="position: relative; overflow: hidden; width: 35px; height: 35px;">
+                <img src="{{auth()->user()->foto_profil == null ?  asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil)}}" alt="Foto Profile Kosong" class="" style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%">
+            </div>
+        @endif
+    @endif
+    
+
+    @if (Auth::check())
+        @if (Auth::user()->role == 'siswa')
+            <span class="me-3" style="color: #E6B31E; font-size: 20px"> {{auth()->user()->username}}</span>
+            <div style="position: relative; overflow: hidden; width: 35px; height: 35px;">
+                <a href="{{url('/profile-akun')}}"><img src="{{auth()->user()->foto_profil == null ?  asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil)}}" alt="Foto Profile Kosong" class="" style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%"></a>
+            </div>
+        @endif
+    @endif
     </nav>
     <div class="mt-5">
         @yield('content')

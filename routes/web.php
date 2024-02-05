@@ -22,6 +22,7 @@ use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\LogsRealisasiController;
 
 use App\Http\Controllers\SumberDanaController;
+use App\Http\Controllers\PembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,8 @@ Route::middleware(['akses:siswa,pengelola,peminta'])->group(function () {
     Route::get('/realisasi', [RealisasiController::class,'index']);
     Route::get('/realisasi/search', [RealisasiController::class, 'show']);
     Route::get('/realisasi/detail/{id}', [RealisasiController::class, 'detail']);
+
+    Route::get('/profile-akun', [PembayaranController::class, 'index']);
 });
 
 Route::middleware(['akses:pengelola'])->group(function () {
@@ -149,7 +152,7 @@ Route::get('/siswa', [SiswaController::class,'index']);
 Route::get('/siswa/tambah', [SiswaController::class,'create']);
 Route::post('/siswa/tambah/simpan', [SiswaController::class,'store']);
 Route::get('/siswa/edit/{id}', [SiswaController::class,'edit']);
-Route::post('/siswa/edit/simpan', [SiswaController::class,'update']);
+Route::post('/siswa/edit/simpan/{id}', [SiswaController::class,'update']);
 Route::delete('/siswa/hapus', [SiswaController::class, 'destroy']);
 
 Route::get('/pengajuan/confirm/{id}', [PerencanaanController::class,'create']);

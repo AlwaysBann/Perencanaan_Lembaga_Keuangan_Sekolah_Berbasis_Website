@@ -15,13 +15,14 @@ class KelasController extends Controller
      */
     public function index(Kelas $kelas)
     {
+        $totalKelas = DB::select('SELECT CountKelas() AS Kelas')[0]->Kelas;
         $data= [
-
-           'kelas' => DB::table('kelas')
+            'jumlahKelas' => $totalKelas,
+            'kelas' => DB::table('kelas')
                             ->join('angkatan', 'kelas.id_angkatan', '=', 'angkatan.id_angkatan')
                             ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
                             ->select('kelas.*', 'angkatan.*', 'jurusan.*')
-                            ->get()
+                            ->get(),
         ];
         // dd($data);
         return view('kelas.index', $data);
@@ -42,7 +43,7 @@ class KelasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, kelas $kelas)
+    public function store(Request $request)
     {
         $data = $request->validate([
             'nama_kelas' => ['required'],
@@ -50,18 +51,14 @@ class KelasController extends Controller
             'id_jurusan' => ['required'],
         ]);
 
-        // dd($data);
-        //Proses Insert
-        if ($data) {
+        // Proses Insert
+        if (DB::statement("CALL CreateDataKelas(?, ?, ?)", [$data['nama_kelas'], $data['id_angkatan'], $data['id_jurusan']])) {
             // Simpan jika data terisi semua
-            $kelas->create($data);
             return redirect('/kelas')->with('success', 'Data Kelas baru berhasil ditambah');
         } else {
             // Kembali ke form tambah data
             return back()->with('error', 'Data Kelas gagal ditambahkan');
-    }
-
-        
+        }
     }
 
     /**

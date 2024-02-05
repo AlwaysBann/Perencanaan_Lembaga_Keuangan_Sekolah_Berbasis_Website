@@ -52,6 +52,7 @@
                             <option value="super_admin">Super Admin</option>
                             <option value="pengelola">pengelola</option>
                             <option value="peminta">Peminta</option>
+                            <option value="siswa">Siswa</option>
                         </select>
                         <div class="valid-feedback" style="font-size: 15px; color: green; font-weight: 700; text-shadow: 0px 0px 5px white">
                             Role Dapat disimpan

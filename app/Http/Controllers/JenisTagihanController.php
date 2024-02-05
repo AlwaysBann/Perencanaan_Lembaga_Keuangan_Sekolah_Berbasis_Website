@@ -12,10 +12,11 @@ class JenisTagihanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(JenisTagihan $JenisTagihan)
+    public function index()
     {
+        // VIEW SQL
         $data = [
-            "JenisTagihan" => $JenisTagihan->all()
+            "JenisTagihan" => DB::table('view_jenis_tagihan')->get()
         ];
 
         return view("JenisTagihan.index", $data);
@@ -77,17 +78,17 @@ class JenisTagihanController extends Controller
     {
         $data = $request->validate(
             [
-                'nama_jenis_tagihan'=> ['required'],
-                ]
-                );
-                if ($data !== null) {
-                    $dataUpdate= $JenisTagihan->where('id_jenis_tagihan',$request->input('id_jenis_tagihan'))->update($data);
-                    if ($dataUpdate) {
-                    return redirect('/JenisTagihan');
-                    }
-                } else {
-                    return back();
-                } 
+                'nama_jenis_tagihan' => ['required'],
+            ]
+        );
+        if ($data !== null) {
+            $dataUpdate = $JenisTagihan->where('id_jenis_tagihan', $request->input('id_jenis_tagihan'))->update($data);
+            if ($dataUpdate) {
+                return redirect('/JenisTagihan');
+            }
+        } else {
+            return back();
+        }
     }
 
 
@@ -102,11 +103,10 @@ class JenisTagihanController extends Controller
         if (!$data) {
             return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
         }
-        
+
         if ($data) {
             $data->delete();
             return response()->json(['success' => true]);
-        } 
-
+        }
     }
 }

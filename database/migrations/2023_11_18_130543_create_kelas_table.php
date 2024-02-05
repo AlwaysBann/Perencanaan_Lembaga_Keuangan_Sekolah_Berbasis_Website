@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -23,6 +24,27 @@ return new class extends Migration
             $table->foreign('id_jurusan')->on('jurusan')
             ->references('id_jurusan')->onDelete('cascade')->onUpdate('cascade');
         });
+
+        DB::unprepared("DROP PROCEDURE IF EXISTS CreateDataKelas");
+        DB::unprepared(
+        "CREATE PROCEDURE CreateDataKelas(nama_kelas VARCHAR(200), id_angkatan INT(11), id_jurusan INT(11))
+        BEGIN
+            DECLARE pesan_error CHAR(5) DEFAULT '00000';
+            BEGIN
+
+            GET DIAGNOSTICS CONDITION 1 pesan_error = RETURNED_SQLSTATE;
+            END;
+
+            START TRANSACTION;
+            SAVEPOINT satu;
+
+            INSERT INTO kelas(nama_kelas, id_angkatan, id_jurusan) VALUES (nama_kelas, id_angkatan, id_jurusan);
+
+            IF pesan_error != '00000' THEN ROLLBACK TO satu;
+            END IF;
+            COMMIT;
+        END;
+        ");
     }
 
     /**

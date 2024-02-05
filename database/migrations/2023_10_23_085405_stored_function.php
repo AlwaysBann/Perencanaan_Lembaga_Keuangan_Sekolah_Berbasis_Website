@@ -41,6 +41,36 @@ return new class extends Migration
             RETURN Perencanaan;
         END
         ');
+        
+        DB::unprepared('DROP FUNCTION IF EXISTS CountKelas');
+        DB::unprepared('
+            CREATE FUNCTION CountKelas() RETURNS INT
+            BEGIN
+                DECLARE Kelas INT;
+                SELECT COUNT(*) INTO Kelas FROM kelas;
+                RETURN Kelas;
+            END
+        ');
+
+        DB::unprepared('DROP FUNCTION IF EXISTS CountSiswa');
+        DB::unprepared('
+            CREATE FUNCTION CountSiswa() RETURNS INT
+            BEGIN
+                DECLARE Siswa INT;
+                SELECT COUNT(*) INTO Siswa FROM siswa;
+                RETURN Siswa;
+            END
+        ');
+
+        DB::unprepared('DROP FUNCTION IF EXISTS CountAngkatan');
+        DB::unprepared('
+            CREATE FUNCTION CountAngkatan() RETURNS INT
+            BEGIN
+                DECLARE Angkatan INT;
+                SELECT COUNT(*) INTO Angkatan FROM angkatan;
+                RETURN Angkatan;
+            END
+        ');
     }
 
     /**

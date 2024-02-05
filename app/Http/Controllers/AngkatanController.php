@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\angkatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AngkatanController extends Controller
 {
@@ -12,7 +13,9 @@ class AngkatanController extends Controller
      */
     public function index(angkatan $a)
     {
+        $totalAngkatan = DB::select('SELECT CountAngkatan() AS Angkatan')[0]->Angkatan;
         $data = [
+            'jumlahAngkatan' => $totalAngkatan,
             "angkatan" => $a->all()
         ];
 
@@ -30,27 +33,21 @@ class AngkatanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, angkatan $angkatan)
+    public function store(Request $request)
     {
-        $data = $request->validate(
-            [
-                'no_angkatan' => ['required'],
-                'tahun_masuk' => ['required'],
-                'tahun_keluar' => ['required'],
-            ]
-        );
-        // dd($data);
-        //Proses Insert
-        if ($data) {
-            // Simpan jika data terisi semua
-            $angkatan->create($data);
+        $data = $request->validate([
+            'no_angkatan' => ['required'],
+            'tahun_masuk' => ['required'],
+            'tahun_keluar' => ['required'],
+        ]);
+
+        if (DB::statement("CALL CreateDataAngkatan(?, ?, ?)", [$data['no_angkatan'], $data['tahun_masuk'], $data['tahun_keluar']])) {
             return redirect('/angkatan')->with('success', 'Data Angkatan baru berhasil ditambah');
         } else {
-            // Kembali ke form tambah data
             return back()->with('error', 'Data Angkatan gagal ditambahkan');
         }
     }
-
+    
     /**
      * Display the specified resource.
      */
