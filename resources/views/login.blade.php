@@ -1,3 +1,6 @@
+@extends('layout.layout')
+@section('title', 'Manage User')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +19,7 @@
   <div class="container my-5 d-flex justify-content-center"> 
     <div class="row justify-content-center align-items-center rounded-3 p-4" style="border: 3px solid #E6B31E; background-color: #F8F9FA; max-width: 400px;">
       <img src="{{asset('img/logo.png')}}" style="width: 120px; margin-bottom: 50px; margin-top: 20px" alt="">
+      @include('layout.flash-massage')    
       <h1 class="align-items-center " style="text-align: center; font-weight: 600">Login</h1>
     <form method="POST" action="" class="needs-validation" novalidate>
       @csrf
@@ -61,3 +65,5 @@
           })
       })()
   </script>
+  
+@endsection

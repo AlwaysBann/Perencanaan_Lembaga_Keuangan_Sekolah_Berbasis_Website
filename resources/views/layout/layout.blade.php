@@ -13,11 +13,12 @@
     </style>
 </head>
 <body>
+    @if (Auth::check())
     <nav class="navbar fixed-top navbar-expand-md px-5" style="background-color: #343434; z-index: 100;">
-        @if (Auth::check() && Auth::User()->role == 'super_admin')
+        @if (Auth::User()->role == 'super_admin')
         <a href="/akun" class="navbar-brand" style="color: #E6B31E">MANAGE ACCOUNT</a>
         @endif
-        @if (Auth::check() && Auth::User()->role == 'pengelola')
+        @if (Auth::User()->role == 'pengelola')
         <a href="/dashboard" class="navbar-brand" style="color: #E6B31E">DASHBOARD</a>
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle navbar-brand" style="color: #E6B31E" href="#" id="listDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,7 +43,7 @@
         <a href="/perencanaan" class="navbar-brand" style="color: #E6B31E">PERENCANAAN</a>
         <a href="/realisasi" class="navbar-brand" style="color: #E6B31E">REALISASI</a>
         @endif
-        @if (Auth::check() && Auth::User()->role == 'peminta')
+        @if (Auth::User()->role == 'peminta')
         <a href="/dashboard" class="navbar-brand" style="color: #E6B31E">DASHBOARD</a>
         <a href="/pengajuan" class="navbar-brand" style="color: #E6B31E">PENGAJUAN</a>
         <a href="/perencanaan" class="navbar-brand" style="color: #E6B31E">PERENCANAAN</a>
@@ -57,6 +58,7 @@
     </div>
     @endauth
     </nav>
+    @endif
     <div class="mt-5">
         @yield('content')
     </div>
