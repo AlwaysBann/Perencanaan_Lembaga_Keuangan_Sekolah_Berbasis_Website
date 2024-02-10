@@ -10,56 +10,31 @@ class PembayaranController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(pembayaran $pembayaran)
     {
-        return view('pembayaran.index');
+        $data = [
+            'pembayaran' =>  
+                $pembayaran
+                ->join('siswa', 'pembayaran.id_siswa', '=', 'siswa.id_siswa')
+                ->get()
+        ];
+
+        return view('pembayaran.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    
+    public function detail(pembayaran $pembayaran, $id)
     {
-        //
+        $data = [
+            'pembayaran' =>  
+                $pembayaran
+                ->join('siswa', 'pembayaran.id_siswa', '=', 'siswa.id_siswa')
+                ->join('tagihan', 'pembayaran.id_tagihan', '=', 'tagihan.id_tagihan')
+                ->where('id_pembayaran', $id)
+                ->first()
+        ];
+
+        return view('pembayaran.detail', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(pembayaran $pembayaran)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(pembayaran $pembayaran)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, pembayaran $pembayaran)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(pembayaran $pembayaran)
-    {
-        //
-    }
 }

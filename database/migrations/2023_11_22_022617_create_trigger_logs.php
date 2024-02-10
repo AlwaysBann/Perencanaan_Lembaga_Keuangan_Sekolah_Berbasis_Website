@@ -41,6 +41,21 @@ return new class extends Migration
         INSERT INTO logs (logs) VALUES (CONCAT("Pengajuan telah ditambahkan oleh peminta dengan nomor id: ", user_id, ". dan nama ", NEW.pembuat));
     END'
         );
+        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared('
+    CREATE TRIGGER ' . $this->trgName . ' AFTER INSERT ON tagihan
+    FOR EACH ROW
+    BEGIN
+        DECLARE jenis_tagihan_name VARCHAR(255);
+
+        SELECT nama_jenis_tagihan INTO jenis_tagihan_name FROM JenisTagihan WHERE id_jenis_tagihan = NEW.id_jenis_tagihan;
+
+        INSERT INTO logs (logs) VALUES (
+            CONCAT("Tagihan dengan ID ", NEW.id_tagihan, " telah ditambahkan dengan jenis tagihan: ", jenis_tagihan_name, ".")
+        );
+    END
+        ');
+
     }
 
     /**

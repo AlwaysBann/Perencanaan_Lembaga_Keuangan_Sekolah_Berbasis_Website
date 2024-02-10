@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tagihan', function (Blueprint $table) {
-            $table->integer('id_tagihan')->autoIncrement();
+            $table->integer('id_tagihan', true);
             $table->integer('id_jenis_tagihan', false);
             $table->integer('jumlah_tagihan', false);
             $table->date('tanggal_tagihan');
+            $table->enum('status', ['Bayar', 'Belum'])->default('Belum');
             
 
             $table->foreign('id_jenis_tagihan')->on('JenisTagihan')

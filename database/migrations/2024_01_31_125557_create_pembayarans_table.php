@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->integer('id_pembayaran')->autoIncrement();
             $table->integer('id_tagihan', false);
-            $table->integer('id_pengelola', false);
+            $table->integer('id_siswa', false);
             $table->integer('nis_siswa', false);
+            $table->enum('nama_sumber_dana',['Dana-BOS', 'Dana-BOPD', 'Dana-Komite', 'Dana-SPP']);
             $table->string('jumlah_dana_pembayaran', 200);
             $table->dateTime('waktu_pembayaran');
             $table->string('bukti_pembayaran', false);
@@ -23,10 +24,7 @@ return new class extends Migration
             $table->foreign('id_tagihan')->on('tagihan')
             ->references('id_tagihan')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->foreign('id_pengelola')->on('pengelola')
-            ->references('id_pengelola')->onDelete('cascade')->onUpdate('cascade');
-
-            $table->foreign('nis_siswa')->on('siswa')
+            $table->foreign('id_siswa')->on('siswa')
             ->references('id_siswa')->onDelete('cascade')->onUpdate('cascade');
         });
     }

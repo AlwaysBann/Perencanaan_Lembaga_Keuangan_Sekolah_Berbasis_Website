@@ -71,6 +71,34 @@ return new class extends Migration
                 RETURN Angkatan;
             END
         ');
+        DB::unprepared('DROP FUNCTION IF EXISTS CalculateTotalValue');
+        DB::unprepared('
+            CREATE FUNCTION CalculateTotalValue(nama_sumber_dana ENUM("Dana-BOS", "Dana-BOPD", "Dana-Komite", "Dana-SPP"))
+            RETURNS VARCHAR(255)
+            BEGIN
+                DECLARE total_value VARCHAR(255);
+
+                SELECT COALESCE(SUM(dana_sumber_dana), 0) INTO total_value
+                FROM sumber_dana
+                WHERE sumber_dana.nama_sumber_dana = nama_sumber_dana;
+
+                RETURN total_value;
+            END
+        ');
+
+        DB::unprepared('DROP FUNCTION IF EXISTS CalculateTotalDanaSumberDana');
+        DB::unprepared('
+            CREATE FUNCTION CalculateTotalDanaSumberDana()
+            RETURNS VARCHAR(255)
+            BEGIN
+                DECLARE total_value VARCHAR(255);
+
+                SELECT COALESCE(SUM(dana_sumber_dana), 0) INTO total_value
+                FROM sumber_dana;
+
+                RETURN total_value;
+            END
+        ');
     }
 
     /**

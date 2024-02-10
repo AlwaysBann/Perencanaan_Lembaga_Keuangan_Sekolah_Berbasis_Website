@@ -1,56 +1,101 @@
 @extends('layout.layout')
-@section('title', 'Tambah Data Jabatan Pengelola')
+@section('title', 'Pembayaran')
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <style>
-        body{
-            background-image: url('/img/background.png');
-            background-size: 100%;
-            background-repeat: repeat-y;
-        }
-    </style>
-</head>
-<body>
-    <div class="px-5 py-3">
-        <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Profile Akun</h1>
-        <div class="container my-5 d-flex justify-content-center rounded-3 p-4" style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
-            <div class="col-md-12">
-                    <div class="col-md-7 m-5">
-                        <img src="{{auth()->user()->foto_profil == null ?  asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil)}}" alt="" width="200px">
-                        <p class="px-5" style="font-family: Nunito; font-size: 20px; font-style: normal; font-weight: 400; color: #E6B31E;">Nama akun</p>
-                        <p class="px-5" style="color: #fff;">Raihanda</p>
+    <!DOCTYPE html>
+    <html lang="en">
 
-                        <button class="mx-5" style="padding: 10px 16px; width: 100px; height: 52px; border-radius: 6px; border: 1px solid #E6B31E; color: red">kembali</button>
-                    </div>
-                    <div class="col-md-4">
-                        <table class="table-responsive DataTable">
-                            <thead>
-                                <th>
-                                    <tr>Nama Siswa</tr>
-                                    <tr></tr>
-                                    <tr></tr>
-                                    <tr></tr>
-                                </th>
-                            </thead>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            body {
+                background-image: url('/img/background.png');
+                background-size: 100%;
+                background-repeat: repeat-y;
+            }
+        </style>
+    </head>
 
-                            <tbody>
-                                <th>
-                                    <tr></tr>
-                                    <tr></tr>
-                                    <tr></tr>
-                                </th>
-                            </tbody>
-                        </table>
-                    </div>
+    <body>
+        <div class="px-5 py-3">
+            <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DATA PEMBAYARAN</h1>
+            @include('layout.flash-massage')
+            <div class="card-body" style="margin-top: 200px">
+                <div class="">
+                    <table class="table table-bordered border-warning table-dark DataTable"
+                        style="background-color: rgba(32, 32, 32, 0.637)">
+                        <thead>
+                            <tr>
+                                <th>Id_tagihan</th>
+                                <th>Nis siswa</th>
+                                <th>Nama siswa</th>
+                                <th>Waktu Pembayaran</th>
+                                <th style="max-width: 40px">aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pembayaran as $bayar)
+                                <tr>
+                                    <td>{{ $bayar->id_tagihan }}</td>
+                                    <td>{{ $bayar->nis_siswa }}</td>
+                                    <td>{{ $bayar->nama_siswa }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($bayar->waktu_pembayaran)->format('Y-m-d') }}</td>
+                                    <td style="max-width: 175px">
+                                        <a href="pembayaran/detail/{{ $bayar->id_pembayaran }}" class="btn mx-4"
+                                            style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
+                                            DETAIL
+                                        </a>
+
+                                        <a href="/pemasukan/confirm/{{ $bayar->id_pembayaran }}" class="btn mx-4"
+                                            style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; ">
+                                            CONFIRM
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-</body>
-</html>
+    </body>
+    <script type="module">
+        $('.DataTable tbody').on('click', '.btnHapus', function(a) {
+            a.preventDefault();
+            let idRuangan = $(this).closest('.btnHapus').attr('idRuangan');
+            swal.fire({
+                title: "Apakah anda ingin menghapus data ini?",
+                showCancelButton: true,
+                confirmButtonText: 'Setuju',
+                cancelButtonText: `Batal`,
+                confirmButtonColor: 'red'
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //Ajax Delete
+                    $.ajax({
+                        type: 'DELETE',
+                        url: 'ruangan/hapus',
+                        data: {
+                            id_ruangan: idRuangan,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(data) {
+                            if (data.success) {
+                                swal.fire('Berhasil di hapus!', '', 'success').then(function() {
+                                    //Refresh Halaman
+                                    location.reload();
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    </html>
 @endsection

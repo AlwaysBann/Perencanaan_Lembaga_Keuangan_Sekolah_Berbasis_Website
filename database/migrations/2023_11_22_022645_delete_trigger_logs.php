@@ -36,6 +36,15 @@ return new class extends Migration
 
             END'
         );
+        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared('
+            CREATE TRIGGER ' . $this->trgName . ' AFTER DELETE ON tagihan
+            FOR EACH ROW
+            BEGIN
+                -- Insert the log message into the logs table
+                INSERT INTO logs (logs) VALUES (CONCAT("Tagihan dengan nomor ID: ", OLD.id_tagihan, " telah dihapus."));
+            END
+        ');
     }
 
     /**

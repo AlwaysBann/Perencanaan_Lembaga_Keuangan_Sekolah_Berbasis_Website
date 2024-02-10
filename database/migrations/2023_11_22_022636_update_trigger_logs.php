@@ -142,6 +142,37 @@ return new class extends Migration
         INSERT INTO logs (logs) VALUES (update_message);
     END'
         );
+        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared('
+    CREATE TRIGGER ' . $this->trgName . ' AFTER UPDATE ON tagihan
+    FOR EACH ROW
+    BEGIN
+        DECLARE tagihan_id INT;
+        DECLARE perubahan VARCHAR(255);
+        DECLARE update_message TEXT;
+
+        SELECT id_tagihan INTO tagihan_id FROM tagihan WHERE id_tagihan = NEW.id_tagihan;
+
+        SET update_message = CONCAT("Tagihan dengan nomor ID: ", tagihan_id, " telah diupdate. Perubahan:");
+
+        IF OLD.id_jenis_tagihan != NEW.id_jenis_tagihan THEN
+            SET perubahan = CONCAT("Jenis Tagihan dari ", (SELECT nama_jenis_tagihan FROM JenisTagihan WHERE id_jenis_tagihan = OLD.id_jenis_tagihan), " ke ", (SELECT nama_jenis_tagihan FROM JenisTagihan WHERE id_jenis_tagihan = NEW.id_jenis_tagihan));
+            SET update_message = CONCAT(update_message, " ", perubahan);
+        END IF;
+
+        IF OLD.jumlah_tagihan != NEW.jumlah_tagihan THEN
+            SET perubahan = CONCAT("Jumlah Tagihan dari ", OLD.jumlah_tagihan, " ke ", NEW.jumlah_tagihan);
+            SET update_message = CONCAT(update_message, " ", perubahan);
+        END IF;
+
+        IF OLD.tanggal_tagihan != NEW.tanggal_tagihan THEN
+            SET perubahan = CONCAT("Tanggal Tagihan dari ", OLD.tanggal_tagihan, " ke ", NEW.tanggal_tagihan);
+            SET update_message = CONCAT(update_message, " ", perubahan);
+        END IF;
+
+        INSERT INTO logs (logs) VALUES (update_message);
+    END
+        ');
     }
 
     /**

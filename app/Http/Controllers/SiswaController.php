@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
+use App\Models\pembayaran;
 use App\Models\Siswa;
 use App\Models\tbl_user;
 use Illuminate\Http\Request;
@@ -67,12 +68,69 @@ class SiswaController extends Controller
     }
 
 
+    public function profile(Siswa $siswa, $id)
+    {
+        $data = [
+            'siswa' => $siswa
+                ->join('tbl_user', 'siswa.id_user', '=', 'tbl_user.id_user')
+                ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+                ->join('angkatan', 'kelas.id_angkatan', '=', 'angkatan.id_angkatan')
+                // ->when($siswa->first(), function ($query, $siswa) {
+                //     if ($siswa->id_tagihan) {
+                //         return $query->join('tagihan', 'siswa.id_tagihan', '=', 'tagihan.id_tagihan');
+                //     }
+                //     return $query;
+                // })
+                ->first()
+        ];
+        
+        dd($data);
+        
+        return view('siswa.profile', $data);
+    }
+
     /**
      * Display the specified resource.
      */
-    public function show(Siswa $siswa)
+    public function pembayaran(Siswa $siswa)
     {
-        //
+        $data = [
+            'siswa' =>
+                $siswa
+                    ->join('tbl_user', 'siswa.id_user', '=', 'tbl_user.id_user')
+                    ->join('tagihan', 'siswa.id_tagihan', '=', 'tagihan.id_tagihan')
+                    ->first()
+        ];
+
+        return view('siswa.bayar', $data);
+    }
+
+    public function bayar(pembayaran $pembayaran, Request $request)
+    {
+
+        $data = $request->validate([
+            'nis_siswa' => ['required'],
+            'id_siswa' => ['required'],
+            'id_tagihan' => ['required'],
+            'jumlah_dana_pembayaran' => ['required'],
+            'nama_sumber_dana' => ['required'],
+            'waktu_pembayaran' => ['required'],
+            'bukti_pembayaran' => ['required'],
+        ]);
+
+        if($data) {
+            if ($request->hasFile('bukti_pembayaran') && $request->file('bukti_pembayaran')->isValid()) {
+                $foto_file = $request->file('bukti_pembayaran');
+                $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
+                $foto_file->move(public_path('bukti_pembayaran'), $foto_nama);
+                $data['bukti_pembayaran'] = $foto_nama;
+            }
+    
+            $pembayaran->create($data);
+    
+            return redirect('/profile-akun/'.$data['id_siswa'])->with('success', 'Data siswa berhasil diupdate');
+        }
+        
     }
 
     /**

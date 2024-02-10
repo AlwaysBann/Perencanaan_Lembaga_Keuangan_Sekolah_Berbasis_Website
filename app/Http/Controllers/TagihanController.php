@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisTagihan;
+use App\Models\logs;
 use App\Models\tagihan;
 use App\Models\tbl_user;
-use Illuminate\Support\Facades\DB;
+use App\Models\JenisTagihan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagihanController extends Controller
 {
@@ -15,7 +16,6 @@ class TagihanController extends Controller
      */
     public function index()
     {
-        // VIEW SQL
         $data = [
             'tagihan' => DB::table('view_tagihan')->get()
         ];
@@ -114,5 +114,14 @@ class TagihanController extends Controller
             $data->delete();
             return response()->json(['success' => true]);
         }
+    }
+
+    public function logs(logs $logs)
+    {
+        $data = [
+            'logs' => $logs::orderBy('id_logs', 'desc')->get()
+        ];
+
+        return view('tagihan.logs', $data);
     }
 }

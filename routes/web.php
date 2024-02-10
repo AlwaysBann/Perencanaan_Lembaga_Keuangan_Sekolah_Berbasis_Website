@@ -23,6 +23,7 @@ use App\Http\Controllers\LogsRealisasiController;
 
 use App\Http\Controllers\SumberDanaController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\KelolaKeuanganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,25 @@ Route::middleware(['akses:siswa,pengelola,peminta'])->group(function () {
     Route::get('/realisasi/search', [RealisasiController::class, 'show']);
     Route::get('/realisasi/detail/{id}', [RealisasiController::class, 'detail']);
 
-    Route::get('/profile-akun', [PembayaranController::class, 'index']);
+Route::get('/pembayaran', [PembayaranController::class, 'index']);
+    Route::get('/pembayaran/detail/{id}', [PembayaranController::class, 'detail']);
+
+    Route::get('/pemasukan/confirm/{id}', [KelolaKeuanganController::class, 'confirm']);
+    Route::post('/pemasukan/confirm/simpan', [KelolaKeuanganController::class, 'simpan']);
+
+
+    Route::get('/kelola/tambah', [KelolaKeuanganController::class, 'create']);
+    Route::post('/kelola/tambah/simpan', [KelolaKeuanganController::class, 'store']);
+    Route::get('/kelola/edit/{id}', [KelolaKeuanganController::class, 'edit']);
+    Route::post('/kelola/edit/simpan', [KelolaKeuanganController::class, 'update']);
+    Route::get('/kelola/detail/{id}', [KelolaKeuanganController::class, 'show']);
+    Route::delete('/kelola/hapus', [KelolaKeuanganController::class, 'destroy']);
+    Route::get('/kelola/cetak', [KelolaKeuanganController::class, 'cetak']);
+
+    Route::get('/profile-akun/{id}', [SiswaController::class, 'profile']);
+    Route::get('/profile-akun/pembayaran/{id}', [SiswaController::class, 'pembayaran']);
+    Route::post('/profile-akun/pembayaran/bayar', [SiswaController::class, 'bayar']);
+
 });
 
 Route::middleware(['akses:pengelola'])->group(function () {
