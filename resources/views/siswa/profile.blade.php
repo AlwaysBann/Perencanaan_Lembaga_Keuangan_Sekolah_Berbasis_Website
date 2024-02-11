@@ -37,8 +37,8 @@
                                 <p class="fs-5 text-white">{{ $siswa->username }}</p>
                             </div>
                             <div class="row">
-                                <button
-                                    style="padding: 5px 5px; width: 20%; height: 40px; border-radius: 6px; border: 1px solid #E6B31E; color: red; font-weight: 600; margin: auto;">KEMBALI</button>
+                                <a href="#" onclick="window.history.back();" class="btn "
+                                style="background-color: white;font-weight: 500 ; color: red;  border: 1px solid #E6B31E;  width: 90px; margin: auto">KEMBALI</a>
                             </div>
                         </div>
                         <div class="col-2">
@@ -123,7 +123,7 @@
                                     </a>
                                 @else
                                     <div class="col"
-                                        style="font-family: Nunito; font-size: 20px; font-style: normal; font-weight: 400; color: #E6B31E; margin-bottom: 35px">
+                                        style="font-family: Nunito; font-size: 20px; font-style: normal; font-weight: 400; color: #E6B31E; margin-bottom: 82px">
                                         Aksi</div>
                                 @endif
                             </div>

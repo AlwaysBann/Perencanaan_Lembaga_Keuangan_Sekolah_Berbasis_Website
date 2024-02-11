@@ -74,17 +74,18 @@ return new class extends Migration
         DB::unprepared('DROP FUNCTION IF EXISTS CalculateTotalValue');
         DB::unprepared('
             CREATE FUNCTION CalculateTotalValue(nama_sumber_dana ENUM("Dana-BOS", "Dana-BOPD", "Dana-Komite", "Dana-SPP"))
-            RETURNS VARCHAR(255)
+            RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci
             BEGIN
-                DECLARE total_value VARCHAR(255);
-
+                DECLARE total_value VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci;
+        
                 SELECT COALESCE(SUM(dana_sumber_dana), 0) INTO total_value
                 FROM sumber_dana
-                WHERE sumber_dana.nama_sumber_dana = nama_sumber_dana;
-
+                WHERE sumber_dana.nama_sumber_dana = nama_sumber_dana COLLATE utf8mb4_unicode_ci;
+        
                 RETURN total_value;
             END
         ');
+        
 
         DB::unprepared('DROP FUNCTION IF EXISTS CalculateTotalDanaSumberDana');
         DB::unprepared('

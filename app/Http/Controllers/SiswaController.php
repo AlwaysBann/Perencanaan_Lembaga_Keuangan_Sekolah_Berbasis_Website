@@ -75,16 +75,16 @@ class SiswaController extends Controller
                 ->join('tbl_user', 'siswa.id_user', '=', 'tbl_user.id_user')
                 ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
                 ->join('angkatan', 'kelas.id_angkatan', '=', 'angkatan.id_angkatan')
-                // ->when($siswa->first(), function ($query, $siswa) {
-                //     if ($siswa->id_tagihan) {
-                //         return $query->join('tagihan', 'siswa.id_tagihan', '=', 'tagihan.id_tagihan');
-                //     }
-                //     return $query;
-                // })
+                ->when($siswa->first(), function ($query, $siswa) {
+                    if ($siswa->id_tagihan) {
+                        return $query->join('tagihan', 'siswa.id_tagihan', '=', 'tagihan.id_tagihan');
+                    }
+                    return $query;
+                })
                 ->first()
         ];
         
-        dd($data);
+        // dd($data);
         
         return view('siswa.profile', $data);
     }

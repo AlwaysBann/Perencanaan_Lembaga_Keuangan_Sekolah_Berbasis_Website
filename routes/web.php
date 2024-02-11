@@ -141,6 +141,7 @@ Route::post('/JenisTagihan/edit/simpan', [JenisTagihanController::class,'update'
 Route::delete('/JenisTagihan/hapus', [JenisTagihanController::class, 'destroy']);
 
 Route::get('/tagihan', [TagihanController::class,'index']);
+Route::get('/tagihan/logs', [TagihanController::class,'logs']);
 Route::get('/tagihan/tambah', [TagihanController::class,'create']);
 Route::post('/tagihan/tambah/simpan', [TagihanController::class,'store']);
 Route::get('/tagihan/edit/{id}', [TagihanController::class,'edit']);

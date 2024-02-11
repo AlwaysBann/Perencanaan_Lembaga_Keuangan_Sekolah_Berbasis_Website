@@ -19,6 +19,7 @@
     </head>
 
     <body>
+        @if (Auth::check() && Auth::User()->role != "siswa")
         <div class="px-5 py-3">
             <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DASHBOARD M-ONE</h1>
             @include('layout.flash-massage')
@@ -26,7 +27,7 @@
                 KEUANGAN</h3>
             <p
                 style="color: white; text-shadow: 0px 0px 2px white; font-weight: 900; margin: 20px; font-size: 100px; text-shadow: 0px 0px 5px #E6B31E;">
-
+                Rp.{{ $totalDana }}</p>
             <div class="card-body" style="margin-top: 50px;">
                 <div class="row">
                     <div class="col-sm-3">
@@ -36,7 +37,7 @@
                                     style="text-shadow: 0px 0px 2px black; font-weight: 900;">DANA BOS</h2>
                                 <p class="card-text text-center fs-2"
                                     style="text-shadow: 0px 0px 2px black; font-weight: 900;">
-
+                                    Rp. {{ $totalBOS }}
                                 </p>
                             </div>
                         </div>
@@ -48,7 +49,7 @@
                                     style="text-shadow: 0px 0px 2px black; font-weight: 900;">DANA BOPD</h2>
                                 <p class="card-text text-center fs-2"
                                     style="text-shadow: 0px 0px 2px black; font-weight: 900;">
-                            
+                                    Rp. {{ $totalBOPD }}
                                 </p>
                             </div>
                         </div>
@@ -60,7 +61,7 @@
                                     style="text-shadow: 0px 0px 2px black; font-weight: 900;">DANA KOMITE</h2>
                                 <p class="card-text text-center fs-2"
                                     style="text-shadow: 0px 0px 2px black; font-weight: 900;">
-                            
+                                    Rp. {{ $totalKomite }}
                                 </p>
                             </div>
                         </div>
@@ -72,7 +73,7 @@
                                     style="text-shadow: 0px 0px 2px black; font-weight: 900;">DANA SPP</h2>
                                 <p class="card-text text-center fs-2"
                                     style="text-shadow: 0px 0px 2px black; font-weight: 900;">
-
+                                    Rp. {{ $totalSPP }}
                                 </p>
                             </div>
                         </div>
@@ -108,7 +109,7 @@
                                     <td>{{ $k->tipe }}</td>
                                     <td>{{ $k->nama_sumber_dana }}</td>
                                     <td>{{ $k->waktu }}</td>
-                                    <td style="max-width: 100px">
+                                    <td style="max-width: 150px">
                                         <a href="kelola/edit/{{ $k->id_kelola_keuangan }}" class="btn mx-2"
                                             style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                             EDIT
@@ -127,6 +128,7 @@
                     </table>
                 </div>
             </div>
+            @endif
     </body>
     <script type="module">
         $('.DataTable tbody').on('click', '.btnHapus', function(a) {

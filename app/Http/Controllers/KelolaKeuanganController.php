@@ -28,7 +28,7 @@ class KelolaKeuanganController extends Controller
         $data = [
             'kelola' => $kelola
                         ->join('sumber_dana', 'kelola_keuangan.id_sumber_dana', '=', 'sumber_dana.id_sumber_dana')
-                        ->where('id_kelola_keuangan', $id)->first()
+                        ->where('kelola_keuangan.id_kelola_keuangan', $id)->first()
         ];
 
         return view('kelola.detail', $data);
@@ -176,10 +176,10 @@ class KelolaKeuanganController extends Controller
         $data = [
             'kelola' => $kelola
                         ->join('sumber_dana', 'kelola_keuangan.id_sumber_dana', '=', 'sumber_dana.id_sumber_dana')
+                        ->select('kelola_keuangan.*', 'sumber_dana.nama_sumber_dana', 'sumber_dana.dana_sumber_dana')
                         ->get()
         ];
 
         $pdf = PDF::loadView('kelola.cetak', $data);
         return $pdf->stream('kelola_keuangan.pdf');
-    }
-}
+    }}

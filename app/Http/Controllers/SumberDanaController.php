@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kelola;
 use App\Models\sumber_dana;
 use Illuminate\Http\Request;
 
@@ -22,9 +23,16 @@ class SumberDanaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(kelola $kelola, sumber_dana $sumber_dana)
     {
-        return view("sumber_dana.tambah");
+        $data = [
+            'sumber_dana' =>  $sumber_dana->get(),
+            'kelola' => $kelola->get()
+        ];
+
+        // dd($data);
+
+        return view("sumber_dana.tambah", $data);
     }
 
     /**
@@ -33,6 +41,7 @@ class SumberDanaController extends Controller
     public function store(Request $request, sumber_dana $sumber_dana)
     {
         $data = $request->validate([
+            'id_kelola_keuangan' => ['required'],
             'nama_sumber_dana' => ['required'],
             'dana_sumber_dana' => ['required'],
         ]);
@@ -55,11 +64,18 @@ class SumberDanaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(sumber_dana $sumber_dana, string $id)
+    public function edit(sumber_dana $sumber_dana, kelola $kelola, string $id)
     {
         $data = [
-            'sumber_dana' =>  $sumber_dana->where('id_sumber_dana', $id)->first()
+            'sumber_dana' =>  $sumber_dana
+                                ->where('sumber_dana.id_sumber_dana', $id)->first(),
+
+            'kelola' => $kelola
+                        ->select('kelola_keuangan.*', 'sumber_dana.nama_sumber_dana', 'sumber_dana.dana_sumber_dana')
+                        ->join('sumber_dana', 'kelola_keuangan.id_sumber_dana', '=', 'sumber_dana.id_sumber_dana')->get()
         ];
+
+        // dd($data);
 
         return view('sumber_dana.edit', $data);
     }
@@ -72,18 +88,19 @@ class SumberDanaController extends Controller
         $id_sumber_dana = $request->input('id_sumber_dana');
         $data = $request->validate(
             [
-                'nama_sumber_dana'=> ['required'],
-                'dana_sumber_dana'=> ['required'],
-                ]
-                );
-                if ($data) {
-                    $dataUpdate= $sumber_dana->where('id_sumber_dana', $id_sumber_dana)->update($data);
-                    if ($dataUpdate) {
-                    return redirect('/sumber_dana');
-                    }
-                } else {
-                    return back();
-                } 
+                'id_kelola_keuangan' => ['required'],
+                'nama_sumber_dana' => ['required'],
+                'dana_sumber_dana' => ['required'],
+            ]
+        );
+        if ($data) {
+            $dataUpdate = $sumber_dana->where('id_sumber_dana', $id_sumber_dana)->update($data);
+            if ($dataUpdate) {
+                return redirect('/sumber_dana');
+            }
+        } else {
+            return back();
+        }
     }
 
     /**
@@ -97,10 +114,10 @@ class SumberDanaController extends Controller
         if (!$data) {
             return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
         }
-        
+
         if ($data) {
             $data->delete();
             return response()->json(['success' => true]);
-        } 
+        }
     }
 }
