@@ -16,7 +16,7 @@ class AngkatanController extends Controller
         $totalAngkatan = DB::select('SELECT CountAngkatan() AS Angkatan')[0]->Angkatan;
         $data = [
             'jumlahAngkatan' => $totalAngkatan,
-            "angkatan" => $a->all()
+            "angkatan" => DB::table('view_angkatan')->get()
         ];
 
         return view("angkatan.index", $data);

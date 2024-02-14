@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         ],
         [
             'username' => 'alpoy',
-            'role' => 'pengelola',
+            'role' => 'siswa',
             'password' => Hash::make('alpoy')
         ],
         [

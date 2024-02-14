@@ -14,7 +14,7 @@ return new class extends Migration
     {
         DB::unprepared('DROP VIEW IF EXISTS view_tagihan');
         DB::unprepared(
-    "CREATE VIEW view_tagihan AS
+            "CREATE VIEW view_tagihan AS
             SELECT
                 t.id_tagihan,
                 t.jumlah_tagihan,
@@ -23,25 +23,40 @@ return new class extends Migration
                 jt.nama_jenis_tagihan
             FROM tagihan t
             JOIN JenisTagihan jt ON t.id_jenis_tagihan = jt.id_jenis_tagihan
-        ");
+        "
+        );
 
         DB::unprepared('DROP VIEW IF EXISTS view_jenis_tagihan');
         DB::unprepared(
-        "CREATE VIEW view_jenis_tagihan AS
+            "CREATE VIEW view_jenis_tagihan AS
         SELECT
             id_jenis_tagihan,
             nama_jenis_tagihan
         FROM JenisTagihan
-        ");
+        "
+        );
 
         DB::unprepared('DROP VIEW IF EXISTS view_jurusan');
         DB::unprepared(
-"CREATE VIEW view_jurusan AS
+            "CREATE VIEW view_jurusan AS
             SELECT
                 id_jurusan,
                 nama_jurusan
             FROM jurusan
-        ");
+        "
+        );
+
+        DB::unprepared('DROP VIEW IF EXISTS view_angkatan');
+        DB::unprepared(
+            "CREATE VIEW view_angkatan AS
+            SELECT
+                id_angkatan,
+                no_angkatan,
+                tahun_masuk,
+                tahun_keluar
+            FROM angkatan
+        "
+        );
     }
 
     /**

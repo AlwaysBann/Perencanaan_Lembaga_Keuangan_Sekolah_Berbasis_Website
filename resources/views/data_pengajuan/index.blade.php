@@ -33,9 +33,13 @@
                             style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i
                                 class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
-                    <a href="pengajuan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
-                        Tambah Pengajuan
-                    </a>
+                    @if (Auth::user()->role == 'siswa' || Auth::user()->role == 'pengelola')
+                    @else
+                        <a href="pengajuan/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
+                            Tambah Pengajuan
+                        </a>
+                    @endif
+
                     <a href="pengajuan/logs" class="btn btn-warning rounded-pill ms-auto"
                         style="color: white; min-width: 130px">
                         Log Activity
