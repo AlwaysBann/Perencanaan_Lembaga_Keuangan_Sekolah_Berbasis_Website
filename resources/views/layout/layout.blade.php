@@ -60,25 +60,36 @@
                 <a href="/realisasi" class="navbar-brand" style="color: #E6B31E">REALISASI</a>
             @endif
             @if (Auth::user()->role == 'siswa')
-            <a href="/dashboard" class="navbar-brand" style="color: #E6B31E">DASHBOARD</a>
+                <a href="/dashboard" class="navbar-brand" style="color: #E6B31E">DASHBOARD</a>
             @endif
             <a href="/logout" class="navbar-brand me-auto" style="color: #E6B31E">LOGOUT</a>
 
             @if (Auth::check())
-                @if (Auth::user()->role == 'super_admin' || Auth::user()->role == 'pengelola' || Auth::user()->role == 'peminta')
+                @if (Auth::user()->role == 'pengelola')
                     <span class="me-3" style="color: #E6B31E; font-size: 20px"> {{ auth()->user()->username }}</span>
                     <div style="position: relative; overflow: hidden; width: 35px; height: 35px;">
-                        <img src="{{ auth()->user()->foto_profil == null ? asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil) }}"
-                            alt="Foto Profile Kosong" class=""
-                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%">
+                        <a href="{{ url('/profile-pengelola/' . Auth::user()->id_user) }}">
+                            <img src="{{ auth()->user()->foto_profil == null ? asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil) }}"
+                                alt="Foto Profile Kosong" class=""
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%"></a>
                     </div>
-                
-                @elseif (Auth::user()->role == 'siswa')<span class="me-3" style="color: #E6B31E; font-size: 20px"> {{ auth()->user()->username }}</span>
-                <div style="position: relative; overflow: hidden; width: 35px; height: 35px;">
-                    <a href="{{ url('/profile-akun/' . Auth::user()->id_user) }}">
-                        <img src="{{ auth()->user()->foto_profil == null ? asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil) }}"
-                        alt="Foto Profile Kosong" class=""
-                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%"></a>
+                @elseif (Auth::user()->role == 'peminta')
+                    <span class="me-3" style="color: #E6B31E; font-size: 20px">
+                        {{ auth()->user()->username }}</span>
+                    <div style="position: relative; overflow: hidden; width: 35px; height: 35px;">
+                        <a href="{{ url('/profile-peminta/' . Auth::user()->id_user) }}">
+                            <img src="{{ auth()->user()->foto_profil == null ? asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil) }}"
+                                alt="Foto Profile Kosong" class=""
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%"></a>
+                    </div>
+                @elseif (Auth::user()->role == 'siswa')
+                    <span class="me-3" style="color: #E6B31E; font-size: 20px">
+                        {{ auth()->user()->username }}</span>
+                    <div style="position: relative; overflow: hidden; width: 35px; height: 35px;">
+                        <a href="{{ url('/profile-siswa/' . Auth::user()->id_user) }}">
+                            <img src="{{ auth()->user()->foto_profil == null ? asset('img/Profile.png') : asset('foto/' . auth()->user()->foto_profil) }}"
+                                alt="Foto Profile Kosong" class=""
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%"></a>
                     </div>
                 @endif
             @endif

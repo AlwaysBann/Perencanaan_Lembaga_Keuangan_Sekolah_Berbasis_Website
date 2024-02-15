@@ -81,14 +81,17 @@ class SiswaController extends Controller
                     }
                     return $query;
                 })
+                ->where('tbl_user.id_user', $id)
                 ->first()
         ];
         
-        // dd($data);
+        if (!$data['siswa']) {
+            return redirect()->back()->with('error', 'Silahkan menambahkan data siswa terlebih dahulu.');
+        }
+
         
         return view('siswa.profile', $data);
     }
-
     /**
      * Display the specified resource.
      */
@@ -128,7 +131,7 @@ class SiswaController extends Controller
     
             $pembayaran->create($data);
     
-            return redirect('/profile-akun/'.$data['id_siswa'])->with('success', 'Data siswa berhasil diupdate');
+            return redirect('/profile-siswa/'.$data['id_siswa'])->with('success', 'Data siswa berhasil diupdate');
         }
         
     }

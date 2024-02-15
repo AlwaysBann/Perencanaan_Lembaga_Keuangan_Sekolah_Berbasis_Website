@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         ],
         [
             'username' => 'alpoy',
-            'role' => 'siswa',
+            'role' => 'pengelola',
             'password' => Hash::make('alpoy')
         ],
         [
@@ -34,7 +34,13 @@ class UserSeeder extends Seeder
             'username' => 'suban',
             'role' => 'pengelola',
             'password' => Hash::make('123')
-        ]];
+        ],
+        [
+            'username' => 'siswa',
+            'role' => 'siswa',
+            'password' => Hash::make('siswa')
+        ]
+    ];
 
         foreach ($users as $user => $val) {
             tbl_user::create($val);

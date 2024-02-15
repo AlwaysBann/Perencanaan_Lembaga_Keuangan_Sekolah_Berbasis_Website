@@ -59,6 +59,23 @@ class PemintaController extends Controller
 
         return back()->with('error', 'Data Peminta gagal ditambahkan');
     }
+    public function profile(peminta $peminta, $id)
+    {
+        $data = [
+            'peminta' => $peminta
+            ->join('tbl_user', 'peminta.id_user', '=', 'tbl_user.id_user')
+            ->join('jabatan_peminta', 'peminta.id_jabatan_peminta', 'jabatan_peminta.id_jabatan_peminta')
+            ->where('tbl_user.id_user', $id)
+            ->first()
+        ];
+
+        if (!$data['peminta']) {
+            return redirect()->back()->with('error', 'Silahkan menambahkan data siswa terlebih dahulu.');
+        }
+
+
+        return view('peminta.profile', $data);
+    }
 
     /**
      * Display the specified resource.

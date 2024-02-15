@@ -59,6 +59,22 @@ class PengelolaController extends Controller
 
         return back()->with('error', 'Data Pengelola gagal ditambahkan');
     }
+    public function profile(pengelola $pengelola, $id)
+    {
+        $data = [
+            'pengelola' => $pengelola
+                ->join('tbl_user', 'pengelola.id_user', '=', 'tbl_user.id_user')
+                ->join('jabatan_pengelola', 'pengelola.id_jabatan_pengelola', 'jabatan_pengelola.id_jabatan_pengelola')
+                ->where('tbl_user.id_user', $id)
+                ->first()
+        ];
+
+        if (!$data['pengelola']) {
+            return redirect()->back()->with('error', 'Silahkan menambahkan data pengelola terlebih dahulu.');
+        }
+
+        return view('pengelola.profile', $data);
+    }
 
     /**
      * Display the specified resource.
