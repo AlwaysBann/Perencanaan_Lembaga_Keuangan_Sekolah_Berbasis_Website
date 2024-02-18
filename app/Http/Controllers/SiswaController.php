@@ -192,4 +192,18 @@ class SiswaController extends Controller
             return response()->json(['success' => true]);
         } 
     }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $data = Siswa::where('nis_siswa', 'LIKE', "%$search%")
+            ->join('tbl_user', 'siswa.id_user', '=', 'tbl_user.id_user')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->select('tbl_user.*', 'kelas.*', 'siswa.*')
+            ->orWhere('nama_siswa', 'LIKE', "%$search%")
+            ->orWhere('jenis_kelamin', 'LIKE', "%$search%")
+            ->get();
+
+        return view('siswa.index', ['siswa' => $data]);
+    }
 }

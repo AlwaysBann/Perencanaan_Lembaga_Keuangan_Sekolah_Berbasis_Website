@@ -121,4 +121,17 @@ class KelasController extends Controller
             return response()->json(['success' => true]);
         } 
     }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $data = Kelas::where('nama_kelas', 'LIKE', "%$search%")
+            ->join('angkatan', 'kelas.id_angkatan', '=', 'angkatan.id_angkatan')
+            ->join('jurusan', 'kelas.id_jurusan', '=', 'jurusan.id_jurusan')
+            ->select('kelas.*', 'angkatan.*', 'jurusan.*')
+            ->orWhere('nama_jurusan', 'LIKE', "%$search%")
+            ->get();
+
+        return view('kelas.index', ['kelas' => $data]);
+    }
 }

@@ -155,6 +155,7 @@ Route::post('/angkatan/tambah/simpan', [AngkatanController::class,'store']);
 Route::get('/angkatan/edit/{id}', [AngkatanController::class,'edit']);
 Route::post('/angkatan/edit/simpan', [AngkatanController::class,'update']);
 Route::delete('/angkatan/hapus', [AngkatanController::class, 'destroy']);
+Route::get('/angkatan/search', [AngkatanController::class, 'search']);
 
 Route::get('/realisasi/tambah/{id}', [RealisasiController::class,'create']);
 Route::post('/realisasi/tambah/simpan', [RealisasiController::class,'store']);
@@ -168,6 +169,7 @@ Route::post('/kelas/tambah/simpan', [KelasController::class,'store']);
 Route::get('/kelas/edit/{id}', [KelasController::class,'edit']);
 Route::post('/kelas/edit/simpan', [KelasController::class,'update']);
 Route::delete('/kelas/hapus', [KelasController::class, 'destroy']);
+Route::get('/kelas/search', [KelasController::class, 'search']);
 
 Route::get('/siswa', [SiswaController::class,'index']);
 Route::get('/siswa/tambah', [SiswaController::class,'create']);
@@ -175,6 +177,7 @@ Route::post('/siswa/tambah/simpan', [SiswaController::class,'store']);
 Route::get('/siswa/edit/{id}', [SiswaController::class,'edit']);
 Route::post('/siswa/edit/simpan/{id}', [SiswaController::class,'update']);
 Route::delete('/siswa/hapus', [SiswaController::class, 'destroy']);
+Route::get('/siswa/search', [SiswaController::class, 'search']);
 
 Route::get('/pengajuan/confirm/{id}', [PerencanaanController::class,'create']);
 Route::post('/pengajuan/confirm/simpan', [PerencanaanController::class,'store']);

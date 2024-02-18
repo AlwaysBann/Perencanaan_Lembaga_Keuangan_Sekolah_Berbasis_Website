@@ -28,6 +28,14 @@
 
             <div class="card-body" style="margin-top: 200px">
                 <div class="d-flex" style="margin-bottom: 20px">
+                    <form action="siswa/search" method="GET" class="me-4" style="position: relative">
+                        <input type="text" name="search"
+                            style="background-color: #343434; border: 1px solid #E6B31E; height: 100%; width: 250px; color: white; padding-left: 10px; border-radius: 7px"
+                            placeholder="Cari Data Siswa...">
+                        <button type="submit"
+                            style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
                     <a href="siswa/tambah" class="btn btn-success rounded-pill" style=" min-width: 130px">
                         Tambah Siswa
                     </a>
@@ -56,8 +64,8 @@
                                     <td>{{ $s->nama_siswa }}</td>
                                     <td>{{ $s->jenis_kelamin }}</td>
                                     <td>{{ $s->nama_kelas }}</td>
-                                    <td style="max-width: 60px">
-                                        <a href="{{ url('/siswa/edit/' . $s->id_siswa) }}" class="btn mx-6"
+                                    <td style="max-width: 100px">
+                                        <a href="{{ url('/siswa/edit/' . $s->id_siswa) }}" class="btn mx-4"
                                             style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">
                                             EDIT
                                         </a>

@@ -107,6 +107,16 @@ class AngkatanController extends Controller
             $data->delete();
             return response()->json(['success' => true]);
         } 
+    }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
 
+        $data = angkatan::where('no_angkatan', 'LIKE', "%$search%")
+            ->orWhere('tahun_masuk', 'LIKE', "%$search%")
+            ->orWhere('tahun_keluar', 'LIKE', "%$search%")
+            ->get();
+
+        return view('angkatan.index', ['angkatan' => $data]);
     }
 }
