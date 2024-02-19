@@ -21,8 +21,8 @@
     <body>
         <div class="px-5 py-3">
             <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Pengajuan</h1>
-            <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Data Pengajuan =
-                {{ $jumlahPengajuan ?? 0 }}</h3>
+            <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Data Pengajuan = {{ $jumlahPengajuan ?? 0 }}</h3>
+            @include('layout.flash-massage') 
             <div class="card-body" style="margin-top: 200px">
                 <div class="d-flex" style="margin-bottom: 20px">
                     <form action="pengajuan/search" method="GET" class="me-4" style="position: relative">

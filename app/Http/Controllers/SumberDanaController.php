@@ -41,9 +41,9 @@ class SumberDanaController extends Controller
     public function store(Request $request, sumber_dana $sumber_dana)
     {
         $data = $request->validate([
-            'id_kelola_keuangan' => ['required'],
+            'id_kelola_keuangan' => ['sometimes'],
             'nama_sumber_dana' => ['required'],
-            'dana_sumber_dana' => ['required'],
+            'dana_sumber_dana' => ['sometimes'],
         ]);
 
         if ($sumber_dana->create($data)) {

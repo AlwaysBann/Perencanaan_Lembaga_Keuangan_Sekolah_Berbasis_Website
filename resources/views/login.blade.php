@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Manage User')
+@section('title', 'M-ONE')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">

@@ -14,9 +14,9 @@ return new class extends Migration
 
     public function up()
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared('DROP TRIGGER IF EXISTS trgTblInsert');
         DB::unprepared(
-            'CREATE TRIGGER ' . $this->trgName . ' AFTER INSERT ON tbl_user
+            'CREATE TRIGGER trgTblInsert AFTER INSERT ON tbl_user
     FOR EACH ROW
     BEGIN
         DECLARE user_id INT;
@@ -29,9 +29,9 @@ return new class extends Migration
     END'
         );
 
-        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared('DROP TRIGGER IF EXISTS trgPengajuanInsert');
         DB::unprepared(
-            'CREATE TRIGGER ' . $this->trgName . ' AFTER INSERT ON pengajuan
+            'CREATE TRIGGER trgPengajuanInsert AFTER INSERT ON pengajuan
     FOR EACH ROW
     BEGIN
         DECLARE user_id INT;
@@ -41,9 +41,10 @@ return new class extends Migration
         INSERT INTO logs (logs) VALUES (CONCAT("Pengajuan telah ditambahkan oleh peminta dengan nomor id: ", user_id, ". dan nama ", NEW.pembuat));
     END'
         );
-        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
-        DB::unprepared('
-    CREATE TRIGGER ' . $this->trgName . ' AFTER INSERT ON tagihan
+
+        DB::unprepared('DROP TRIGGER IF EXISTS trgTagihanInsert');
+        DB::unprepared(
+            'CREATE TRIGGER trgTagihanInsert AFTER INSERT ON tagihan
     FOR EACH ROW
     BEGIN
         DECLARE jenis_tagihan_name VARCHAR(255);
@@ -54,8 +55,23 @@ return new class extends Migration
             CONCAT("Tagihan dengan ID ", NEW.id_tagihan, " telah ditambahkan dengan jenis tagihan: ", jenis_tagihan_name, ".")
         );
     END
-        ');
+        '
+        );
 
+        DB::unprepared('DROP TRIGGER IF EXISTS trgPerencanaanInsert');
+        DB::unprepared(
+            'CREATE TRIGGER trgPerencanaanInsert AFTER INSERT ON perencanaan
+    FOR EACH ROW
+    BEGIN
+        DECLARE user_id INT;
+        DECLARE nameuser VARCHAR(200);
+
+        SELECT nama_penanggung_jawab INTO nameuser FROM perencanaan WHERE id_perencanaan = NEW.id_perencanaan;
+
+        SELECT id_perencanaan INTO user_id FROM perencanaan WHERE id_perencanaan = NEW.id_perencanaan;
+        INSERT INTO logs (logs) VALUES (CONCAT("Perencanaan ditambahkan oleh ", nameuser, " dengan nomor id: ", user_id));
+    END'
+        );
     }
 
     /**

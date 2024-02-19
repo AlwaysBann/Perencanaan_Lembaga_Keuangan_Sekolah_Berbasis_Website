@@ -201,6 +201,8 @@ Route::middleware(['akses:peminta,pengelola'])->group(function () {
     
     Route::get('/realisasi/cetak', [RealisasiController::class, 'cetak']);
     Route::get('/realisasi/logs', [LogsRealisasiController::class, 'index']);
+
+    Route::get('/perencanaan/logs', [PerencanaanController::class,'logs']);
 });
 
 Route::middleware(['akses:peminta'])->group(function () {

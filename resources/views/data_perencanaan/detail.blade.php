@@ -15,18 +15,20 @@
                 background-size: 100%;
                 background-repeat: repeat-y;
             }
-        </style>    
+        </style>
     </head>
 
     <body>
         <div class="px-5 py-3">
-            <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DETAIL DATA PERENCANAAN
+            <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">DETAIL DATA
+                PERENCANAAN
             </h1>
             <div class="container my-5 d-flex justify-content-center">
                 <div class="row justify-content-center align-items-center rounded-3 p-4"
                     style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">
                     <div class="container">
                         <div class="row">
+                            {{-- {{ dd($pengajuan->gambar_item) }} --}}
                             <div class="col-sm-4">
                                 @if ($pengajuan->gambar_item)
                                     <img src="{{ url('item') . '/' . $pengajuan->gambar_item }} "
@@ -119,43 +121,44 @@
                                         Ruangan
                                     </div>
                                     <div name='id_ruangan'>
-                                                {{ $pengajuan->nama_ruangan }}
+                                        {{ $pengajuan->nama_ruangan }}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col fs-5" style="color: #E6B31E">
-                                    Jumlah Item
+                                <div class="row">
+                                    <div class="col fs-5" style="color: #E6B31E">
+                                        Jumlah Item
+                                    </div>
+                                    <div>
+                                        {{ $pengajuan->jumlah_item }}
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ $pengajuan->jumlah_item }}
-                                </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col fs-5" style="color: #E6B31E">
-                                    Harga Satuan
+                                <div class="row">
+                                    <div class="col fs-5" style="color: #E6B31E">
+                                        Harga Satuan
+                                    </div>
+                                    <div>
+                                        {{ $pengajuan->harga_satuan }}
+                                    </div>
                                 </div>
-                                <div>
-                                    {{ $pengajuan->harga_satuan }}
-                                </div>
+
                             </div>
-                            
-                        </div>
-                        <div class="col-md-4 mt-3 mb-3">
-                            <a href="#" onclick="window.history.back();" class="btn "
-                                style="background-color: white;font-weight: 500 ; color: red;  border: 1px solid #E6B31E;  min-width: 100px">KEMBALI</a>
-                                <a href="/perencanaan/cetak/{{$pengajuan->id_perencanaan}}" class="btn btn-info rounded-pill mx-3" style="color: white; min-width: 130px">
+                            <div class="col-md-4 mt-3 mb-3">
+                                <a href="#" onclick="window.history.back();" class="btn "
+                                    style="background-color: white;font-weight: 500 ; color: red;  border: 1px solid #E6B31E;  min-width: 100px">KEMBALI</a>
+                                <a href="/perencanaan/cetak/{{ $pengajuan->id_perencanaan }}"
+                                    class="btn btn-info rounded-pill mx-3" style="color: white; min-width: 130px">
                                     Cetak List Data
                                 </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-</body>
+        </div>
+    </body>
 
-</html>
+    </html>
 @endsection

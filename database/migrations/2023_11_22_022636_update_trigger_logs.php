@@ -14,9 +14,9 @@ return new class extends Migration
 
     public function up()
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared('DROP TRIGGER IF EXISTS trgTblUpdate');
         DB::unprepared(
-            'CREATE TRIGGER ' . $this->trgName . ' AFTER UPDATE ON tbl_user
+            'CREATE TRIGGER trgTblUpdate AFTER UPDATE ON tbl_user
     FOR EACH ROW
     BEGIN
         DECLARE user_id INT;
@@ -57,9 +57,9 @@ return new class extends Migration
     END'
         );
 
-        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared('DROP TRIGGER IF EXISTS trgPengajuanUpdate');
         DB::unprepared(
-            'CREATE TRIGGER ' . $this->trgName . ' AFTER UPDATE ON pengajuan
+            'CREATE TRIGGER trgPengajuanUpdate AFTER UPDATE ON pengajuan
     FOR EACH ROW
     BEGIN
         DECLARE pengajuan_id INT;
@@ -142,9 +142,10 @@ return new class extends Migration
         INSERT INTO logs (logs) VALUES (update_message);
     END'
         );
-        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
-        DB::unprepared('
-    CREATE TRIGGER ' . $this->trgName . ' AFTER UPDATE ON tagihan
+
+        DB::unprepared('DROP TRIGGER IF EXISTS trgUpdateTagihan');
+        DB::unprepared(
+            'CREATE TRIGGER trgUpdateTagihan AFTER UPDATE ON tagihan
     FOR EACH ROW
     BEGIN
         DECLARE tagihan_id INT;
@@ -172,7 +173,41 @@ return new class extends Migration
 
         INSERT INTO logs (logs) VALUES (update_message);
     END
-        ');
+        '
+        );
+
+        DB::unprepared('DROP TRIGGER IF EXISTS trgUpdatePerencanaan');
+        DB::unprepared(
+            'CREATE TRIGGER trgUpdatePerencanaan AFTER UPDATE ON perencanaan
+    FOR EACH ROW
+    BEGIN
+        DECLARE perencanaan_id INT;
+        DECLARE perubahan VARCHAR(255);
+        DECLARE update_message TEXT;
+
+        SELECT id_perencanaan INTO perencanaan_id FROM perencanaan WHERE id_perencanaan = NEW.id_perencanaan;
+
+        SET update_message = CONCAT("Perencanaan dengan nomor ID: ", perencanaan_id, " telah diupdate. Perubahan:");
+
+        IF OLD.nama_penanggung_jawab != NEW.nama_penanggung_jawab THEN
+            SET perubahan = CONCAT("Nama Penanggung Jawab dari ", OLD.nama_penanggung_jawab, " ke ", NEW.nama_penanggung_jawab);
+            SET update_message = CONCAT(update_message, " ", perubahan);
+        END IF;
+
+        IF OLD.nama_perencanaan != NEW.nama_perencanaan THEN
+            SET perubahan = CONCAT("Nama Perencanaan dari ", OLD.nama_perencanaan, " ke ", NEW.nama_perencanaan);
+            SET update_message = CONCAT(update_message, " ", perubahan);
+        END IF;
+
+        IF OLD.waktu_realisasi != NEW.waktu_realisasi THEN
+            SET perubahan = CONCAT("Waktu Realisasi dari ", OLD.waktu_realisasi, " ke ", NEW.waktu_realisasi);
+            SET update_message = CONCAT(update_message, " ", perubahan);
+        END IF;
+
+        INSERT INTO logs (logs) VALUES (update_message);
+    END
+'
+        );
     }
 
     /**

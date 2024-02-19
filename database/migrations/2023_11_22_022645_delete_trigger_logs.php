@@ -26,9 +26,9 @@ return new class extends Migration
         //     END'
         // );
 
-        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
+        DB::unprepared('DROP TRIGGER IF EXISTS trgPengajuanDelete');
         DB::unprepared(
-            'CREATE TRIGGER ' . $this->trgName . ' AFTER DELETE ON pengajuan
+            'CREATE TRIGGER trgPengajuanDelete AFTER DELETE ON pengajuan
             FOR EACH ROW
             BEGIN
 
@@ -36,15 +36,28 @@ return new class extends Migration
 
             END'
         );
-        DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName);
-        DB::unprepared('
-            CREATE TRIGGER ' . $this->trgName . ' AFTER DELETE ON tagihan
+
+        DB::unprepared('DROP TRIGGER IF EXISTS trgTagihanDelete');
+        DB::unprepared(
+            'CREATE TRIGGER trgTagihanDelete AFTER DELETE ON tagihan
             FOR EACH ROW
             BEGIN
-                -- Insert the log message into the logs table
+                
                 INSERT INTO logs (logs) VALUES (CONCAT("Tagihan dengan nomor ID: ", OLD.id_tagihan, " telah dihapus."));
             END
-        ');
+        '
+        );
+
+        DB::unprepared('DROP TRIGGER IF EXISTS trgPerencanaanDelete');
+        DB::unprepared(
+            'CREATE TRIGGER trgPerencanaanDelete AFTER DELETE ON perencanaan
+    FOR EACH ROW
+    BEGIN
+
+        INSERT INTO logs (logs) VALUES (CONCAT("Penanggung Jawab ", OLD.nama_penanggung_jawab, " telah menghapus Perencanaan nomor id: ", OLD.id_perencanaan, " dengan nama ", OLD.nama_perencanaan));
+
+    END'
+        );
     }
 
     /**
@@ -54,4 +67,4 @@ return new class extends Migration
     {
         DB::unprepared('DROP TRIGGER IF EXISTS ' . $this->trgName); //
     }
-};
+};;

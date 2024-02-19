@@ -22,6 +22,7 @@
         <div class="px-5 py-3">
             <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">EDIT DATA PENGAJUAN
             </h1>
+            @include('layout.flash-massage')
             <div class="container my-5 d-flex justify-content-center">
                 <div class="row justify-content-center align-items-center rounded-3 p-4"
                     style="background-color: rgba(32, 32, 32, 0.637); min-width: 1000px">

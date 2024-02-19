@@ -11,6 +11,7 @@ use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class PengajuanController extends Controller
 {
@@ -101,15 +102,17 @@ class PengajuanController extends Controller
 
     public function logs(logs $logs)
     {
-        date_default_timezone_set('Asia/Jakarta');
-
         $data = [
-            'logs' => $logs::orderBy('id_logs', 'desc')->get(),
-            'waktuSekarang' => date('Y-m-d H:i:s')
+            'logs' => $logs::orderBy('id_logs', 'desc')
+                ->get()
+                ->filter(function ($log) {
+                    return !Str::startsWith($log->logs, 'Akun') && !Str::startsWith($log->logs, 'Tagihan');
+                })
         ];
 
-        return view('data_pengajuan.logs', $data);  
+        return view('data_pengajuan.logs', $data);
     }
+
 
     public function update(Request $request, ruangan $ruangan, Pengajuan $pengajuan)
     {

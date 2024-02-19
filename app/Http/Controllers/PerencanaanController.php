@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Pengajuan;
 use App\Models\perencanaan;
 use App\Models\ruangan;
+use App\Models\logs;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PerencanaanController extends Controller
 {
@@ -16,6 +18,7 @@ class PerencanaanController extends Controller
      */
     public function index(perencanaan $perencanaan)
     {
+
         $totalPerencanaan = DB::select('SELECT CountPerencanaan() AS Perencanaan')[0]->Perencanaan;
         $data = [
             "jumlahPerencanaan" => $totalPerencanaan,
@@ -74,8 +77,21 @@ class PerencanaanController extends Controller
         return view('data_perencanaan.index', ['perencanaan' => $data]);
     }
 
+    public function logs(logs $logs)
+    {
+        $data = [
+            'logs' => $logs::orderBy('id_logs', 'desc')
+                ->get()
+                ->filter(function ($log) {
+                    return !Str::startsWith($log->logs, 'Akun')  && !Str::startsWith($log->logs, 'Tagihan') && !Str::startsWith($log->logs, 'Pengajuan');
+                })
+        ];
+
+        return view('data_perencanaan.logs', $data);
+    }
+
     /**
-     * Display the specified resource.  z
+     * Display the specified resource.  
      */
     public function show(string $id, Request $request, perencanaan $perencanaan)
     {

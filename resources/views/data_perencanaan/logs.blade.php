@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Pengajuan')
+@section('title', 'Perencanaan')
 @section('content')
     <!DOCTYPE html>
     <html lang="en">
@@ -21,7 +21,7 @@
     <body>
         <div class="px-5 py-3">
             <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">ACTIVITY IN TABLE
-                PENGAJUAN</h1>
+                PERENCANAAN</h1>
             <div class="card-body" style="margin-top: 200px">
                 <div class="d-flex" style="margin-bottom: 20px">
                     <a href="/pengajuan" class="btn btn-warning rounded-pill" style="color: white; min-width: 130px">
