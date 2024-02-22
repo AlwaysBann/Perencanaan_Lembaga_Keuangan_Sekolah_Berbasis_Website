@@ -52,7 +52,7 @@
                             <div class="form-group mb-3">
                                 <label for="dana_sumber_dana" style="color: #E6B31E;">Dana Sumber Dana</label>
                                 <input type="text" class="form-control" id="dana_sumber_dana" name="dana_sumber_dana"
-                                    placeholder="Dana Sumber Dana" style="margin-bottom: 300px" value="Rp.">
+                                    placeholder="Dana Sumber Dana" style="margin-bottom: 300px">
                                 @csrf
                             </div>
                             <div class="col-md-4 mt-3 mb-3">

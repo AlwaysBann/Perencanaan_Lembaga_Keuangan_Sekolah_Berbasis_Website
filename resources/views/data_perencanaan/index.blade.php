@@ -23,7 +23,7 @@
             <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Perencanaan</h1>
             <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Data Perencanaan =
                 {{ $jumlahPerencanaan ?? 0 }}</h3>
-                @include('layout.flash-massage')
+            @include('layout.flash-massage')
             <div class="card-body" style="margin-top: 200px">
                 <div class="d-flex" style="margin-bottom: 20px">
                     <form action="perencanaan/search" method="GET" class="me-4" style="position: relative">
@@ -34,7 +34,11 @@
                             style="height: 37px; position: absolute; background-color: #343434; border-top: 1px solid #E6B31E; border-left: 1px solid #E6B31E; border-bottom: 1px solid #E6B31E; border-right: none; border-radius: 0 7px 7px 0; right: 1px; color: white; width: 40px"><i
                                 class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
-                    <a href="perencanaan/logs" class="btn btn-warning rounded-pill ms-auto"
+                    <a href="perencanaan/cetak/" class="btn btn-info rounded-pill ms-auto"
+                        style="color: white; min-width: 130px">
+                        Cetak List Data
+                    </a>
+                    <a href="perencanaan/logs" class="btn btn-warning rounded-pill ms-4"
                         style="color: white; min-width: 130px">
                         Log Activity
                     </a>
@@ -61,7 +65,7 @@
                                     <td>{{ $o->nama_penanggung_jawab }}</td>
                                     <td>{{ $o->waktu_realisasi }}</td>
                                     @if (Auth::check() && Auth::User()->role == 'peminta')
-                                        <td style="max-width: 175px">
+                                        <td style="max-width:">
                                             <a href="perencanaan/detail/{{ $o->id_perencanaan }}" class="btn "
                                                 style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                                 DETAIL
@@ -76,7 +80,7 @@
                                         </td>
                                     @endif
                                     @if (Auth::check() && Auth::User()->role == 'pengelola')
-                                        <td style="max-width: 205px">
+                                        <td style="max-width: ">
                                             <a href="perencanaan/detail/{{ $o->id_perencanaan }}" class="btn "
                                                 style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                                 DETAIL
@@ -87,7 +91,7 @@
                                             </a>
                                             <button class="btn btnHapus mx-2"
                                                 style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; "
-                                                idPengajuan="{{ $o->id_perencanaan }}" disabled>HAPUS</button>
+                                                idPerencanaan="{{ $o->id_perencanaan }}">HAPUS</button>
                                         </td>
                                     @endif
                                     @if (Auth::check() && Auth::User()->role == 'siswa')
@@ -120,7 +124,7 @@
     <script type="module">
         $('.DataTable tbody').on('click', '.btnHapus', function(a) {
             a.preventDefault();
-            let idPengajuan = $(this).closest('.btnHapus').attr('idPengajuan');
+            let idPerencanaan = $(this).closest('.btnHapus').attr('idPerencanaan');
             swal.fire({
                 title: "Apakah anda ingin menghapus data ini?",
                 showCancelButton: true,
@@ -133,9 +137,9 @@
                     //Ajax Delete
                     $.ajax({
                         type: 'DELETE',
-                        url: 'pengajuan/hapus',
+                        url: 'perencanaan/hapus',
                         data: {
-                            id_pengajuan: idPengajuan,
+                            id_perencanaan: idPerencanaan,
                             _token: "{{ csrf_token() }}"
                         },
                         success: function(data) {

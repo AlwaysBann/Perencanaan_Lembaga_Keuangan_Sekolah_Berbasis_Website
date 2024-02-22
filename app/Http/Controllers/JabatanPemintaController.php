@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\jabatan_peminta;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class JabatanPemintaController extends Controller
 {
@@ -31,21 +32,21 @@ class JabatanPemintaController extends Controller
      */
     public function store(Request $request, jabatan_peminta $jabatan)
     {
-        $data = $request->validate(
-            [
+        try {
+            $data = $request->validate([
                 'nama_jabatan_peminta' => ['required'],
-            ]
-        );
+            ]);
 
-        //Proses Insert
-        if ($data) {
-            $data['id_jabatan_peminta'] = 1;
-            // Simpan jika data terisi semuanya
-            $jabatan->create($data);
-            return redirect('/jabatan_peminta')->with('success', 'Data jabatan peminta baru berhasil ditambah');
-        } else {
-            // Kembali ke form tambah data
-            return back()->with('error', 'Data jabatan peminta gagal ditambahkan');
+
+            if ($data) {
+                $data['id_jabatan_peminta'] = 1;
+
+                $jabatan->create($data);
+
+                return redirect('/jabatan_peminta')->with('success', 'Data jabatan peminta baru berhasil ditambah.');
+            }
+        } catch (QueryException) {
+            return redirect('/jabatan_peminta')->with('error', 'Data jabatan peminta sudah ada.')->withInput();
         }
     }
 
@@ -76,17 +77,17 @@ class JabatanPemintaController extends Controller
     {
         $data = $request->validate(
             [
-                'nama_jabatan_peminta'=> ['required'],
-                ]
-                );
-                if ($data) {
-                    $dataUpdate= $jabatan->where('id_jabatan_peminta',$request->input('id_jabatan_peminta'))->update($data);
-                    if ($dataUpdate) {
-                    return redirect('/jabatan_peminta');
-                    }
-                } else {
-                    return back();
-                } 
+                'nama_jabatan_peminta' => ['required'],
+            ]
+        );
+        if ($data) {
+            $dataUpdate = $jabatan->where('id_jabatan_peminta', $request->input('id_jabatan_peminta'))->update($data);
+            if ($dataUpdate) {
+                return redirect('/jabatan_peminta');
+            }
+        } else {
+            return back();
+        }
     }
 
     /**
@@ -100,11 +101,10 @@ class JabatanPemintaController extends Controller
         if (!$data) {
             return response()->json(['success' => false, 'pesan' => 'Data tidak ditemukan'], 404);
         }
-        
+
         if ($data) {
             $data->delete();
             return response()->json(['success' => true]);
-        } 
-
+        }
     }
 }

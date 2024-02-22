@@ -30,8 +30,8 @@
                 <table class="table table-bordered border-warning table-dark DataTable" style="background-color: rgba(32, 32, 32, 0.637)">
                     <thead>
                         <tr>
-                            <th style="max-width: 10px;">id_ruangan</th>
-                            <th>nama_ruangan</th>
+                            <th style="max-width: 10px;">No</th>
+                            <th>Nama Ruangan</th>
                             <th style="max-width: 40px">aksi</th>
                         </tr>
                     </thead>

@@ -45,10 +45,10 @@
                         style="background-color: rgba(32, 32, 32, 0.637)">
                         <thead>
                             <tr>
-                                <th style="max-width: 40px;">Id angkatan</th>
-                                <th style="max-width: 40px;">No angkatan</th>
-                                <th>tahun_masuk</th>
-                                <th>tahun_keluar</th>
+                                <th style="max-width: 40px;">No</th>
+                                <th style="max-width: 40px;">Angkatan</th>
+                                <th>Tahun Masuk</th>
+                                <th>Tahun keluar</th>
                                 <th style="max-width: 40px">aksi</th>
                             </tr>
                         </thead>

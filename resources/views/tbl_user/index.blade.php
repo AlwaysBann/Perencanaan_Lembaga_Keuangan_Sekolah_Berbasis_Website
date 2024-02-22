@@ -41,9 +41,8 @@
                 <table class="table table-bordered border-warning table-dark DataTable" style="background-color: rgba(32, 32, 32, 0.637)">
                     <thead>
                         <tr>
-                            <th>id_user</th>
+                            <th>No</th>
                             <th>username</th>
-                            <th>password</th>
                             <th>role</th>
                             <th>aksi</th>
                         </tr>
@@ -53,7 +52,6 @@
                         <tr>
                             <td>{{$u->id_user}}</td>
                             <td>{{$u->username}}</td>
-                            <td>{{$u->password}}</td>
                             <td>{{$u->role}}</td>
                             <td>
                                 <a href="akun/edit/{{ $u->id_user }}" class="btn mx-4" style="background-color: white;font-weight: 600 ; color: green; border: 1px solid #E6B31E; min-width: 80px;">

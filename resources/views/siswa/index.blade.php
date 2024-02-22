@@ -48,11 +48,11 @@
                         style="background-color: rgba(32, 32, 32, 0.637)">
                         <thead>
                             <tr>
-                                <th style="max-width: 40px;">id_siswa</th>
-                                <th>username</th>
-                                <th>nama siswa</th>
-                                <th>jenis kelamin</th>
-                                <th>kelas</th>
+                                <th style="max-width: 40px;">No</th>
+                                <th>Username</th>
+                                <th>Nama Siswa</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Kelas </th>
                                 <th style="min-width: 90px">aksi</th>
                             </tr>
                         </thead>

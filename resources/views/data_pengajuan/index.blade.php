@@ -21,8 +21,9 @@
     <body>
         <div class="px-5 py-3">
             <h1 class="" style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;">Pengajuan</h1>
-            <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Data Pengajuan = {{ $jumlahPengajuan ?? 0 }}</h3>
-            @include('layout.flash-massage') 
+            <h3 style="color: #E6B31E; text-shadow: 0px 0px 2px white; font-weight: 900;"> Jumlah Data Pengajuan =
+                {{ $jumlahPengajuan ?? 0 }}</h3>
+            @include('layout.flash-massage')
             <div class="card-body" style="margin-top: 200px">
                 <div class="d-flex" style="margin-bottom: 20px">
                     <form action="pengajuan/search" method="GET" class="me-4" style="position: relative">
@@ -39,8 +40,11 @@
                             Tambah Pengajuan
                         </a>
                     @endif
-
-                    <a href="pengajuan/logs" class="btn btn-warning rounded-pill ms-auto"
+                    <a href="pengajuan/cetak" class="btn btn-info rounded-pill ms-auto"
+                        style="color: white; min-width: 130px">
+                        Cetak List Data
+                    </a>
+                    <a href="pengajuan/logs" class="btn btn-warning rounded-pill ms-4"
                         style="color: white; min-width: 130px">
                         Log Activity
                     </a>
@@ -67,7 +71,7 @@
                                     <td>{{ $p->nama_pengaju }}</td>
                                     <td>{{ $p->waktu_pengajuan }}</td>
                                     <td style="max-width: 175px">
-                                        <a href="pengajuan/detail/{{ $p->id_pengajuan }}" class="btn "
+                                        <a href="pengajuan/detail/{{ $p->id_pengajuan }}" class="btn"
                                             style="background-color: white;font-weight: 600 ; color: #E6B31E; border: 1px solid #E6B31E;">
                                             DETAIL
                                         </a>
@@ -83,9 +87,15 @@
                                                 CONFIRM
                                             </a>
                                         @endif
-                                        <btn class="btn btnHapus mx-2"
+                                        @if (Auth::check() && Auth::User()->role == 'pengelola')
+                                        <button class="btn btnHapus mx-2"
                                             style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; "
-                                            idPengajuan="{{ $p->id_pengajuan }}">HAPUS</btn>
+                                            idPengajuan="{{ $p->id_pengajuan }}" disabled>HAPUS</button>         
+                                        @else 
+                                        <button class="btn btnHapus mx-2"
+                                            style="background-color: white;font-weight: 600 ; color: red;  border: 1px solid #E6B31E; "
+                                            idPengajuan="{{ $p->id_pengajuan }}">HAPUS</button>     
+                                        @endif
                                     </td>
                                 </tr>
                         </tbody>

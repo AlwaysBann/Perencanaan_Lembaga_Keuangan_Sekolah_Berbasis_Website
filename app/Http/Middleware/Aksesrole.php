@@ -16,7 +16,7 @@ class Aksesrole
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (Auth::check() && in_array(Auth::user()->role, $roles)) {
+        if (Auth::user() && in_array(Auth::user()->role, $roles)) {
             return $next($request);
         }
         return back();

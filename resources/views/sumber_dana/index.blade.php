@@ -32,10 +32,10 @@
                         style="background-color: rgba(32, 32, 32, 0.637)">
                         <thead>
                             <tr>
-                                <th style="max-width: 50px;">id_sumber_dana</th>
-                                <th>id_kelola_keuangan</th>
-                                <th>nama_sumber_dana</th>
-                                <th>dana_sumber_dana</th>
+                                <th style="max-width: 50px;">No</th>
+                                <th>ID</th>
+                                <th>Nama Sumber Dana</th>
+                                <th>Dana Sumber Dana</th>
                                 <th style="min-width: 115px">aksi</th>
                             </tr>
                         </thead>

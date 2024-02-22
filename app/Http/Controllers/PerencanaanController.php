@@ -152,10 +152,21 @@ class PerencanaanController extends Controller
         }
     }
 
-    public function cetak(string $id, perencanaan $perencanaan, Request $request)
+    
+    public function cetak(perencanaan $perencanaan)
     {
-        $pengajuan = $perencanaan->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('perencanaan.id_pengajuan', $id)->select('pengajuan.*', 'ruangan.*', 'perencanaan.nama_penanggung_jawab', 'perencanaan.nama_perencanaan', 'perencanaan.id_perencanaan')->first();
-        $pdf = PDF::loadView('data_perencanaan.cetak', compact('pengajuan'));
-        return $pdf->stream('data_perencanaan.pdf');
+        $dataPerencanaan = $perencanaan->join('pengajuan', 'perencanaan.id_pengajuan', '=', 'pengajuan.id_pengajuan')->get();
+        $data = [
+            'perencanaan' => $dataPerencanaan
+        ];
+        //echo json_encode($dataPengajuan);
+
+        //return view('data_pengajuan.cetak', $data);
+
+        $pdf = PDF::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true
+        ])->loadView('data_perencanaan.cetak', ['perencanaan' => $dataPerencanaan]);
+        return $pdf->stream('perencanaan.pdf');
     }
 }

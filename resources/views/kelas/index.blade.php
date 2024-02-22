@@ -45,10 +45,10 @@
                         style="background-color: rgba(32, 32, 32, 0.637)">
                         <thead>
                             <tr>
-                                <th style="max-width: 40px;">id_kelas</th>
-                                <th>nama_kelas</th>
-                                <th>angkatan</th>
-                                <th>jurusan</th>
+                                <th style="max-width: 40px;">No</th>
+                                <th>Nama Kelas</th>
+                                <th>Angkatan</th>
+                                <th>Jurusan</th>
                                 <th style="min-width: 90px">aksi</th>
                             </tr>
                         </thead>

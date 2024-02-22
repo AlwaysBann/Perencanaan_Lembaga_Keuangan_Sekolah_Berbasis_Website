@@ -15,6 +15,9 @@ use Illuminate\Support\Str;
 
 class PengajuanController extends Controller
 {
+    /**
+     * function dibawah digunakan untuk memanggil halaman list data pengajuan lalu memanggil storedfunction CountPengajuan.
+     */
     public function index(Pengajuan $pengajuan)
     {
         $totalPengajuan = DB::select('SELECT CountPengajuan() AS Pengajuan')[0]->Pengajuan;
@@ -25,6 +28,9 @@ class PengajuanController extends Controller
         return view("data_pengajuan.index", $data);
     }
 
+    /**
+     * function dibawah digunakan untuk memanggil view tambah dan memanggil juga datanya.
+     */
     public function create(Pengajuan $pengajuan, ruangan $ruangan)
     {
         $data = [
@@ -33,6 +39,9 @@ class PengajuanController extends Controller
         return view('data_pengajuan.tambah', $data);
     }
 
+    /**
+     * function dibawah  digunakan untuk mengupdate data tabel
+     */
     public function store(Request $request, Pengajuan $pengajuan)
     {
         $data = $request->validate([
@@ -53,7 +62,7 @@ class PengajuanController extends Controller
 
         if ($request->hasFile('gambar_item') && $request->file('gambar_item')->isValid()) {
             $foto_file = $request->file('gambar_item');
-            $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
+            $foto_nama = base64_encode($foto_file->getClientOriginalName() . time()) . '.' . $foto_file->getClientOriginalExtension();
             $foto_file->move(public_path('Item'), $foto_nama);
             $data['gambar_item'] = $foto_nama;
         }
@@ -68,6 +77,9 @@ class PengajuanController extends Controller
         }
     }
 
+    /**
+     * function edit dibawah untuk memanggil view edit dan datanya.
+     */
     public function edit(string $id, Request $request, Pengajuan $pengajuan, ruangan $ruangan)
     {
         $data = [
@@ -78,6 +90,9 @@ class PengajuanController extends Controller
         return view('data_pengajuan.edit', $data);
     }
 
+    /**
+     * function dibawah ini digunakan untuk menampilkan detail
+     */
     public function show(string $id, Request $request, Pengajuan $pengajuan, ruangan $ruangan)
     {
         $data = [
@@ -114,6 +129,10 @@ class PengajuanController extends Controller
     }
 
 
+    /**
+     * function dibawah  untuk mengupdate atau mengedit list data obat.
+     */
+
     public function update(Request $request, ruangan $ruangan, Pengajuan $pengajuan)
     {
         $id_pengajuan = $request->input('id_pengajuan');
@@ -136,7 +155,7 @@ class PengajuanController extends Controller
             if ($request->hasFile('gambar_item')) {
                 $foto_file = $request->file('gambar_item');
                 $foto_extension = $foto_file->getClientOriginalExtension();
-                $foto_nama = md5($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
+                $foto_nama = base64_encode($foto_file->getClientOriginalName() . time()) . '.' . $foto_extension;
                 $foto_file->move(public_path('item'), $foto_nama);
 
                 $update_data = $pengajuan->where('id_pengajuan', $id_pengajuan)->first();
@@ -155,7 +174,9 @@ class PengajuanController extends Controller
     }
 
 
-
+    /**
+     * function dibawah digunakan untuk menghapus data pada list.
+     */
     public function destroy(Pengajuan $pengajuan, Request $request)
     {
         $id_pengajuan = $request->input('id_pengajuan');
@@ -171,13 +192,64 @@ class PengajuanController extends Controller
         }
     }
 
-    public function cetak(string $id, Request $request, Pengajuan $pengajuan, ruangan $ruangan)
+    /**
+     * Function cetak() dibawah ini digunakan untuk mencetak pdf list data obat.
+     */
+    public function cetak(Pengajuan $pengajuan)
     {
+        $imageDataArray = [];
+        $dataPengajuan = $pengajuan->all();
         $data = [
-            'pengajuan' => $pengajuan->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('id_pengajuan', '=', $id)->first(),
-            'ruangan' => $ruangan->join('pengajuan', 'ruangan.id_ruangan', '=', 'pengajuan.id_ruangan')->get()
+            'pengajuan' => $dataPengajuan
         ];
-        $pdf = PDF::loadView('data_pengajuan.cetak', $data);
-        return $pdf->stream('data_pengajuan.pdf');
+        //echo json_encode($dataPengajuan);
+
+
+        foreach ($dataPengajuan as $dataGambar) {
+            if ($dataGambar->gambar_item) {
+                /**
+                 * $imageData berfungsi menghash file gambar_item yang sudah tersimpan pada folder public/foto.
+                 * function file_get_contents() untuk mengambil konten yang sudah di panggil di function public_path
+                 */
+                $imageData = base64_encode(file_get_contents(public_path('item') . '/' . $dataGambar->gambar_item));
+                /**
+                 * $imageSrc berfungsi untuk  memanggil path yang ada di variable $imageData.
+                 */
+                $imageSrc = 'data:image/' . pathinfo($dataGambar->gambar_item, PATHINFO_EXTENSION) . ';base64,' . $imageData;
+                $imageDataArray[] = ['src' => $imageSrc, 'alt' => 'pengajuan'];
+            }
+        }
+        //return view('data_pengajuan.cetak', $data);
+
+        $pdf = PDF::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true
+        ])->loadView('data_pengajuan.cetak', ['pengajuan' => $dataPengajuan, 'imageDataArray' => $imageDataArray]);
+        /**
+         * kode dibawah untuk mereturn variable pdf dan mengatur nama pdf nya nanti mau jadi apa
+         * function stream supaya tidak langsung mendownload file, bisa di lihat terleih dulu sebelum di download
+         */
+        return $pdf->stream('pengajuan.pdf');
+    }
+
+    public function cetakDetail(string $id, Request $request, Pengajuan $pengajuan, ruangan $ruangan)
+    {
+        $imageDataArray = [];
+        $pengajuan = $pengajuan->join('ruangan', 'pengajuan.id_ruangan', '=', 'ruangan.id_ruangan')->where('id_pengajuan', '=', $id)->first();
+        $ruangan = $ruangan->join('pengajuan', 'ruangan.id_ruangan', '=', 'pengajuan.id_ruangan')->get();
+
+        // dd($pengajuan);
+        if ($pengajuan->gambar_item) {
+            $imageData = base64_encode(file_get_contents(public_path('Item') . '/' . $pengajuan->gambar_item));
+            $imageSrc = 'data:image/' . pathinfo($pengajuan->gambar_item, PATHINFO_EXTENSION) . ';base64,' . $imageData;
+
+            $imageDataArray[] = ['src' => $imageSrc, 'alt' => 'awok'];
+        }
+
+        $pdf = PDF::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true
+        ])->loadView('data_pengajuan.cetakDetail', ['pengajuan' => $pengajuan, 'imageDataArray' => $imageDataArray, 'ruangan' => $ruangan]);
+        return $pdf->stream('data_pengajuanDetail.pdf');
     }
 }

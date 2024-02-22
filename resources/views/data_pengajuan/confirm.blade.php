@@ -1,5 +1,5 @@
 @extends('layout.layout')
-@section('title', 'Realisasi')
+@section('title', 'Pengajuan')
 @section('content')
 <!DOCTYPE html>
 <html lang="en">

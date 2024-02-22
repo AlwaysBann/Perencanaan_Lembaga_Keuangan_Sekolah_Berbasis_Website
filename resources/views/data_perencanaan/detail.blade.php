@@ -42,7 +42,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Nama Pengaju
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->nama_pengaju }}
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Nama Penanggung Jawab
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->nama_penanggung_jawab }}
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Tujuan Pengajuan
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->tujuan_pengajuan }}
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Nama Item
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->nama_item }}
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Spesifikasi Item
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->spesifikasi_item }}
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Jenis Item
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->jenis_item }}
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Nama Pengajuan
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->nama_pengajuan }}
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Nama Perencanaan
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->nama_perencanaan }}
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Ruangan
                                     </div>
-                                    <div name='id_ruangan'>
+                                    <div name='id_ruangan' style="color: aliceblue">
                                         {{ $pengajuan->nama_ruangan }}
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Jumlah Item
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->jumlah_item }}
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                                     <div class="col fs-5" style="color: #E6B31E">
                                         Harga Satuan
                                     </div>
-                                    <div>
+                                    <div style="color: aliceblue">
                                         {{ $pengajuan->harga_satuan }}
                                     </div>
                                 </div>
@@ -147,10 +147,10 @@
                             <div class="col-md-4 mt-3 mb-3">
                                 <a href="#" onclick="window.history.back();" class="btn "
                                     style="background-color: white;font-weight: 500 ; color: red;  border: 1px solid #E6B31E;  min-width: 100px">KEMBALI</a>
-                                <a href="/perencanaan/cetak/{{ $pengajuan->id_perencanaan }}"
+                                {{-- <a href="/perencanaan/cetak/{{ $pengajuan->id_perencanaan }}"
                                     class="btn btn-info rounded-pill mx-3" style="color: white; min-width: 130px">
                                     Cetak List Data
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                     </div>
